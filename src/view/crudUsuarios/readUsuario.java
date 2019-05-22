@@ -26,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.TablaImagen;
 import model.Usuarios.Usuario;
@@ -731,7 +732,18 @@ public  class readUsuario extends javax.swing.JFrame {
     private void btnMenuPrincipalProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalProdActionPerformed
         // TODO add your handling code here:
        this.setVisible(false);
-        menuPrincipal mp = new menuPrincipal();
+        menuPrincipal mp = null;
+        try {
+            mp = new menuPrincipal();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
         mp.setVisible(true);
         mp.pack();

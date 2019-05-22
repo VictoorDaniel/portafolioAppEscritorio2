@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.TablaImagen;
@@ -335,7 +336,18 @@ public class readProductos extends javax.swing.JFrame {
     private void btnMenuPrincipalProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalProdActionPerformed
         // TODO add your handling code here:
        
-        menuPrincipal mp = new menuPrincipal();
+        menuPrincipal mp = null;
+        try {
+            mp = new menuPrincipal();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
         mp.setVisible(true);
         mp.pack();
@@ -344,7 +356,18 @@ public class readProductos extends javax.swing.JFrame {
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        createProductos cp = new createProductos();
+        createProductos cp = null;
+        try {
+            cp = new createProductos();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cp.setVisible(true);
         cp.pack();
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
@@ -485,7 +508,18 @@ public class readProductos extends javax.swing.JFrame {
                     //jPanel.setSelectedIndex(1);
                     
                     this.setVisible(false);
-                    updateProductos up = new updateProductos();
+                    updateProductos up = null;
+                    try {
+                        up = new updateProductos();
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InstantiationException ex) {
+                        Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalAccessException ex) {
+                        Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (UnsupportedLookAndFeelException ex) {
+                        Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     up.setVisible(true); 
                     
                     /*ENVIAR DATOS A LA VENTANA*/

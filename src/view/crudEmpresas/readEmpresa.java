@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.Comuna.Comuna;
 import model.Empresas.Empresa;
@@ -781,7 +782,18 @@ public class readEmpresa extends javax.swing.JFrame {
     private void btnMenuPrincipalProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalProdActionPerformed
         // TODO add your handling code here: this.setVisible(false);
         this.setVisible(false);
-        menuPrincipal mp = new menuPrincipal();
+        menuPrincipal mp = null;
+        try {
+            mp = new menuPrincipal();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+        }
         mp.setVisible(true);
         mp.pack();
     }//GEN-LAST:event_btnMenuPrincipalProdActionPerformed
