@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.TablaImagen;
@@ -293,7 +294,18 @@ public class readDescuento extends javax.swing.JFrame {
 
     private void btnMenuPrincipalProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalProdActionPerformed
         // TODO add your handling code here:
-        menuPrincipal mp = new menuPrincipal();
+        menuPrincipal mp = null;
+        try {
+            mp = new menuPrincipal();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
         mp.setVisible(true);
         mp.pack();

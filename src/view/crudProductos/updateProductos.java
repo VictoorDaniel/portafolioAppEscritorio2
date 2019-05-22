@@ -31,6 +31,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import model.TablaImagen;
 import model.Usuarios.Usuario;
 import model.producto.Producto;
@@ -54,7 +56,7 @@ public class updateProductos extends javax.swing.JFrame {
     /**
      * Creates new form modifyProductos
      */
-    public updateProductos() {
+    public updateProductos() throws ClassNotFoundException, ClassNotFoundException, InstantiationException, InstantiationException, InstantiationException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, UnsupportedLookAndFeelException, UnsupportedLookAndFeelException, UnsupportedLookAndFeelException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, UnsupportedLookAndFeelException, IllegalAccessException {
         initComponents();
         
         //mostrarImagen();
@@ -73,6 +75,9 @@ public class updateProductos extends javax.swing.JFrame {
         cbxCategoriaProductoMod.setModel(getValuesCbxCategoria());
         cbxRubroProductoMod.setModel(getValuesCbxRubro());
         
+        
+        //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
+          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         
     }
     
@@ -529,7 +534,17 @@ public class updateProductos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new updateProductos().setVisible(true);
+                try {
+                    new updateProductos().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
