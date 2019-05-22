@@ -5,18 +5,89 @@
  */
 package view.crudOferta;
 
+import conectorBD.JavaConnectDb;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import oracle.jdbc.OracleResultSet;
+
 /**
  *
  * @author fernandacancinoreyes
  */
 public class createOferta extends javax.swing.JFrame {
 
-    /**
-     * Creates new form createOferta
-     */
+    /*llamo a la clase que contiene la conexion*/
+    JavaConnectDb obj = new JavaConnectDb();
+    
+    OracleResultSet rs = null;
+    
+    
     public createOferta() {
         initComponents();
+        
+        cbxTiendaOferta.setModel(getValuesTienda());
+        cbxProductoOferta.setModel(getValuesProducto());
+        
+        
     }
+    
+    private DefaultComboBoxModel getValuesTienda(){
+        
+        DefaultComboBoxModel cbxTiendaOferta = new DefaultComboBoxModel();
+        
+        String[] registros = new String[2];
+        
+        try {
+            Connection cn = obj.ConnectBd();
+            String sql = "select idtienda, nombretienda from TIENDA";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while (rs.next()) { 
+                
+                registros[0] = rs.getNString("idtienda");
+                registros[1] = rs.getString("nombretienda");
+               cbxTiendaOferta.addElement(registros[1]);
+            }
+            
+            cn.close();
+            rs.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return cbxTiendaOferta;
+    }
+    
+    private DefaultComboBoxModel getValuesProducto(){
+        
+        DefaultComboBoxModel cbxProductoOferta = new DefaultComboBoxModel();
+        
+        String[] registros = new String[2];
+        
+        try {
+            Connection cn = obj.ConnectBd();
+            String sql = "select idproducto, nombreproducto from PRODUCTO";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while (rs.next()) { 
+                
+                registros[0] = rs.getNString("idproducto");
+                registros[1] = rs.getString("nombreproducto");
+               cbxProductoOferta.addElement(registros[1]);
+            }
+            
+            cn.close();
+            rs.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return cbxProductoOferta;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,21 +98,239 @@ public class createOferta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtNombreOferta = new javax.swing.JTextField();
+        txtDesceuntoOferta = new javax.swing.JTextField();
+        txtStockOferta1 = new javax.swing.JTextField();
+        txtPrecioProductoOferta = new javax.swing.JTextField();
+        cbxTiendaOferta = new javax.swing.JComboBox<>();
+        cbxProductoOferta = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(208, 211, 212));
+        jPanel1.setToolTipText("");
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setText("Agregar Oferta");
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("Tiendas Retail Mis Ofertas");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap())
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel3.setText("Nombre Oferta");
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel4.setText("Tienda");
+
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel5.setText("Producto");
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel6.setText("Precio Producto");
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setText("Descuento");
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel8.setText("Stock");
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel9.setText("Imagen");
+
+        txtNombreOferta.setPreferredSize(new java.awt.Dimension(10, 32));
+        txtNombreOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreOfertaActionPerformed(evt);
+            }
+        });
+
+        txtDesceuntoOferta.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtDesceuntoOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDesceuntoOfertaActionPerformed(evt);
+            }
+        });
+        txtDesceuntoOferta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDesceuntoOfertaKeyTyped(evt);
+            }
+        });
+
+        txtStockOferta1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtStockOferta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStockOferta1ActionPerformed(evt);
+            }
+        });
+        txtStockOferta1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStockOferta1KeyTyped(evt);
+            }
+        });
+
+        txtPrecioProductoOferta.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtPrecioProductoOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecioProductoOfertaActionPerformed(evt);
+            }
+        });
+        txtPrecioProductoOferta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioProductoOfertaKeyTyped(evt);
+            }
+        });
+
+        cbxTiendaOferta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbxProductoOferta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDesceuntoOferta)
+                            .addComponent(txtNombreOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtStockOferta1)
+                            .addComponent(txtPrecioProductoOferta))
+                        .addGap(191, 191, 191))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxTiendaOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxProductoOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtNombreOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(cbxTiendaOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cbxProductoOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtPrecioProductoOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtDesceuntoOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtStockOferta1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9)
+                .addGap(0, 141, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtDesceuntoOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDesceuntoOfertaActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtDesceuntoOfertaActionPerformed
+
+    private void txtDesceuntoOfertaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDesceuntoOfertaKeyTyped
+        // TODO add your handling code here:
+        char validar = evt.getKeyChar();
+
+        if (Character.isLetter(validar)){
+            getToolkit().beep();
+            evt.consume();
+
+            JOptionPane.showMessageDialog(rootPane, "Ingresar Solo Numeros");
+        }
+
+        //O tambien se puede validar de la siguiente forma
+        /*
+        //VALIDA EL INGRESO DE DIGITOS
+        if (Character.isDigit(validar)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Ingresar Solo letras");
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Bien ha ingresado un número");
+        }
+        */
+
+    }//GEN-LAST:event_txtDesceuntoOfertaKeyTyped
+
+    private void txtNombreOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreOfertaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreOfertaActionPerformed
+
+    private void txtStockOferta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStockOferta1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStockOferta1ActionPerformed
+
+    private void txtStockOferta1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockOferta1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStockOferta1KeyTyped
+
+    private void txtPrecioProductoOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioProductoOfertaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioProductoOfertaActionPerformed
+
+    private void txtPrecioProductoOfertaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioProductoOfertaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioProductoOfertaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -79,5 +368,22 @@ public class createOferta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbxProductoOferta;
+    private javax.swing.JComboBox<String> cbxTiendaOferta;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JTextField txtDesceuntoOferta;
+    private javax.swing.JTextField txtNombreOferta;
+    private javax.swing.JTextField txtPrecioProductoOferta;
+    private javax.swing.JTextField txtStockOferta1;
     // End of variables declaration//GEN-END:variables
 }
