@@ -47,10 +47,8 @@ public class Index {
   Calendar calendar = Calendar.getInstance();
  int dia =  calendar.get(Calendar.DAY_OF_WEEK);
  
-
-
-//cambiar el Monday por el dia atual si quieres probar que pasa <3
-if(dia==Calendar.MONDAY){
+//cambiar el Monday por el dia actual si quieres probar que pasa <3
+if(dia==Calendar.TUESDAY){
    //Lunes
    /*le decimos que comience a ejecutarce desde el lunes 
      cada 168 horas los cual es equvalente a cada7 dias*/

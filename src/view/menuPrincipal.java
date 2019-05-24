@@ -299,9 +299,9 @@ public class menuPrincipal extends javax.swing.JFrame {
                       }
                       else
                       {
-                         JOptionPane.showMessageDialog(null, "La Carpeta de ReportesBI no existe o esta vacía.\n"
-                                 + " Porfavor espere hasta el día Lunes para que se cree  genere el primer reporte gracias por su comprensión \n"
-                                 + " en especial tu feña curiosa...  ");
+                         JOptionPane.showMessageDialog(null, "\t \t La Carpeta de ReportesBI no existe o esta vacía.\n"
+                                 + " Porfavor espere hasta el día Lunes para que se cree y  genere el primer reporte.\n"
+                                 + " gracias por su comprensión \n");
                          
                          
                       }

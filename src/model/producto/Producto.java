@@ -5,6 +5,8 @@
  */
 package model.producto;
 
+import java.io.FileInputStream;
+
 /**
  *
  * @author fernandacancinoreyes
@@ -99,6 +101,8 @@ public class Producto {
     public void setCategoriaProducto(int categoriaProducto) {
         this.categoriaProducto = categoriaProducto;
     }
+
+    
     
             
     
