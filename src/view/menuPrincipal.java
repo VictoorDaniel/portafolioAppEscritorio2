@@ -5,6 +5,9 @@
  */
 package view;
 
+
+
+import conectorBD.JavaConnectDb;
 import view.crudDescuento.readDescuento;
 import view.Tienda.readTienda;
 import view.crudEmpresas.readEmpresa;
@@ -12,7 +15,28 @@ import view.crudProductos.readProductos;
 import view.crudProductos.readProductos;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+
 import view.crudUsuarios.readUsuario;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import model.GenerarArchivoBItxt;
+import model.Oferta.Oferta2BI;
 
 /**
  *
@@ -24,12 +48,17 @@ public class menuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form menuPrincipal
      */
-    public menuPrincipal() {
+   public menuPrincipal() throws ClassNotFoundException, IllegalAccessException, InstantiationException, UnsupportedLookAndFeelException {
         initComponents();
         
         /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
         this.setLocationRelativeTo(null);
+          
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }
+   
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -242,10 +271,59 @@ public class menuPrincipal extends javax.swing.JFrame {
 
     private void btnDescargaArchivosBIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargaArchivosBIActionPerformed
         // TODO add your handling code here:
+     
+                    String Ruta="C:\\ReportesBI";
+                      File ReporteBI=new File(Ruta);
+                      
+                      if(ReporteBI.exists())
+                      {
+                          String Ruta2=null;
+         int s = JOptionPane.showConfirmDialog(null, "El Archivo se a descargado exitosamente se encuentra en :\n "+Ruta+"\n"+"¿Desea mostrar el contenido?","Si/no",JOptionPane.YES_NO_OPTION);
+                    if(s == 0){
+                        
+                        JFileChooser fileChooser = new JFileChooser("C:\\ReportesBI\\");
+                int seleccion = fileChooser.showOpenDialog(null);
+                
+                if (seleccion == JFileChooser.APPROVE_OPTION)
+                   {
+               File fichero = fileChooser.getSelectedFile();
+                      Ruta2= fichero.getAbsolutePath();
+                       
+                    GenerarArchivoBItxt.abrirarchivo(Ruta2);
+                    }    
+                        
+                     
+                    }
+        
+                         
+                      }
+                      else
+                      {
+                         JOptionPane.showMessageDialog(null, "La Carpeta de ReportesBI no existe o esta vacía.\n"
+                                 + " Porfavor espere hasta el día Lunes para que se cree  genere el primer reporte gracias por su comprensión \n"
+                                 + " en especial tu feña curiosa...  ");
+                         
+                         
+                      }
+         
+        
+        
+             
+        
+        
+        
+        
+        
+      
+			
+			
+			
+			
         
         
     }//GEN-LAST:event_btnDescargaArchivosBIActionPerformed
 
+    
 
     /**
      * @param args the command line arguments
@@ -277,7 +355,18 @@ public class menuPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new menuPrincipal().setVisible(true);
+                try {
+                    new menuPrincipal().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         });
     }

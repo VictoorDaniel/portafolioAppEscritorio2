@@ -10,12 +10,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import oracle.jdbc.OracleResultSet;
 
 /**
@@ -35,7 +39,7 @@ public class createProductos extends javax.swing.JFrame {
     
     
     
-    public createProductos() {
+    public createProductos() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         /*inicia los componentes*/
         initComponents();
         
@@ -49,6 +53,10 @@ public class createProductos extends javax.swing.JFrame {
         
         cbxRubroProducto.setModel(getValuesRubro());
         //cbxCategoriaProducto.setModel(cnProd.getValuesCategoria());
+        
+        
+        //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
+          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }
 
     @SuppressWarnings("unchecked")
@@ -403,7 +411,17 @@ public class createProductos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new createProductos().setVisible(true);
+                try {
+                    new createProductos().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(createProductos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(createProductos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(createProductos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(createProductos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
