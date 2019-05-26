@@ -271,6 +271,11 @@ public class readProductos extends javax.swing.JFrame {
             }
         });
 
+        buscartodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscartodoActionPerformed(evt);
+            }
+        });
         buscartodo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 buscartodoKeyPressed(evt);
@@ -566,6 +571,10 @@ public class readProductos extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_tblProductosMouseClicked
+
+    private void buscartodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscartodoActionPerformed
 
     public void eliminar(String id) throws SQLException{
          CrudProducto cProducto= new CrudProducto();

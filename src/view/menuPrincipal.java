@@ -37,6 +37,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.GenerarArchivoBItxt;
 import model.Oferta.Oferta2BI;
+import view.crudOferta.readOferta;
 
 /**
  *
@@ -244,7 +245,9 @@ public class menuPrincipal extends javax.swing.JFrame {
 
     private void btnMantenedorOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorOfertaActionPerformed
         // TODO add your handling code here:
-        
+        this.setVisible(false);
+        readOferta ro= new  readOferta();
+        ro.setVisible(true);
     }//GEN-LAST:event_btnMantenedorOfertaActionPerformed
 
     private void btnMantenedorDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorDescuentoActionPerformed

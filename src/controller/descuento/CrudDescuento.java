@@ -68,8 +68,8 @@ public class CrudDescuento {
         
             try{
                 pst.close();
-               
-            }catch(Exception ex){}
+            }
+            catch(Exception ex){}
         }
               
     }

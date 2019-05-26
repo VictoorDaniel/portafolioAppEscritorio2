@@ -379,6 +379,11 @@ public class readEmpresa extends javax.swing.JFrame {
         });
 
         cmbxComuna.setEditable(true);
+        cmbxComuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbxComunaActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel11.setText("Cliente Asociado");
@@ -797,6 +802,10 @@ public class readEmpresa extends javax.swing.JFrame {
         mp.setVisible(true);
         mp.pack();
     }//GEN-LAST:event_btnMenuPrincipalProdActionPerformed
+
+    private void cmbxComunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxComunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbxComunaActionPerformed
 
     /**
      * @param args the command line arguments

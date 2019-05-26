@@ -306,6 +306,7 @@ public class createProductos extends javax.swing.JFrame {
                //guardamos la imagen que emos elegido en estas variables
                File file = new File(ruta);
                fi = new FileInputStream(file);
+               
                 /*para obtener id de producto*/
                 int idrubro =  cbxRubroProducto.getSelectedIndex();
                 idrubro = idrubro + 1;
