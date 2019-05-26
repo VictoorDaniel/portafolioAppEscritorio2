@@ -318,8 +318,6 @@ public class createProductos extends javax.swing.JFrame {
                 pst.setString(4, txtStockProducto.getText());
                 pst.setString(5,((JTextField)JDfechaV.getDateEditor().getUiComponent()).getText());
                 pst.setBinaryStream(6, fi);
-                //esta validacio logra que tire un especie de error en casos de que vallan nulos 
-                //datos o  por otras razones lo cual entra en traycatch y no inserta en la bd 
                
               cn.commit();
                 
