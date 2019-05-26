@@ -75,6 +75,7 @@ public class readProductos extends javax.swing.JFrame {
     
     /*utilizamos la clase de jtable*/
     DefaultTableModel tablaProductos = new DefaultTableModel(){
+            @Override
             public boolean isCellEditable(int row, int column){
                 return false;
             }  
@@ -375,18 +376,25 @@ public class readProductos extends javax.swing.JFrame {
     /*metodo para buscar los productos en la tabla */
     private void buscartodoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscartodoKeyPressed
         // TODO add your handling code here:
+      tblProductos.setDefaultRenderer(Object.class,new Renders());
         
-        String[] titulos = {"id", "Nombre", "Rubro", "Categoria", "Precio", "Stock","Vencimiento",/*"Imagen"*/};
+        String[] titulos = {"id", "Nombre", "Rubro", "Categoria", "Precio", "Stock","Vencimiento","Imagen","Modificar","Eliminar"};
         
-           
+        
+        JButton btn_modificar = new JButton("Modificar");
+        btn_modificar.setName("m");
+        JButton btn_eliminar = new JButton("Eliminar");
+        btn_eliminar.setName("e");
+        
+        
             String sql = "select   IDPRODUCTO\n" +
                         "        ,NOMBREPRODUCTO\n" +
                         "        ,rubro.nombrerubro\n" +
                         "        ,CATEGORIA.nombrecategoria\n" +
                         "        ,PRECIOPRODUCTO\n" +
-                        //"        ,IMAGENPRODUCTO\n" +
                         "        ,STOCKPRODUCTO\n" +
                         "        ,to_char(FECHAEXPIRACION) \n" +
+                         "        ,IMAGENPRODUCTO\n" +
                         "from PRODUCTO INNER JOIN RUBRO\n" +
                         "ON PRODUCTO.RUBROPRODUCTO = rubro.idrubro\n" +
                         "  INNER JOIN CATEGORIA ON rubro.idcategoria = categoria.idcategoria "+
@@ -395,7 +403,12 @@ public class readProductos extends javax.swing.JFrame {
                     + "OR RUBRO.NOMBRERUBRO LIKE '%" + buscartodo.getText() + "%'"
                     + "OR CATEGORIA.NOMBRECATEGORIA LIKE '%" + buscartodo.getText() + "%'"
                     + "OR FECHAEXPIRACION  LIKE'%" + buscartodo.getText() + "%'";
-           tablaProductos = new DefaultTableModel(null, titulos);
+           tablaProductos = new DefaultTableModel(null, titulos){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }  
+    };
            
             try {
                 Connection cn = obj.ConnectBd();
@@ -412,7 +425,38 @@ public class readProductos extends javax.swing.JFrame {
                 datos[4] = rs.getString(5);
                 datos[5] = rs.getString(6);
                 datos[6] = rs.getString(7);
+                   
+                Blob blob = rs.getBlob(8);//llamamos la imagen
+
+                if(blob != null)//mandamos un mensaje de no imagen si es null
+                {
+                   try{
+                        byte[] data = blob.getBytes(1, (int)blob.length());
+                        BufferedImage img = null;
+                        try{
+                        img = ImageIO.read(new ByteArrayInputStream(data));
+                        }catch(Exception ex){
+                        System.out.println(ex.getMessage());
+                        }
+                    
+                    
+                        //de cierto modo necesitamos tener la imagen para ello debemos conocer la ruta de dicha imagen
+                        Image foto = img;
+
+                        //Le damos dimension a nuestro label que tendra la imagen
+                        foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
+                        ImageIcon icono = new ImageIcon(foto);
+                        datos[7] = new JLabel(icono);
+                    }catch(Exception ex){
+                        datos[7] = "No Imagen";
+                    }
+                }
+                else{
+                   datos[7] = "No Imagen";
+                }
                 
+                datos[8] = btn_modificar;
+                datos[9] = btn_eliminar;
              
                 tablaProductos.addRow(datos);   
                 
@@ -444,48 +488,8 @@ public class readProductos extends javax.swing.JFrame {
         String stock        = ""+tblProductos.getValueAt(clic_tabla, 5);
         String vencimiento  = ""+tblProductos.getValueAt(clic_tabla, 6);
         //ImageIcon imagen       = (ImageIcon) tblProductos.getValueAt(clic_tabla,7);
-        
-        Producto prod = new Producto();/*
-        prod.idProducto = Integer.parseInt(id);
-        prod.nombreProducto = nombre;
-        prod.rubroProducto = Integer.parseInt(rubro);
-        prod.categoriaProducto = Integer.parseInt(categoria);
-        prod.precioProducto = Integer.parseInt(precio);
-        prod.stockProducto = Integer.parseInt(stock);
-        prod.fechaExpiracion = vencimiento;
-        */
-       //enviamos las variables a las cajas de textos para que aparescan cargadas
-       /*
-        txtCodigo.setText(String.valueOf(codigo));
-        txtNombre.setText(nombre);
-        txtApellidoP.setText(apellido);
-        txtApellidoM.setText(apellidoM);
-        txtEmail.setText(email);
-        txtRut.setText(rut); 
-        
-        
-          
-        
-        if(!"Activo".equals(Estado)){
-            rbInactivo.setSelected(true);
-        }
-        else{
-            rbActivo.setSelected(true);
-        }
-        if("si".equals(AceptaOferta)){
-            rbAceptarS.setSelected(true);
-        }
-        else{
-           rbAceptarN.setSelected(true); 
-        }
-        
-        ((JTextField)JDFechaN.getDateEditor().getUiComponent()).setText(fechaN);
-        
-        cbxRol.setSelectedItem(rol);
-        
-        txtPassword.setText(pass);
-         
-       */
+       //me rindo nopude con esa asi que lo voy a hacer a la 
+      
        
         int column = tblProductos.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY()/tblProductos.getRowHeight();
@@ -519,6 +523,8 @@ public class readProductos extends javax.swing.JFrame {
                         Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (UnsupportedLookAndFeelException ex) {
                         Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     up.setVisible(true); 
                     
@@ -531,8 +537,17 @@ public class readProductos extends javax.swing.JFrame {
                     updateProductos.cbxCategoriaProductoMod.setSelectedItem(categoria);
                     updateProductos.cbxRubroProductoMod.setSelectedItem(rubro);
                     ((JTextField)updateProductos.dtFechaVencimientoMod.getDateEditor().getUiComponent()).setText(vencimiento);
-                    //updateProductos.lblImagenMod.setIcon((Icon) new JLabel(imagen));
-                    
+                   // updateProductos.lblImagenMod.setIcon((Icon) new JLabel(imagen));
+                   Producto prod=new Producto();
+                   prod.setIdProducto(Integer.parseInt(id));
+                   CrudProducto crud=new CrudProducto();
+                    try {
+                        crud.mostrarImagen(prod);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                 
+            
                     
                     //updateProductos.lblImagenMod.setIcon(tblProductos.getValueAt(clic_tabla,7));
                    // updateProductos.lblImagenMod.setIcon(new ImageIcon(tblProductos.getValueAt(clic_tabla,7)));

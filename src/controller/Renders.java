@@ -38,8 +38,9 @@ public class Renders extends DefaultTableCellRenderer  {
          return lbl;
         }
         return super.getTableCellRendererComponent(table, value, isSelected, 
-                hasFocus, row, column);
+                hasFocus, row, column );
     }
     
     
+          
 }

@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import static java.lang.Integer.parseInt;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -25,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -37,12 +39,13 @@ import model.TablaImagen;
 import model.Usuarios.Usuario;
 import model.producto.Producto;
 import oracle.jdbc.OracleResultSet;
+import sun.misc.IOUtils;
 
 /**
  *
  * @author fernandacancinoreyes
  */
-public class updateProductos extends javax.swing.JFrame {
+public final class updateProductos extends javax.swing.JFrame {
 
     
     /*llamo a la clase que contiene la conexion*/
@@ -51,12 +54,16 @@ public class updateProductos extends javax.swing.JFrame {
     /*declaracion de variables*/
     String ruta = null;//para la ruta de la imagen
     OracleResultSet rs = null;
+    FileInputStream fi = null; //para la imagen..
+    
     
     
     /**
      * Creates new form modifyProductos
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.lang.InstantiationException
      */
-    public updateProductos() throws ClassNotFoundException, ClassNotFoundException, InstantiationException, InstantiationException, InstantiationException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, UnsupportedLookAndFeelException, UnsupportedLookAndFeelException, UnsupportedLookAndFeelException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, UnsupportedLookAndFeelException, IllegalAccessException {
+    public updateProductos() throws ClassNotFoundException, ClassNotFoundException, InstantiationException, InstantiationException, InstantiationException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, UnsupportedLookAndFeelException, UnsupportedLookAndFeelException, UnsupportedLookAndFeelException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, UnsupportedLookAndFeelException, IllegalAccessException, SQLException {
         initComponents();
         
         //mostrarImagen();
@@ -66,7 +73,7 @@ public class updateProductos extends javax.swing.JFrame {
         
         
         /*dejar 'invisible' el text de id */
-        txtIdProductoMod.setVisible(false);
+        txtIdProductoMod.setVisible(true);
         cbxCategoriaProductoMod.setVisible(false);
         lblCategoria.setVisible(false);
         
@@ -74,17 +81,17 @@ public class updateProductos extends javax.swing.JFrame {
         /*Cargar cmbx*/
         cbxCategoriaProductoMod.setModel(getValuesCbxCategoria());
         cbxRubroProductoMod.setModel(getValuesCbxRubro());
+       // Producto prod = getIdProducto();
+        
+        
         
         
         //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        
+  
     }
     
-    
-    public  void mostrarProductos(){
-        
-    }
+   
     
     /*
     public void mostrarImagen(){
@@ -434,16 +441,20 @@ public class updateProductos extends javax.swing.JFrame {
         
         
         try {
-            modificar();
+            try {
+                modificar();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         
         this.setVisible(false);
     }//GEN-LAST:event_btnModificarProductoActionPerformed
 
     public void validaDatosVacios(){
-        if(    txtNombreProductoMod.getText().trim().length() != 0 
+        if(    txtNombreProductoMod.getText().trim().length() != 0
             && txtPrecioProductoMod.getText().trim().length() != 0
             && txtStockProductoMod.getText().trim().length() != 0
             && ((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText().trim().length() != 0
@@ -458,8 +469,13 @@ public class updateProductos extends javax.swing.JFrame {
     }
     
     //metodo para modificar 
-   public void modificar() throws SQLException {//throws SQLException{
-       
+   public void modificar() throws SQLException, FileNotFoundException {//throws SQLException{
+             
+          File file = new File(ruta);
+             fi = new FileInputStream(file);
+             
+
+           
         Producto prod = new Producto();
         CrudProducto controllerProd = new CrudProducto();
         
@@ -472,11 +488,13 @@ public class updateProductos extends javax.swing.JFrame {
         prod.setPrecioProducto(parseInt(txtPrecioProductoMod.getText()));
         prod.setStockProducto(parseInt(txtStockProductoMod.getText()));
         prod.setFechaExpiracion(((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText());
-                       
-        controllerProd.modificarProducto(prod);
         
-    }
-    
+        
+        controllerProd.modificarProducto(prod,fi);
+        
+        
+         
+   }
     
     private void btnImagenModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenModActionPerformed
         
@@ -543,6 +561,8 @@ public class updateProductos extends javax.swing.JFrame {
                 } catch (IllegalAccessException ex) {
                     Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
                     Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
