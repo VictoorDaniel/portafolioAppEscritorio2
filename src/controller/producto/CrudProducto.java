@@ -93,7 +93,8 @@ public class CrudProducto {
                        + "PRECIOPRODUCTO= ?, "
                        + "STOCKPRODUCTO = ?,"
                        + "FECHAEXPIRACION= ?,"
-                       + "IMAGENPRODUCTO= ?"
+                       + "IMAGENPRODUCTO= ?,"
+                       + "IDTIENDA= ?"
                        + "WHERE IDPRODUCTO = ?";
         
         PreparedStatement pst = null;
@@ -107,12 +108,14 @@ public class CrudProducto {
             pst.setInt(4, prod.getStockProducto());
             pst.setString(5, prod.getFechaExpiracion());
             pst.setBinaryStream(6, fi);
+            pst.setInt(7, prod.getIdtienda());
             
-            pst.setInt(7, prod.getIdProducto());
+            pst.setInt(8, prod.getIdProducto());
             
             System.out.println("nombre : " + prod.getNombreProducto() + "rubro : " + prod.getRubroProducto()
-                              + "precio :" + prod.getPrecioProducto()
-                               + "stock :" + prod.getStockProducto() + " id :" + prod.getIdProducto());
+                               + "precio :" + prod.getPrecioProducto()
+                               + "stock :" + prod.getStockProducto()  + "IDTIENDA :" + prod.getIdtienda()
+                               + " id :" + prod.getIdProducto());
              
             pst.executeUpdate();
         }catch(SQLException ex){

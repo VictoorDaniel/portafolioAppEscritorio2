@@ -37,6 +37,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.TablaImagen;
 import model.Usuarios.Usuario;
+import model.comboBox.CbxTienda;
 import model.producto.Producto;
 import oracle.jdbc.OracleResultSet;
 import sun.misc.IOUtils;
@@ -73,7 +74,7 @@ public final class updateProductos extends javax.swing.JFrame {
         
         
         /*dejar 'invisible' el text de id */
-        txtIdProductoMod.setVisible(true);
+        txtIdProductoMod.setVisible(false);
         cbxCategoriaProductoMod.setVisible(false);
         lblCategoria.setVisible(false);
         
@@ -83,7 +84,9 @@ public final class updateProductos extends javax.swing.JFrame {
         cbxRubroProductoMod.setModel(getValuesCbxRubro());
        // Producto prod = getIdProducto();
         
-        
+        CbxTienda comboboxTienda = new CbxTienda();
+        cbxTiendaProductoMod.removeAllItems();
+        comboboxTienda.getValuesTienda(cbxTiendaProductoMod);
         
         
         //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
@@ -232,6 +235,8 @@ public final class updateProductos extends javax.swing.JFrame {
         dtFechaVencimientoMod = new com.toedter.calendar.JDateChooser();
         btnImagenMod = new javax.swing.JButton();
         lblImagenMod = new javax.swing.JLabel();
+        cbxTiendaProductoMod = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -322,6 +327,15 @@ public final class updateProductos extends javax.swing.JFrame {
             }
         });
 
+        cbxTiendaProductoMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTiendaProductoModActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel6.setText("Tienda");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -342,7 +356,8 @@ public final class updateProductos extends javax.swing.JFrame {
                             .addComponent(lblCategoria)
                             .addComponent(jLabel5)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -358,6 +373,7 @@ public final class updateProductos extends javax.swing.JFrame {
                                     .addComponent(lblImagenMod, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxTiendaProductoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dtFechaVencimientoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbxRubroProductoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
@@ -403,7 +419,11 @@ public final class updateProductos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(dtFechaVencimientoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(cbxTiendaProductoMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVolverProductoM, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -435,32 +455,27 @@ public final class updateProductos extends javax.swing.JFrame {
     
     
     private void btnModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProductoActionPerformed
-        // TODO add your handling code here:
-        
-        validaDatosVacios();
-        
-        
         try {
-            try {
-                modificar();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            // TODO add your handling code here:
+
+            validaDatosVacios();
         } catch (SQLException ex) {
             Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         this.setVisible(false);
     }//GEN-LAST:event_btnModificarProductoActionPerformed
 
-    public void validaDatosVacios(){
+    public void validaDatosVacios() throws SQLException, FileNotFoundException{
         if(    txtNombreProductoMod.getText().trim().length() != 0
             && txtPrecioProductoMod.getText().trim().length() != 0
             && txtStockProductoMod.getText().trim().length() != 0
             && ((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText().trim().length() != 0
           )//este if es para validar algunos campos vacios
         {
-            
+            modificar();
         }
         else{
             JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");
@@ -482,18 +497,27 @@ public final class updateProductos extends javax.swing.JFrame {
         int idRubro =  cbxRubroProductoMod.getSelectedIndex();
         idRubro = idRubro + 1;
         
+        int idTienda =  cbxTiendaProductoMod.getItemAt(cbxTiendaProductoMod.getSelectedIndex()).getIDTIENDA();
+        
         prod.setIdProducto(parseInt(txtIdProductoMod.getText()));
         prod.setRubroProducto(idRubro);
         prod.setNombreProducto(txtNombreProductoMod.getText());
         prod.setPrecioProducto(parseInt(txtPrecioProductoMod.getText()));
         prod.setStockProducto(parseInt(txtStockProductoMod.getText()));
         prod.setFechaExpiracion(((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText());
+        prod.setIdtienda(idTienda);
+        
+        System.out.println("txtIdProductoMod" + parseInt(txtIdProductoMod.getText()));
+        System.out.println("idRubro" + idRubro);
+        System.out.println("txtNombreProductoMod" + txtNombreProductoMod.getText());
+        System.out.println("txtPrecioProductoMod" + parseInt(txtPrecioProductoMod.getText()));
+        System.out.println("txtStockProductoMod" + parseInt(txtStockProductoMod.getText()));
+        System.out.println("dtFechaVencimientoMod" + ((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText());
+        System.out.println("idTienda" + idTienda);
         
         
         controllerProd.modificarProducto(prod,fi);
         
-        
-         
    }
     
     private void btnImagenModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenModActionPerformed
@@ -520,6 +544,10 @@ public final class updateProductos extends javax.swing.JFrame {
     private void txtNombreProductoModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProductoModActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreProductoModActionPerformed
+
+    private void cbxTiendaProductoModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaProductoModActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxTiendaProductoModActionPerformed
 
     /**
      * @param args the command line arguments
@@ -575,11 +603,13 @@ public final class updateProductos extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverProductoM;
     public static javax.swing.JComboBox<String> cbxCategoriaProductoMod;
     public static javax.swing.JComboBox<String> cbxRubroProductoMod;
+    private javax.swing.JComboBox<model.comboBox.CbxTienda> cbxTiendaProductoMod;
     public static com.toedter.calendar.JDateChooser dtFechaVencimientoMod;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

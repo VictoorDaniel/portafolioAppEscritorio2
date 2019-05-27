@@ -103,6 +103,7 @@ public class readProductos extends javax.swing.JFrame {
         tablaProductos.addColumn("Stock");
         tablaProductos.addColumn("Vencimiento");
         tablaProductos.addColumn("Imagen");
+        tablaProductos.addColumn("Tienda");
         tablaProductos.addColumn(""); //Modificar
         tablaProductos.addColumn(""); //Eliminar
         
@@ -123,9 +124,11 @@ public class readProductos extends javax.swing.JFrame {
                         "        ,STOCKPRODUCTO\n" +
                         "        ,to_char(FECHAEXPIRACION) \n" +
                         "        ,IMAGENPRODUCTO\n" +
-                        "from PRODUCTO, RUBRO, CATEGORIA\n" +
+                        "        ,NOMBRETIENDA\n" +
+                        "from PRODUCTO, RUBRO, CATEGORIA, TIENDA\n" +
                         "where PRODUCTO.RUBROPRODUCTO = rubro.idrubro\n" +
-                        "  and rubro.idcategoria = categoria.idcategoria";
+                        "  and rubro.idcategoria = categoria.idcategoria\n"+
+                        "  and PRODUCTO.IDTIENDA = TIENDA.IDTIENDA\n";
             ResultSet rs = st.executeQuery(sql);
             
             Object datos[] = new Object[40];/* A la cantidad objetos le puse 40
@@ -172,8 +175,9 @@ public class readProductos extends javax.swing.JFrame {
                    datos[7] = "No Imagen";
                 }
                 
-                datos[8] = btn_modificar;
-                datos[9] = btn_eliminar;
+                datos[8] = rs.getString(9);
+                datos[9] = btn_modificar;
+                datos[10] = btn_eliminar;
                 
                 tablaProductos.addRow(datos);   
                 
@@ -383,7 +387,7 @@ public class readProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
       tblProductos.setDefaultRenderer(Object.class,new Renders());
         
-        String[] titulos = {"id", "Nombre", "Rubro", "Categoria", "Precio", "Stock","Vencimiento","Imagen","Modificar","Eliminar"};
+        String[] titulos = {"id", "Nombre", "Rubro", "Categoria", "Precio", "Stock","Vencimiento","Imagen", "Tienda","Modificar","Eliminar"};
         
         
         JButton btn_modificar = new JButton("Modificar");
@@ -392,21 +396,23 @@ public class readProductos extends javax.swing.JFrame {
         btn_eliminar.setName("e");
         
         
-            String sql = "select   IDPRODUCTO\n" +
+            String sql = "select IDPRODUCTO\n" +
                         "        ,NOMBREPRODUCTO\n" +
                         "        ,rubro.nombrerubro\n" +
                         "        ,CATEGORIA.nombrecategoria\n" +
                         "        ,PRECIOPRODUCTO\n" +
                         "        ,STOCKPRODUCTO\n" +
                         "        ,to_char(FECHAEXPIRACION) \n" +
-                         "        ,IMAGENPRODUCTO\n" +
-                        "from PRODUCTO INNER JOIN RUBRO\n" +
-                        "ON PRODUCTO.RUBROPRODUCTO = rubro.idrubro\n" +
-                        "  INNER JOIN CATEGORIA ON rubro.idcategoria = categoria.idcategoria "+
-                    " WHERE IDPRODUCTO LIKE '%" + buscartodo.getText() + "%' "
+                        "        ,IMAGENPRODUCTO\n" +
+                        "        ,TIENDA.NOMBRETIENDA\n"+
+                        "from PRODUCTO INNER JOIN RUBRO     ON PRODUCTO.RUBROPRODUCTO = rubro.idrubro\n" +
+                        "              INNER JOIN CATEGORIA ON rubro.idcategoria      = categoria.idcategoria\n "+
+                        "              INNER JOIN TIENDA    ON PRODUCTO.IDTIENDA      = TIENDA.IDTIENDA "
+                    +" WHERE IDPRODUCTO LIKE '%" + buscartodo.getText() + "%' "
                     + "OR NOMBREPRODUCTO  LIKE'%" + buscartodo.getText() + "%'"
                     + "OR RUBRO.NOMBRERUBRO LIKE '%" + buscartodo.getText() + "%'"
                     + "OR CATEGORIA.NOMBRECATEGORIA LIKE '%" + buscartodo.getText() + "%'"
+                    + "OR TIENDA.NOMBRETIENDA LIKE '%" + buscartodo.getText() + "%'"
                     + "OR FECHAEXPIRACION  LIKE'%" + buscartodo.getText() + "%'";
            tablaProductos = new DefaultTableModel(null, titulos){
             @Override
@@ -420,7 +426,7 @@ public class readProductos extends javax.swing.JFrame {
                  Statement st = cn.createStatement();
                  ResultSet rs = st.executeQuery(sql);
               
-                Object datos[] = new Object[10];
+                Object datos[] = new Object[11];
             while (rs.next()) {     
                 
                 datos[0] = rs.getString(1);
@@ -460,8 +466,9 @@ public class readProductos extends javax.swing.JFrame {
                    datos[7] = "No Imagen";
                 }
                 
-                datos[8] = btn_modificar;
-                datos[9] = btn_eliminar;
+                datos[8] = rs.getString(9);
+                datos[9] = btn_modificar;
+                datos[10] = btn_eliminar;
              
                 tablaProductos.addRow(datos);   
                 
@@ -492,6 +499,7 @@ public class readProductos extends javax.swing.JFrame {
         String precio       = ""+tblProductos.getValueAt(clic_tabla, 4);
         String stock        = ""+tblProductos.getValueAt(clic_tabla, 5);
         String vencimiento  = ""+tblProductos.getValueAt(clic_tabla, 6);
+        String tienda       = ""+tblProductos.getValueAt(clic_tabla, 8);
         //ImageIcon imagen       = (ImageIcon) tblProductos.getValueAt(clic_tabla,7);
        //me rindo nopude con esa asi que lo voy a hacer a la 
       
