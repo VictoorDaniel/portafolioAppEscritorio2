@@ -7,6 +7,7 @@ package view.crudUsuarios;
 
 import conectorBD.JavaConnectDb;
 import controller.AgregarBtnATbl;
+import controller.Utilidades;
 import controller.usuario.udUsuario;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -28,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
+import model.LoginUser;
 import model.TablaImagen;
 import model.Usuarios.Usuario;
 import oracle.jdbc.OracleResultSet;
@@ -38,7 +40,7 @@ import view.menuPrincipal;
  * @author muzaka
  */
 public  class readUsuario extends javax.swing.JFrame {
-
+ LoginUser mods;
     /**
      * Creates new form readUsuario
      */
@@ -68,6 +70,36 @@ public  class readUsuario extends javax.swing.JFrame {
          //modificar el ancho
        tblUsuarios.setRowHeight(50);
        
+    }
+    
+    public readUsuario(LoginUser mods)
+    {
+     initComponents();
+     
+     this.mods=mods;
+        //tamaño del JFrame
+        setSize(1110,700);
+        /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        /*cargar los datos de la tabla */
+        mostrarEnTabla(); 
+        /*con esto el tamaño de la pantalla no se puede modificar*/
+        this.setResizable(false);
+         // Indicamos que la aplicación finaliza al cerrar la ventana.
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //Agregar el btan a la tabla
+         tblUsuarios.setDefaultRenderer(Object.class, new AgregarBtnATbl());
+         
+         /*para limpiar el cbx de rubro*/
+        cbxRol.removeAllItems();
+           /*Cargar cmbx*/
+        cbxRol.setModel(getValuesRol());
+        
+        //modificar el tamaño de las columna en la tablas (lo haremos para la imagen)
+        //modificar el ancho
+        tblUsuarios.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(110);
+         //modificar el ancho
+       tblUsuarios.setRowHeight(50);
     }
      /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
@@ -117,9 +149,8 @@ public  class readUsuario extends javax.swing.JFrame {
                         usu.setFechaNacimiento(((JTextField)JDFechaN.getDateEditor().getUiComponent()).getText());
                         usu.setAceptaOfertasEmail(aceptaOferta);
                         usu.setIdEstado(Estado);
-                        usu.setPassword(txtPassword.getText());
-        
-        ud.Modificar_Usuario(usu);
+                        usu.setPassword(Utilidades.Encriptar(txtPassword.getText()));
+                        ud.Modificar_Usuario(usu);
         
      
         
@@ -136,7 +167,7 @@ public  class readUsuario extends javax.swing.JFrame {
         ud.Eliminar_USUARIO(usu);
         //re Actualizamos la pagina para que se vizualice el campo eliminado
          this.setVisible(false);
-        readUsuario rp = new readUsuario();
+        readUsuario rp = new readUsuario(mods);
         rp.setVisible(true);
         rp.pack();
     }
@@ -202,8 +233,14 @@ public  class readUsuario extends javax.swing.JFrame {
                 datos[8] = rs.getString(9);
                 datos[9] = rs.getString(10);
                 datos[10] = rs.getString(11);
-                datos[11] = rs.getString(12);
-                 datos[12] = btn_modificar;
+                try {
+                    //mostrar la contraseña desncriptada
+                 datos[11] =  Utilidades.Desencriptar(rs.getString(12));
+                } catch (Exception ex) {
+                    Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+                datos[12] = btn_modificar;
                 datos[13] = btn_eliminar;
                 
                   
@@ -706,7 +743,13 @@ public  class readUsuario extends javax.swing.JFrame {
                 datos[8] = rs.getString(9);
                 datos[9] = rs.getString(10);
                 datos[10] = rs.getString(11);
-                 datos[11] = rs.getString(12);
+                try {
+                    //mostrar la contraseña desncriptada
+                 datos[11] =  Utilidades.Desencriptar(rs.getString(12));
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
                  datos[12] = btn_modificar;
                 datos[13] = btn_eliminar;
 
@@ -724,29 +767,36 @@ public  class readUsuario extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        createUsuarios cp = new createUsuarios();
+        createUsuarios cp = new createUsuarios(mods);
         cp.setVisible(true);
         cp.pack();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnMenuPrincipalProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalProdActionPerformed
         // TODO add your handling code here:
-       this.setVisible(false);
-        menuPrincipal mp = null;
-        try {
-            mp = new menuPrincipal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.setVisible(false);
-        mp.setVisible(true);
-        mp.pack();
+      
+              menuPrincipal mp = null;
+              mp = new menuPrincipal(mods);
+              this.setVisible(false);
+              mp.setVisible(true);
+              mp.pack();
+      
+          /* menuPrincipal mp = null;
+           try {
+               mp = new menuPrincipal();
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (IllegalAccessException ex) {
+               Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (InstantiationException ex) {
+               Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (UnsupportedLookAndFeelException ex) {
+               Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+           }
+              this.setVisible(false);
+              mp.setVisible(true);
+              mp.pack();*/
+       
     }//GEN-LAST:event_btnMenuPrincipalProdActionPerformed
 
     private void buscartodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartodoActionPerformed
@@ -877,7 +927,7 @@ public  class readUsuario extends javax.swing.JFrame {
                 try {
                     modificar();
                     this.setVisible(false);
-                    readUsuario rp = new readUsuario();
+                    readUsuario rp = new readUsuario(mods);
                    rp.setVisible(true);
                    rp.pack();
                  
@@ -949,7 +999,7 @@ public static boolean validarRut(String rut) {
     private void btnVolverProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverProductoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readUsuario rp = new readUsuario();
+        readUsuario rp = new readUsuario(mods);
         rp.setVisible(true);
         rp.pack();
     }//GEN-LAST:event_btnVolverProductoActionPerformed

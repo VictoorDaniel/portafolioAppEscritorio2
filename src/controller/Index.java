@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.Oferta.Oferta2BI;
 import view.crudProductos.createProductos;
+import view.login;
 import view.menuPrincipal;
 
 /**
@@ -55,7 +56,7 @@ if(dia==Calendar.TUESDAY){
    time.scheduleAtFixedRate(task,0,1000*60*60*168);
  }
    //   lo redireccionamos al menu principal
-   menuPrincipal m = new menuPrincipal();
+   login m = new login();
         m.setVisible(true);
         m.pack();
         

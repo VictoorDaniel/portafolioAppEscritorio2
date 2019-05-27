@@ -3,30 +3,40 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudDescuento/readDescuento.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudUsuarios/readUsuario.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/Empresa/udEmpresa.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/producto/Producto.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudProductos/createProductos.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/dialog.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/AgregarBtnATbl.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/producto/CrudProducto.java</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Usuarios/Usuario.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudRubro/updateRubro.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/rubro/CrudRubro.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/menuPrincipal.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudOferta/readOferta.java</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Oferta/Oferta2BI.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/Tienda/readTienda.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/login.java</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudProductos/readProductos.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/Utilidades.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/Tienda/createTienda.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudProductos/updateProductos.java</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudOferta/updateOferta.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/GenerarArchivoBItxt.java</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudOferta/createOferta.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/TablaImagen.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudEmpresas/readEmpresa.java</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Tienda/Tienda.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudDescuento/createDescuentos.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/Renders.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/Index.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudDescuento/readDescuento.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Usuarios/Usuario.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/Login.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Oferta/Oferta2BI.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudProductos/readProductos.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudOferta/updateOferta.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudUsuarios/createUsuarios.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudOferta/createOferta.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/LoginUser.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Tienda/Tienda.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/usuario/udUsuario.java</file>
         </group>
     </open-files>
 </project-private>

@@ -36,7 +36,9 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.GenerarArchivoBItxt;
+import model.LoginUser;
 import model.Oferta.Oferta2BI;
+import model.Usuarios.Usuario;
 
 /**
  *
@@ -44,7 +46,9 @@ import model.Oferta.Oferta2BI;
  */
 public class menuPrincipal extends javax.swing.JFrame {
     
-
+    LoginUser mod;//la importamos de esta manera ya que no estmaos creando
+    //un nuevo objeto de lo contrario seria LoginUser mod=new LoginUser();
+    //ademas los datos ya estan cargado del incio por lo que no queremos setearlos.
     /**
      * Creates new form menuPrincipal
      */
@@ -56,6 +60,80 @@ public class menuPrincipal extends javax.swing.JFrame {
           
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }
+   
+   public menuPrincipal(LoginUser mod)
+   {
+       initComponents();
+       
+       this.mod=mod;
+       this.setLocationRelativeTo(null);
+    if(!mod.getNombreUsuario().equals(""))
+    {
+       lblNombre1.setText(mod.getNombreUsuario()+" "
+               + " "+mod.getApellidoPaterno()+" "+mod.getApellidoMaterno());
+       lblRol.setText(mod.getNombreRol());
+    }else{
+        lblNombre1.setText("no hay nada");
+        lblNombre1.setText("no hay nada");
+    }
+    
+       
+       if(mod.getIdRol()==1)
+       {
+         btnConsultaValoracionPorTienda.setVisible(false);
+         btnReporteResumenPorTienda.setVisible(false);
+       }else if(mod.getIdRol()==2)
+       { //Gerente
+                btnMantenedorDescuento.setVisible(false);
+                btnMantenedorProducto.setVisible(false);
+                btnMantenedorOferta.setVisible(false);
+                btnMantenedorEmpresa.setVisible(false);
+                btnMantenedorTienda.setVisible(false);
+                btnMantenedorUsuario.setVisible(false);
+                btnConsultaValoracionPorTienda.setVisible(false);
+                btnDescargaArchivosBI.setVisible(false);
+       
+       }
+       else if(mod.getIdRol()==3)
+       {
+            //Jefe de Tienda
+        btnMantenedorDescuento.setVisible(false);
+                btnMantenedorProducto.setVisible(false);
+                btnMantenedorEmpresa.setVisible(false);
+                btnMantenedorTienda.setVisible(false);
+                btnMantenedorUsuario.setVisible(false);
+                btnDescargaArchivosBI.setVisible(false);
+                btnReporteResumenPorTienda.setVisible(false);
+       } else if(mod.getIdRol()==4)
+       {
+       //Cliente
+        btnMantenedorDescuento.setVisible(false);
+                btnMantenedorProducto.setVisible(false);
+                btnMantenedorOferta.setVisible(false);
+                btnMantenedorEmpresa.setVisible(false);
+                btnMantenedorTienda.setVisible(false);
+                btnMantenedorUsuario.setVisible(false);
+                btnConsultaValoracionPorTienda.setVisible(false);
+                btnDescargaArchivosBI.setVisible(false);
+                btnReporteResumenPorTienda.setVisible(false);
+       }else if(mod.getIdRol()==5)
+       {
+           //Invitado
+       btnMantenedorDescuento.setVisible(false);
+                btnMantenedorProducto.setVisible(false);
+                btnMantenedorOferta.setVisible(false);
+                btnMantenedorEmpresa.setVisible(false);
+                btnMantenedorTienda.setVisible(false);
+                btnMantenedorUsuario.setVisible(false);
+                btnConsultaValoracionPorTienda.setVisible(false);
+                btnDescargaArchivosBI.setVisible(false);
+                btnReporteResumenPorTienda.setVisible(false);
+       }
+
+   
+   
+   
+   }
    
 
     
@@ -71,6 +149,8 @@ public class menuPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        lblRol = new javax.swing.JLabel();
+        lblNombre1 = new javax.swing.JLabel();
         btnMantenedorProducto = new javax.swing.JButton();
         btnMantenedorOferta = new javax.swing.JButton();
         btnMantenedorEmpresa = new javax.swing.JButton();
@@ -91,6 +171,10 @@ public class menuPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setText("Tiendas Retail Mis Ofertas");
 
+        lblRol.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        lblNombre1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -98,13 +182,20 @@ public class menuPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblRol, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblNombre1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
         );
 
@@ -238,8 +329,9 @@ public class menuPrincipal extends javax.swing.JFrame {
     private void btnMantenedorUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorUsuarioActionPerformed
         // TODO add your handling code here: 
         this.setVisible(false);
-        readUsuario ru = new readUsuario();
+        readUsuario ru = new readUsuario(mod);
         ru.setVisible(true);
+        ru.pack();
     }//GEN-LAST:event_btnMantenedorUsuarioActionPerformed
 
     private void btnMantenedorOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorOfertaActionPerformed
@@ -252,6 +344,7 @@ public class menuPrincipal extends javax.swing.JFrame {
         this.setVisible(false);
         readDescuento rd = new readDescuento();
         rd.setVisible(true);
+         rd.pack();  
     }//GEN-LAST:event_btnMantenedorDescuentoActionPerformed
 
     private void btnMantenedorEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorEmpresaActionPerformed
@@ -384,5 +477,7 @@ public class menuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblNombre1;
+    private javax.swing.JLabel lblRol;
     // End of variables declaration//GEN-END:variables
 }
