@@ -21,6 +21,7 @@ public class Producto {
     public int stockProducto;
     public String fechaExpiracion;
     public int categoriaProducto;
+    public int idtienda;
 
     public Producto () {
         
@@ -100,6 +101,14 @@ public class Producto {
 
     public void setCategoriaProducto(int categoriaProducto) {
         this.categoriaProducto = categoriaProducto;
+    }
+
+    public int getIdtienda() {
+        return idtienda;
+    }
+
+    public void setIdtienda(int idtienda) {
+        this.idtienda = idtienda;
     }
 
     

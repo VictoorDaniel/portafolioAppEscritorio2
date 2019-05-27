@@ -163,6 +163,12 @@ public class createEmpresas extends javax.swing.JFrame {
             }
         });
 
+        cmbxComuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbxComunaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -348,6 +354,10 @@ public class createEmpresas extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, "Ingresar solo Letras");
         }
     }//GEN-LAST:event_txtCalleDireccionKeyTyped
+
+    private void cmbxComunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxComunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbxComunaActionPerformed
 
     /**
      * @param args the command line arguments

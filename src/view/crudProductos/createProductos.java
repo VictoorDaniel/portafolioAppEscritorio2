@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import model.comboBox.CbxTienda;
 import oracle.jdbc.OracleResultSet;
 
 /**
@@ -54,6 +55,9 @@ public class createProductos extends javax.swing.JFrame {
         cbxRubroProducto.setModel(getValuesRubro());
         //cbxCategoriaProducto.setModel(cnProd.getValuesCategoria());
         
+        CbxTienda comboboxTienda = new CbxTienda();
+        cbxTiendaProducto.removeAllItems();
+        comboboxTienda.getValuesTienda(cbxTiendaProducto);
         
         //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -80,6 +84,8 @@ public class createProductos extends javax.swing.JFrame {
         lblimagen = new javax.swing.JLabel();
         btnImagen = new javax.swing.JButton();
         JDfechaV = new com.toedter.calendar.JDateChooser();
+        cbxTiendaProducto = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,6 +169,15 @@ public class createProductos extends javax.swing.JFrame {
             }
         });
 
+        cbxTiendaProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTiendaProductoActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel6.setText("Tienda");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,7 +194,8 @@ public class createProductos extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -197,7 +213,9 @@ public class createProductos extends javax.swing.JFrame {
                                 .addComponent(btnImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(23, 23, 23))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(JDfechaV, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JDfechaV, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxTiendaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -240,7 +258,11 @@ public class createProductos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(JDfechaV, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(cbxTiendaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,17 +321,24 @@ public class createProductos extends javax.swing.JFrame {
          {
         try {
                 Connection cn = obj.ConnectBd();
-                 String sql =  "insert into PRODUCTO (NOMBREPRODUCTO, RUBROPRODUCTO, PRECIOPRODUCTO, STOCKPRODUCTO,FECHAEXPIRACION ,IMAGENPRODUCTO) "
-                            + "values (?, ?, ?, ?, ?, ?)";
+                 String sql =  "insert into PRODUCTO (NOMBREPRODUCTO, RUBROPRODUCTO, PRECIOPRODUCTO, STOCKPRODUCTO,FECHAEXPIRACION ,IMAGENPRODUCTO, IDTIENDA) "
+                            + "values (?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement pst = cn.prepareCall(sql);
                 
                //guardamos la imagen que emos elegido en estas variables
                File file = new File(ruta);
                fi = new FileInputStream(file);
+               
                 /*para obtener id de producto*/
                 int idrubro =  cbxRubroProducto.getSelectedIndex();
                 idrubro = idrubro + 1;
                 String idRubroString = String.valueOf(idrubro);
+                
+                System.out.println("idTienda" + cbxTiendaProducto.getItemAt(cbxTiendaProducto.getSelectedIndex()).getIDTIENDA());
+                
+                /*para obtener id de producto*/
+                int idTienda =  cbxTiendaProducto.getItemAt(cbxTiendaProducto.getSelectedIndex()).getIDTIENDA();
+                
                 /*se envian los datos a la consulta*/
                 pst.setString(1, txtNombreProducto.getText());
                 pst.setString(2, idRubroString) ;
@@ -317,7 +346,8 @@ public class createProductos extends javax.swing.JFrame {
                 pst.setString(4, txtStockProducto.getText());
                 pst.setString(5,((JTextField)JDfechaV.getDateEditor().getUiComponent()).getText());
                 pst.setBinaryStream(6, fi);
-               
+                pst.setInt(7, idTienda);
+                
               cn.commit();
                 
                 rs = (OracleResultSet) pst.executeQuery();
@@ -378,6 +408,10 @@ public class createProductos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnImagenActionPerformed
 
+    private void cbxTiendaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxTiendaProductoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -430,11 +464,13 @@ public class createProductos extends javax.swing.JFrame {
     private javax.swing.JButton btnImagen;
     private javax.swing.JButton btnVolverProducto;
     private javax.swing.JComboBox<String> cbxRubroProducto;
+    private javax.swing.JComboBox<model.comboBox.CbxTienda> cbxTiendaProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
