@@ -375,17 +375,9 @@ public class readProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
        
         menuPrincipal mp = null;
-        try {
-            mp = new menuPrincipal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+            mp = new menuPrincipal(mod);
+        
         this.setVisible(false);
         mp.setVisible(true);
         mp.pack();
