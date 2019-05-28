@@ -35,6 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import model.LoginUser;
 import model.TablaImagen;
 import model.Usuarios.Usuario;
 import model.comboBox.CbxTienda;
@@ -47,7 +48,7 @@ import oracle.jdbc.OracleResultSet;
  * @author fernandacancinoreyes
  */
 public final class updateProductos extends javax.swing.JFrame {
-
+LoginUser mod;
     
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
@@ -95,60 +96,36 @@ public final class updateProductos extends javax.swing.JFrame {
     }
     
    
-    
-    /*
-    public void mostrarImagen(){
+  public updateProductos(LoginUser mod) throws ClassNotFoundException, ClassNotFoundException, InstantiationException, InstantiationException, InstantiationException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, UnsupportedLookAndFeelException, UnsupportedLookAndFeelException, UnsupportedLookAndFeelException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, IllegalAccessException, UnsupportedLookAndFeelException, IllegalAccessException, SQLException {
+        initComponents();
+        this.mod=mod;
+        //mostrarImagen();
         
-        try {
-            Connection cn = obj.ConnectBd();
-            String sql = "select idrubro, nombrerubro from RUBRO";
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
-            //Object datos[] = new Object[1];
-
-             while (rs.next()) { 
-                 
-                Blob blob = rs.getBlob(1);//llamamos la imagen
-                byte [] blobbytes = rs.getBytes("");//llamamos la imagen
-                 
-                if(blob != null)//mandamos un mensaje de no imagen si es null
-                {
-                   try{
-                        byte[] data = blob.getBytes(1, (int)blob.length());
-                        BufferedImage img = null;
-                        try{
-                        img = ImageIO.read(new ByteArrayInputStream(data));
-                        }catch(Exception ex){
-                        System.out.println(ex.getMessage());
-                        }
-                    
-                        //de cierto modo necesitamos tener la imagen para ello debemos conocer la ruta de dicha imagen
-                        Image foto = img;
-
-                        //Le damos dimension a nuestro label que tendra la imagen
-                        foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
-                        ImageIcon icono = new ImageIcon(foto);
-                        lblImagenMod.setIcon(icono); //= new JLabel(icono);
-                    }catch(Exception ex){
-                        lblImagenMod.setText("No Imagen");
-                    }
-                }
-                else{
-                   lblImagenMod.setText("No Imagen");// = "No Imagen";
-                } 
-                 
-             }
-            
-            
-            
-            cn.close();
-            rs.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        
+        
+        /*dejar 'invisible' el text de id */
+        txtIdProductoMod.setVisible(false);
+        cbxCategoriaProductoMod.setVisible(false);
+        lblCategoria.setVisible(false);
+        
+        
+        /*Cargar cmbx*/
+        cbxCategoriaProductoMod.setModel(getValuesCbxCategoria());
+        cbxRubroProductoMod.setModel(getValuesCbxRubro());
+       // Producto prod = getIdProducto();
+        
+        CbxTienda comboboxTienda = new CbxTienda();
+        cbxTiendaProductoMod.removeAllItems();
+        comboboxTienda.getValuesTienda(cbxTiendaProductoMod);
+        
+        
+        //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
+          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+  
     }
-    */
+    
     
     private DefaultComboBoxModel getValuesCbxRubro(){
         
@@ -437,7 +414,7 @@ public final class updateProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
         
        this.setVisible(false);
-       readProductos rp = new readProductos();
+       readProductos rp = new readProductos(mod);
        rp.setVisible(true); 
        rp.pack();
         
@@ -459,6 +436,11 @@ public final class updateProductos extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             validaDatosVacios();
+            readProductos rp = new readProductos(mod);
+            rp.setVisible(true); 
+            rp.pack();
+        
+            
         } catch (SQLException ex) {
             Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
@@ -476,6 +458,7 @@ public final class updateProductos extends javax.swing.JFrame {
           )//este if es para validar algunos campos vacios
         {
             modificar();
+            
         }
         else{
             JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");
@@ -486,8 +469,11 @@ public final class updateProductos extends javax.swing.JFrame {
     //metodo para modificar 
    public void modificar() throws SQLException, FileNotFoundException {//throws SQLException{
              
-          File file = new File(ruta);
+           if(ruta!=null)
+           {
+            File file = new File(ruta);
              fi = new FileInputStream(file);
+           }
              
 
            
@@ -515,8 +501,14 @@ public final class updateProductos extends javax.swing.JFrame {
         System.out.println("dtFechaVencimientoMod" + ((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText());
         System.out.println("idTienda" + idTienda);
         
+          if(fi==null)
+        {
+        controllerProd.modificarProducto(prod);
+        }else
+        {
+            controllerProd.modificarProductoConImagen(prod,fi);
+        }
         
-        controllerProd.modificarProducto(prod,fi);
         
    }
     

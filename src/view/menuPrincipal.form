@@ -32,14 +32,15 @@
                   <Component id="btnMantenedorEmpresa" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnMantenedorTienda" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnMantenedorDescuento" alignment="0" pref="215" max="32767" attributes="0"/>
-                  <Component id="btnMantenedorUsuario" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnMantenedorUsuario1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnConsultaValoracionPorTienda" min="-2" pref="215" max="-2" attributes="0"/>
-                  <Component id="btnDescargaArchivosBI" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnConsultaValoracionPorTienda" pref="215" max="32767" attributes="0"/>
                   <Component id="btnReporteResumenPorTienda" alignment="0" pref="0" max="32767" attributes="0"/>
                   <Component id="btnSalir" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnMantenedoRubro" pref="215" max="32767" attributes="0"/>
+                  <Component id="btnDescargaArchivosBI" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
           </Group>
@@ -52,28 +53,36 @@
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnMantenedorProducto" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
-                  <Component id="btnConsultaValoracionPorTienda" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
+                  <Component id="btnMantenedoRubro" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnMantenedorOferta" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
-                  <Component id="btnReporteResumenPorTienda" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
+                  <Component id="btnConsultaValoracionPorTienda" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnMantenedorEmpresa" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
-                  <Component id="btnDescargaArchivosBI" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnReporteResumenPorTienda" alignment="1" min="-2" pref="52" max="-2" attributes="0"/>
+                  <Component id="btnMantenedorEmpresa" min="-2" pref="52" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnMantenedorTienda" min="-2" pref="52" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnDescargaArchivosBI" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
+                  <Component id="btnMantenedorTienda" min="-2" pref="52" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnMantenedorDescuento" min="-2" pref="52" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnMantenedorUsuario" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
-                  <Component id="btnSalir" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnSalir" min="-2" pref="52" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="btnMantenedorUsuario1" min="-2" pref="52" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="0" pref="44" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="34" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -183,18 +192,21 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMantenedorDescuentoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnMantenedorUsuario">
+    <Component class="javax.swing.JButton" name="btnMantenedoRubro">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mantenedor Usuario"/>
+        <Property name="text" type="java.lang.String" value="Mantenedor Rubro"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMantenedorUsuarioActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMantenedoRubroActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnConsultaValoracionPorTienda">
       <Properties>
         <Property name="text" type="java.lang.String" value="Consulta Valoracion por Tienda"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultaValoracionPorTiendaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDescargaArchivosBI">
       <Properties>
@@ -215,6 +227,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalirActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnMantenedorUsuario1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mantenedor Usuario"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMantenedorUsuario1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

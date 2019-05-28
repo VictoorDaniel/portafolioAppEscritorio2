@@ -40,7 +40,7 @@ import view.menuPrincipal;
  * @author muzaka
  */
 public  class readUsuario extends javax.swing.JFrame {
- LoginUser mods;
+ LoginUser mod;
     /**
      * Creates new form readUsuario
      */
@@ -72,11 +72,11 @@ public  class readUsuario extends javax.swing.JFrame {
        
     }
     
-    public readUsuario(LoginUser mods)
+    public readUsuario(LoginUser mod)
     {
      initComponents();
      
-     this.mods=mods;
+     this.mod=mod;
         //tamaño del JFrame
         setSize(1110,700);
         /*Para dejar la pantalla centrada*/
@@ -167,7 +167,7 @@ public  class readUsuario extends javax.swing.JFrame {
         ud.Eliminar_USUARIO(usu);
         //re Actualizamos la pagina para que se vizualice el campo eliminado
          this.setVisible(false);
-        readUsuario rp = new readUsuario(mods);
+        readUsuario rp = new readUsuario(mod);
         rp.setVisible(true);
         rp.pack();
     }
@@ -767,7 +767,7 @@ public  class readUsuario extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        createUsuarios cp = new createUsuarios(mods);
+        createUsuarios cp = new createUsuarios(mod);
         cp.setVisible(true);
         cp.pack();
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -776,7 +776,7 @@ public  class readUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
       
               menuPrincipal mp = null;
-              mp = new menuPrincipal(mods);
+              mp = new menuPrincipal(mod);
               this.setVisible(false);
               mp.setVisible(true);
               mp.pack();
@@ -924,15 +924,32 @@ public  class readUsuario extends javax.swing.JFrame {
             
             if(validarRut(txtRut.getText()))
             {
+                udUsuario ud=new udUsuario();
+                 if(ud.ExisteRut(txtRut.getText())==0)
+                    {
+                     if(ud.ExisteEmail(txtEmail.getText())==0)
+                     {
                 try {
                     modificar();
                     this.setVisible(false);
-                    readUsuario rp = new readUsuario(mods);
+                    readUsuario rp = new readUsuario(mod);
                    rp.setVisible(true);
                    rp.pack();
                  
                 } catch (SQLException ex) {
                     Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }else
+                     {
+                         JOptionPane.showMessageDialog(null,"El Correo que intenta "
+                                 + "Ingresa ya existe");
+                     }
+                }
+                else
+                {
+                
+                JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
+                
                 }
 
             }
@@ -999,7 +1016,7 @@ public static boolean validarRut(String rut) {
     private void btnVolverProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverProductoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readUsuario rp = new readUsuario(mods);
+        readUsuario rp = new readUsuario(mod);
         rp.setVisible(true);
         rp.pack();
     }//GEN-LAST:event_btnVolverProductoActionPerformed

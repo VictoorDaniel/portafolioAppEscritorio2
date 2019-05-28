@@ -23,6 +23,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import model.LoginUser;
 import model.Oferta.Oferta;
 import model.comboBox.CbxProducto;
 import oracle.jdbc.OracleResultSet;
@@ -32,7 +33,7 @@ import oracle.jdbc.OracleResultSet;
  * @author fernandacancinoreyes
  */
 public class updateOferta extends javax.swing.JFrame {
-
+  LoginUser mod;
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     OracleResultSet rs = null;
@@ -62,12 +63,33 @@ public class updateOferta extends javax.swing.JFrame {
         combobox.getValuesProducto(cbxProductoOfertaMod);
         
     }
+    public updateOferta(LoginUser mod) {
+        
+        this.mod=mod;
+        initComponents();
+        
+        /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+        
+        //cbxTiendaOfertaMod.setModel(getValuesTiendaMod());
+        //cbxEstadoOfertaMod.setModel(getValuesEstadoMod());
+        //cbxProductoOfertaMod.setModel(getValuesProductoMod());
+        
+        CbxProducto combobox = new CbxProducto();
+        cbxProductoOfertaMod.removeAllItems();
+        combobox.getValuesProducto(cbxProductoOfertaMod);
+        
+    }
+    
     
     
     private int stock ;
     private int maximoDscto;
     private int varCero;
-            
+
+    
+
+        
     
     private void cargarPrecioProducto() throws SQLException{
         Connection cn = obj.ConnectBd();
@@ -683,7 +705,7 @@ public class updateOferta extends javax.swing.JFrame {
                                 }finally{
                                     JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
                                     this.setVisible(false);
-                                    readOferta rd = new readOferta();
+                                    readOferta rd = new readOferta(mod);
                                     rd.setVisible(true);
                                     rd.pack();
                                     try{
@@ -703,7 +725,7 @@ public class updateOferta extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         limpiarDatos();
-        readOferta ro = new readOferta();
+        readOferta ro = new readOferta(mod);
         ro.setVisible(true);
         ro.pack();
     }//GEN-LAST:event_btnVolverOfertaModActionPerformed

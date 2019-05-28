@@ -8,6 +8,7 @@ package view.crudUsuarios;
 import conectorBD.ConnectDbProducto;
 import conectorBD.JavaConnectDb;
 import controller.Utilidades;
+import controller.usuario.udUsuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +25,7 @@ import oracle.jdbc.OracleResultSet;
  * @author muzaka
  */
 public class createUsuarios extends javax.swing.JFrame {
-    LoginUser mods;
+    LoginUser mod;
       /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     
@@ -46,11 +47,11 @@ public class createUsuarios extends javax.swing.JFrame {
    
     
     //creamos otro contructor el cual guardara los datos de la sesón
-    public createUsuarios(LoginUser mods)
+    public createUsuarios(LoginUser mod)
     {
     initComponents();
     
-    this.mods=mods;
+    this.mod=mod;
     
        /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
         this.setLocationRelativeTo(null);
@@ -474,6 +475,12 @@ private void limpiarDatos(){
             {
                 if(pas.equals(conpas))//compara las contraseñas se son iguales
                  {
+                    udUsuario ud=new udUsuario();
+            
+                    if(ud.ExisteRut(txtRut.getText())==0)
+                    {
+                     if(ud.ExisteEmail(txtEmail.getText())==0)
+                     {
                 try {
                        
                     String nuevaPass=Utilidades.Encriptar(pas);
@@ -518,6 +525,18 @@ private void limpiarDatos(){
                     System.out.println(e.getCause());
                     JOptionPane.showMessageDialog(null,"uups no registro"+e);
                 }
+                     }else
+                     {
+                         JOptionPane.showMessageDialog(null,"El Correo que intenta "
+                                 + "Ingresa ya existe");
+                     }
+                }
+                else
+                {
+                
+                JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
+                
+                }
                 }
         else
         {
@@ -540,7 +559,7 @@ private void limpiarDatos(){
         // TODO add your handling code here:
         //this.setVisible(false);
        
-        readUsuario rp = new readUsuario(mods);
+        readUsuario rp = new readUsuario(mod);
         this.setVisible(false);
         rp.setVisible(true);
         rp.pack();

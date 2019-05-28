@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
+import model.LoginUser;
 import model.Oferta.Oferta;
 import model.TablaImagen;
 import view.menuPrincipal;
@@ -35,7 +36,7 @@ import view.menuPrincipal;
  * @author fernandacancinoreyes
  */
 public class readOferta extends javax.swing.JFrame {
-
+LoginUser mod;
     /**
      * Creates new form updateOferta
      */
@@ -75,6 +76,30 @@ public class readOferta extends javax.swing.JFrame {
                 return false;
             }  
     }; //le agregamos el isCellEditable y lo retornamos falso para que nos epueda editar 
+
+    public readOferta(LoginUser mod) {
+        this.mod=mod;
+        
+        initComponents();
+        
+        /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+                
+        propiedadesTabla();
+        mostrarOfertas();
+        
+        /*con esto el tamaño de la pantalla no se puede modificar*/
+        this.setResizable(true);
+        
+        // Indicamos que la aplicación finaliza al cerrar la ventana.
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        //Agregar el btan a la tabla
+        tblOferta.setDefaultRenderer(Object.class, new Renders());
+        
+    }
+
+    
     
     
     public void propiedadesTabla() {
@@ -479,7 +504,7 @@ public class readOferta extends javax.swing.JFrame {
         this.setVisible(false);
         createOferta co = null;
         try {
-            co = new createOferta();
+            co = new createOferta(mod);
         } catch (SQLException ex) {
             Logger.getLogger(readOferta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -497,17 +522,7 @@ public class readOferta extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         menuPrincipal mp = null;
-        try {
-            mp = new menuPrincipal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(readOferta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(readOferta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(readOferta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(readOferta.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        mp = new menuPrincipal(mod);
         this.setVisible(false);
         mp.setVisible(true);
         mp.pack();
@@ -562,7 +577,7 @@ public class readOferta extends javax.swing.JFrame {
                     //jPanel.setSelectedIndex(1);
 
                     this.setVisible(false);
-                    updateOferta ud = new updateOferta();
+                    updateOferta ud = new updateOferta(mod);
                     ud.setVisible(true);
 
                     /*ENVIAR DATOS A LA VENTANA*/
@@ -581,11 +596,13 @@ public class readOferta extends javax.swing.JFrame {
                     int s = JOptionPane.showConfirmDialog(null, "Eliminar Descuento","Si/no",JOptionPane.YES_NO_OPTION);
 
                     if(s == 0){
-                    }try {
+                        
+                        try {
                         //EVENTOS ELIMINAR
                         eliminar (idOferta);
                     } catch (SQLException ex){
                         Logger.getLogger(readOferta.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     }
                 }
             }
@@ -600,7 +617,7 @@ public class readOferta extends javax.swing.JFrame {
         cOferta.eliminarOferta(ofert);
         //re Actualizamos la pagina para que se vizualice el campo eliminado
          this.setVisible(false);
-        readOferta rp = new readOferta();
+        readOferta rp = new readOferta(mod);
         rp.setVisible(true);
         rp.pack();
     }

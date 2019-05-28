@@ -23,7 +23,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import view.crudUsuarios.readUsuario;
 import java.util.Timer;
@@ -39,7 +41,14 @@ import model.GenerarArchivoBItxt;
 import model.LoginUser;
 import model.Oferta.Oferta2BI;
 import model.Usuarios.Usuario;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import view.crudOferta.readOferta;
+import view.crudRubro.readRubro;
 
 
 /**
@@ -91,9 +100,10 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnMantenedorOferta.setVisible(false);
                 btnMantenedorEmpresa.setVisible(false);
                 btnMantenedorTienda.setVisible(false);
-                btnMantenedorUsuario.setVisible(false);
+                btnMantenedoRubro.setVisible(false);
                 btnConsultaValoracionPorTienda.setVisible(false);
                 btnDescargaArchivosBI.setVisible(false);
+                btnMantenedorUsuario1.setVisible(false);
        
        }
        else if(mod.getIdRol()==3)
@@ -103,9 +113,10 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnMantenedorProducto.setVisible(false);
                 btnMantenedorEmpresa.setVisible(false);
                 btnMantenedorTienda.setVisible(false);
-                btnMantenedorUsuario.setVisible(false);
+                btnMantenedoRubro.setVisible(false);
                 btnDescargaArchivosBI.setVisible(false);
                 btnReporteResumenPorTienda.setVisible(false);
+                btnMantenedorUsuario1.setVisible(false);
        } else if(mod.getIdRol()==4)
        {
        //Cliente
@@ -114,22 +125,24 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnMantenedorOferta.setVisible(false);
                 btnMantenedorEmpresa.setVisible(false);
                 btnMantenedorTienda.setVisible(false);
-                btnMantenedorUsuario.setVisible(false);
+                btnMantenedoRubro.setVisible(false);
                 btnConsultaValoracionPorTienda.setVisible(false);
                 btnDescargaArchivosBI.setVisible(false);
                 btnReporteResumenPorTienda.setVisible(false);
+                btnMantenedorUsuario1.setVisible(false);
        }else if(mod.getIdRol()==5)
        {
            //Invitado
-       btnMantenedorDescuento.setVisible(false);
+                 btnMantenedorDescuento.setVisible(false);
                 btnMantenedorProducto.setVisible(false);
                 btnMantenedorOferta.setVisible(false);
                 btnMantenedorEmpresa.setVisible(false);
                 btnMantenedorTienda.setVisible(false);
-                btnMantenedorUsuario.setVisible(false);
+                btnMantenedoRubro.setVisible(false);
                 btnConsultaValoracionPorTienda.setVisible(false);
                 btnDescargaArchivosBI.setVisible(false);
                 btnReporteResumenPorTienda.setVisible(false);
+                btnMantenedorUsuario1.setVisible(false);
        }
 
    
@@ -158,11 +171,12 @@ public class menuPrincipal extends javax.swing.JFrame {
         btnMantenedorEmpresa = new javax.swing.JButton();
         btnMantenedorTienda = new javax.swing.JButton();
         btnMantenedorDescuento = new javax.swing.JButton();
-        btnMantenedorUsuario = new javax.swing.JButton();
+        btnMantenedoRubro = new javax.swing.JButton();
         btnConsultaValoracionPorTienda = new javax.swing.JButton();
         btnDescargaArchivosBI = new javax.swing.JButton();
         btnReporteResumenPorTienda = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnMantenedorUsuario1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -236,14 +250,19 @@ public class menuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnMantenedorUsuario.setText("Mantenedor Usuario");
-        btnMantenedorUsuario.addActionListener(new java.awt.event.ActionListener() {
+        btnMantenedoRubro.setText("Mantenedor Rubro");
+        btnMantenedoRubro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMantenedorUsuarioActionPerformed(evt);
+                btnMantenedoRubroActionPerformed(evt);
             }
         });
 
         btnConsultaValoracionPorTienda.setText("Consulta Valoracion por Tienda");
+        btnConsultaValoracionPorTienda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaValoracionPorTiendaActionPerformed(evt);
+            }
+        });
 
         btnDescargaArchivosBI.setText("Descarga Archivos BI");
         btnDescargaArchivosBI.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +280,13 @@ public class menuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnMantenedorUsuario1.setText("Mantenedor Usuario");
+        btnMantenedorUsuario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMantenedorUsuario1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -274,13 +300,14 @@ public class menuPrincipal extends javax.swing.JFrame {
                     .addComponent(btnMantenedorEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMantenedorTienda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMantenedorDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                    .addComponent(btnMantenedorUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnMantenedorUsuario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnConsultaValoracionPorTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDescargaArchivosBI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReporteResumenPorTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnConsultaValoracionPorTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                    .addComponent(btnReporteResumenPorTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMantenedoRubro, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                    .addComponent(btnDescargaArchivosBI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
@@ -290,24 +317,29 @@ public class menuPrincipal extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMantenedorProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConsultaValoracionPorTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMantenedoRubro, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMantenedorOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReporteResumenPorTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnConsultaValoracionPorTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnMantenedorEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDescargaArchivosBI, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReporteResumenPorTienda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMantenedorEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMantenedorTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDescargaArchivosBI, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMantenedorTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMantenedorDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnMantenedorUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(btnMantenedorUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 34, Short.MAX_VALUE))
         );
 
         pack();
@@ -323,36 +355,47 @@ public class menuPrincipal extends javax.swing.JFrame {
     private void btnMantenedorProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorProductoActionPerformed
        /*PRODUCTOS*/
        this.setVisible(false);
-       readProductos rp = new readProductos();
+       readProductos rp = new readProductos(mod);
       rp.setVisible(true);
         rp.pack();
     }//GEN-LAST:event_btnMantenedorProductoActionPerformed
 
-    private void btnMantenedorUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorUsuarioActionPerformed
+    private void btnMantenedoRubroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedoRubroActionPerformed
         // TODO add your handling code here: 
         this.setVisible(false);
-        readUsuario ru = new readUsuario(mod);
+        readRubro ru = null;
+        try {
+            ru = new readRubro(mod);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ru.setVisible(true);
         ru.pack();
-    }//GEN-LAST:event_btnMantenedorUsuarioActionPerformed
+    }//GEN-LAST:event_btnMantenedoRubroActionPerformed
 
     private void btnMantenedorOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorOfertaActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readOferta ro= new  readOferta();
+        readOferta ro= new  readOferta(mod);
         ro.setVisible(true);
     }//GEN-LAST:event_btnMantenedorOfertaActionPerformed
 
     private void btnMantenedorDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorDescuentoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readDescuento rd = new readDescuento();
+        readDescuento rd = new readDescuento(mod);
         rd.setVisible(true);
          rd.pack();  
     }//GEN-LAST:event_btnMantenedorDescuentoActionPerformed
 
     private void btnMantenedorEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorEmpresaActionPerformed
-      readEmpresa re = new readEmpresa();
+      readEmpresa re = new readEmpresa(mod);
         this.setVisible(false);
         re.setVisible(true);
         re.pack();        // TODO add your handling code here:
@@ -360,7 +403,7 @@ public class menuPrincipal extends javax.swing.JFrame {
 
     private void btnMantenedorTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorTiendaActionPerformed
         // TODO add your handling code here:
-         readTienda re = new readTienda();
+         readTienda re = new readTienda(mod);
         this.setVisible(false);
         re.setVisible(true);
         re.pack();  
@@ -420,6 +463,49 @@ public class menuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnDescargaArchivosBIActionPerformed
 
+    private void btnMantenedorUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedorUsuario1ActionPerformed
+        // TODO add your handling code here:
+        
+         this.setVisible(false);
+        readUsuario ru = new readUsuario(mod);
+        ru.setVisible(true);
+        ru.pack();
+    }//GEN-LAST:event_btnMantenedorUsuario1ActionPerformed
+
+    private void btnConsultaValoracionPorTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaValoracionPorTiendaActionPerformed
+        try {
+            // TODO add your handling code here:
+            
+            //El Informe de valoración por  Tienda se realizara segun
+            //a la tienda que el usuario(jefe de Tienda)que esta en sesión  pertenesca
+            
+            JavaConnectDb obj = new JavaConnectDb();
+            Connection cn = obj.ConnectBd();
+            
+            JasperReport report=null;
+            String path="src\\Reportes\\ReporteValoracionesPorTienda.jasper";
+            Map parametro=new HashMap();
+            
+            
+            parametro.put("idJefeTienda",mod.getIdUsuario());
+            //lo cargamos
+            report=(JasperReport) JRLoader.loadObjectFromFile(path);
+            //para mandarle variables al reporte 
+            JasperPrint jprint=JasperFillManager.fillReport(report,parametro,cn);
+           
+            //para ver el reporte
+            JasperViewer view=new JasperViewer(jprint,false);
+            
+            
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            
+            view.setVisible(true);
+            
+        } catch (JRException ex) {
+            Logger.getLogger(menuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultaValoracionPorTiendaActionPerformed
+
     
 
     /**
@@ -471,12 +557,13 @@ public class menuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultaValoracionPorTienda;
     private javax.swing.JButton btnDescargaArchivosBI;
+    private javax.swing.JButton btnMantenedoRubro;
     private javax.swing.JButton btnMantenedorDescuento;
     private javax.swing.JButton btnMantenedorEmpresa;
     private javax.swing.JButton btnMantenedorOferta;
     private javax.swing.JButton btnMantenedorProducto;
     private javax.swing.JButton btnMantenedorTienda;
-    private javax.swing.JButton btnMantenedorUsuario;
+    private javax.swing.JButton btnMantenedorUsuario1;
     private javax.swing.JButton btnReporteResumenPorTienda;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;

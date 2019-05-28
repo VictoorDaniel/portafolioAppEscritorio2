@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import model.Comuna.Comuna;
 import model.Empresas.Empresa;
+import model.LoginUser;
 import model.Usuarios.Usuario;
 import oracle.jdbc.OracleResultSet;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -21,6 +22,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class createTienda extends javax.swing.JFrame {
 
+    LoginUser mod;
     /**
      * Creates new form createTienda
      */
@@ -30,6 +32,35 @@ public class createTienda extends javax.swing.JFrame {
     OracleResultSet rs = null;
    
     public createTienda() {
+        initComponents();
+          /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+        
+         Usuario usuarios= new Usuario();
+        cmbxUsuarios.removeAllItems();
+        usuarios.getValuesUsuarioEncargado(cmbxUsuarios);
+        
+        Comuna comunas=new Comuna();
+        
+        cmbxComuna.removeAllItems();
+        comunas.getValuesComuna(cmbxComuna);
+        
+         Empresa empresa=new Empresa();
+        
+        cmbxEmpresas.removeAllItems();
+        empresa.getValuesEmpresa(cmbxEmpresas);
+        //Esta sentencia viene de la libreria swing
+        //sirve para que los campos se autocompleten el combx
+        AutoCompleteDecorator.decorate(cmbxUsuarios);
+        AutoCompleteDecorator.decorate(cmbxComuna);
+        AutoCompleteDecorator.decorate(cmbxEmpresas);
+        
+        
+    }
+    
+      public createTienda(LoginUser mod) {
+          
+          this.mod=mod;
         initComponents();
           /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
         this.setLocationRelativeTo(null);
@@ -360,7 +391,7 @@ public class createTienda extends javax.swing.JFrame {
     private void btnVolverProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverProductoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readTienda rp = new readTienda();
+        readTienda rp = new readTienda(mod);
         rp.setVisible(true);
         rp.pack();
     }//GEN-LAST:event_btnVolverProductoActionPerformed
