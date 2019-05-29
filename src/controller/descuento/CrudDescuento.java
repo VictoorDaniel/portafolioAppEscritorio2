@@ -62,9 +62,7 @@ public class CrudDescuento {
             
             JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
             
-            readDescuento rd = new readDescuento();
-            rd.setVisible(true); 
-            rd.pack();
+            
         
             try{
                 pst.close();
@@ -111,9 +109,7 @@ public class CrudDescuento {
             
             JOptionPane.showMessageDialog(null, "Datos Actualizados...");
             
-            readDescuento rd = new readDescuento();
-            rd.setVisible(true); 
-            rd.pack();
+           
         
             try{
                 pst.close();

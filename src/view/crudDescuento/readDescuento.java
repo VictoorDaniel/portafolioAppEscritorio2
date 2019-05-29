@@ -30,6 +30,7 @@ import javax.swing.RowFilter;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import model.LoginUser;
 import model.TablaImagen;
 import model.descuento.Descuento;
 import model.producto.Producto;
@@ -44,6 +45,7 @@ import view.menuPrincipal;
  */
 public class readDescuento extends javax.swing.JFrame {
  
+    LoginUser mod;
     JButton btn_modificar = new JButton("Modificar");
     JButton btn_eliminar = new JButton("Eliminar");
     
@@ -84,6 +86,37 @@ public class readDescuento extends javax.swing.JFrame {
                 return false;
             }  
     }; //le agregamos el isCellEditable y lo retornamos falso para que nos epueda editar 
+
+    public readDescuento(LoginUser mod) {
+
+       this.mod=mod;
+       
+        initComponents();
+        
+        /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        
+        propiedadesTabla();
+        
+        /*cargar los datos de la tabla producto en la tabla */
+        mostrarDescuentos(); 
+        
+        /*con esto el tamaño de la pantalla no se puede modificar*/
+        this.setResizable(true);
+        
+        // Indicamos que la aplicación finaliza al cerrar la ventana.
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        //Agregar el btan a la tabla
+        tblDescuentos.setDefaultRenderer(Object.class, new Renders());
+        //tblProductos.setDefaultRenderer(Object.class, new RenderImages());
+        
+        //modificar el tamaño de las columna en la tablas (lo haremos para la imagen)
+        //modificar el ancho
+        tblDescuentos.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(110);
+        
+        
+    }
     
     public void propiedadesTabla() {
         
@@ -295,17 +328,9 @@ public class readDescuento extends javax.swing.JFrame {
     private void btnMenuPrincipalProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalProdActionPerformed
         // TODO add your handling code here:
         menuPrincipal mp = null;
-        try {
-            mp = new menuPrincipal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+            mp = new menuPrincipal(mod);
+       
         this.setVisible(false);
         mp.setVisible(true);
         mp.pack();
@@ -314,7 +339,7 @@ public class readDescuento extends javax.swing.JFrame {
     private void btnAgregarDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDescuentoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        createDescuentos cd = new createDescuentos();
+        createDescuentos cd = new createDescuentos(mod);
         cd.setVisible(true);
         cd.pack();
     }//GEN-LAST:event_btnAgregarDescuentoActionPerformed
@@ -434,14 +459,15 @@ public class readDescuento extends javax.swing.JFrame {
                     int s = JOptionPane.showConfirmDialog(null, "Eliminar Descuento","Si/no",JOptionPane.YES_NO_OPTION);
                     
                     if(s == 0){
-                    }
-                    
-                    try {
+                        try {
                         //EVENTOS ELIMINAR
                         eliminar (id);
                     } catch (SQLException ex){
                         Logger.getLogger(readDescuento.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    }
+                    
+                    
                 }
             }
 
@@ -460,7 +486,7 @@ public class readDescuento extends javax.swing.JFrame {
         cDescuento.eliminarDescuento(dscto);
         //re Actualizamos la pagina para que se vizualice el campo eliminado
          this.setVisible(false);
-        readDescuento rp = new readDescuento();
+        readDescuento rp = new readDescuento(mod);
         rp.setVisible(true);
         rp.pack();
     }

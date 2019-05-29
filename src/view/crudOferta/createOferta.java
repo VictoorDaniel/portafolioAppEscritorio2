@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import model.Oferta.Oferta;
 import model.Oferta.Oferta2BI;
 import javax.swing.JComboBox;
+import model.LoginUser;
 import model.comboBox.CbxEstado;
 import model.comboBox.CbxProducto;
 import model.comboBox.CbxTienda;
@@ -38,7 +39,7 @@ import model.comboBox.CbxTienda;
  * @author fernandacancinoreyes
  */
 public class createOferta extends javax.swing.JFrame {
-
+LoginUser mod;
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     OracleResultSet rs = null;
@@ -62,6 +63,21 @@ public class createOferta extends javax.swing.JFrame {
         
          txtPrecioProductoOferta.setEditable(false);
         
+        
+    }
+
+    public createOferta(LoginUser mod)throws SQLException {
+        
+        this.mod=mod;
+        initComponents();
+        
+        /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+        
+        limpiarDatos();
+        cargarCbx();
+        
+         txtPrecioProductoOferta.setEditable(false);
         
     }
     
@@ -678,7 +694,7 @@ public class createOferta extends javax.swing.JFrame {
                     }finally{
                         JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
                         this.setVisible(false);
-                        readOferta rd = new readOferta();
+                        readOferta rd = new readOferta(mod);
                         rd.setVisible(true); 
                         rd.pack();
                             try{
@@ -700,7 +716,7 @@ public class createOferta extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         limpiarDatos();
-        readOferta ro = new readOferta();
+        readOferta ro = new readOferta(mod);
         ro.setVisible(true);
         ro.pack();
 

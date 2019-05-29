@@ -24,6 +24,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.Comuna.Comuna;
 import model.Empresas.Empresa;
+import model.LoginUser;
 import model.Usuarios.Usuario;
 import oracle.jdbc.OracleResultSet;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -36,6 +37,7 @@ import view.menuPrincipal;
  */
 public class readEmpresa extends javax.swing.JFrame {
 
+    LoginUser mod;
     /**
      * Creates new form readEmpresa
      */
@@ -85,6 +87,44 @@ public class readEmpresa extends javax.swing.JFrame {
         tbl.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(110);
          //modificar el ancho
        tbl.setRowHeight(50);
+    }
+
+    public readEmpresa(LoginUser mod) {
+      this.mod=mod;
+      
+        initComponents();
+        //tamaño del JFrame
+        setSize(1000,700);
+          /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        /*cargar los datos de la tabla */
+        mostrarEnTabla(); 
+        /*con esto el tamaño de la pantalla no se puede modificar*/
+        this.setResizable(false);
+         // Indicamos que la aplicación finaliza al cerrar la ventana.
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //Agregar el btan a la tabla
+         tbl.setDefaultRenderer(Object.class, new AgregarBtnATbl());
+         
+          Usuario usuarios= new Usuario();
+        cmbxUsuarios.removeAllItems();
+        usuarios.getValuesUsuario(cmbxUsuarios);
+        
+        Comuna comunas=new Comuna();
+        
+        cmbxComuna.removeAllItems();
+        comunas.getValuesComuna(cmbxComuna);
+        //Esta sentencia viene de la libreria swing
+        //sirve para que los campos se autocompleten el combx
+        AutoCompleteDecorator.decorate(cmbxUsuarios);
+        AutoCompleteDecorator.decorate(cmbxComuna);
+        
+        //modificar el tamaño de las columna en la tablas (lo haremos para la imagen)
+        //modificar el ancho
+        tbl.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(110);
+         //modificar el ancho
+       tbl.setRowHeight(50);
+
     }
    public  void mostrarEnTabla(){
         
@@ -182,7 +222,7 @@ public class readEmpresa extends javax.swing.JFrame {
         udem.Eliminar_Empresa(empre);
         //re Actualizamos la pagina para que se vizualice el campo eliminado
          this.setVisible(false);
-        readEmpresa rp = new readEmpresa();
+        readEmpresa rp = new readEmpresa(mod);
         rp.setVisible(true);
         rp.pack();
     }
@@ -554,30 +594,7 @@ public class readEmpresa extends javax.swing.JFrame {
         String[] titulos = {"id", "Nombre", "Usuario", "Apellido Paterno", "Apellido Materno",
             "Fecha de Registro","Comuna","Calle Dirección","Numero Dirección",
             "Observación Dirección","Modificar","Eliminar"};
-
-        /*String sql = "select   IDEMPRESA\n" +
-                        "        ,NOMBREEMPRESA\n" +
-                        "        ,USUARIO.NOMBREUSUARIO\n" +
-                        "        ,USUARIO.APELLIDOPATERNO\n" +
-                        "        ,USUARIO.APELLIDOMATERNO\n" +
-                        "        ,to_char(FECHAINSCRIPCION) \n" +
-                       "        ,COMUNA.NOMBRECOMUNA\n" +
-                       "        ,CALLEDIRECCION \n" +
-                       "        ,NUMERODIRECCION \n" +
-                       "        ,OBSERVACIONDIRECCION \n" +
-                          "from EMPRESA,USUARIO,COMUNA \n" +
-        "where EMPRESA.IDUSUARIO = USUARIO.IDUSUARIO\n" +
-           "  and EMPRESA.IDCOMUNA = COMUNA.IDCOMUNA and"+
-        "  IDEMPRESA LIKE '%" + buscartodo.getText() + "%' "
-        +" OR NOMBREEMPRESA LIKE '%" + buscartodo.getText() + "%' "
-        + "OR USUARIO.NOMBREUSUARIO  LIKE'%" + buscartodo.getText() + "%'"
-        + "OR COMUNA.NOMBRECOMUNA LIKE '%" + buscartodo.getText() + "%'"
-        + "OR CALLEDIRECCION LIKE '%" + buscartodo.getText() + "%'"
-        + "OR NUMERODIRECCION LIKE '%" + buscartodo.getText() + "%'"
-        + "OR OBSERVACIONDIRECCION LIKE '%" + buscartodo.getText() + "%'"
-        + "OR FECHAREGISTRO  LIKE'%" + buscartodo.getText() + "%'";*/
-        
-        
+ 
         String sql = "select   IDEMPRESA\n" +
                         "        ,NOMBREEMPRESA\n" +
                         "        ,USUARIO.NOMBREUSUARIO\n" +
@@ -644,7 +661,7 @@ public class readEmpresa extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        createEmpresas cp = new createEmpresas();
+        createEmpresas cp = new createEmpresas(mod);
         cp.setVisible(true);
         cp.pack();
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -740,7 +757,7 @@ public class readEmpresa extends javax.swing.JFrame {
     private void btnVolverProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverProductoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readEmpresa rp = new readEmpresa();
+        readEmpresa rp = new readEmpresa(mod);
         rp.setVisible(true);
         rp.pack();
     }//GEN-LAST:event_btnVolverProductoActionPerformed
@@ -759,7 +776,7 @@ public class readEmpresa extends javax.swing.JFrame {
                 Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
             }
                 this.setVisible(false);
-                readEmpresa rp = new readEmpresa();
+                readEmpresa rp = new readEmpresa(mod);
               rp.setVisible(true);
               rp.pack();
                
@@ -788,17 +805,9 @@ public class readEmpresa extends javax.swing.JFrame {
         // TODO add your handling code here: this.setVisible(false);
         this.setVisible(false);
         menuPrincipal mp = null;
-        try {
-            mp = new menuPrincipal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(readEmpresa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+            mp = new menuPrincipal(mod);
+       
         mp.setVisible(true);
         mp.pack();
     }//GEN-LAST:event_btnMenuPrincipalProdActionPerformed

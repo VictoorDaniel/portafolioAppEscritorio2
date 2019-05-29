@@ -25,6 +25,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import model.LoginUser;
 import oracle.jdbc.OracleResultSet;
 
 /**
@@ -33,7 +34,7 @@ import oracle.jdbc.OracleResultSet;
  */
 public class createDescuentos extends javax.swing.JFrame {
     
-     
+     LoginUser mod;
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     
@@ -45,6 +46,16 @@ public class createDescuentos extends javax.swing.JFrame {
     ConnectDbProducto cnProd = new ConnectDbProducto();
     
     public createDescuentos() {
+        /*inicia los componentes*/
+        initComponents();
+        
+        /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+        
+    }
+     public createDescuentos(LoginUser mod) {
+         
+         this.mod=mod;
         /*inicia los componentes*/
         initComponents();
         
@@ -268,13 +279,16 @@ public class createDescuentos extends javax.swing.JFrame {
         verificaDatos();
         limpiarDatos();
         this.setVisible(false);
+        readDescuento rd = new readDescuento(mod);
+            rd.setVisible(true); 
+            rd.pack();
          
     }//GEN-LAST:event_btnGuardarDescuentoActionPerformed
 
     private void btnVolverDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverDescuentoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readDescuento rp = new readDescuento();
+        readDescuento rp = new readDescuento(mod);
         rp.setVisible(true);
         rp.pack();
         
@@ -376,38 +390,7 @@ public class createDescuentos extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(createDescuentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
+import model.LoginUser;
 import view.menuPrincipal;
 import model.Rubro.Rubro;
 import model.TablaImagen;
@@ -31,7 +32,8 @@ import view.crudDescuento.readDescuento;
  * @author fernandacancinoreyes
  */
 public class readRubro extends javax.swing.JFrame {
-
+  LoginUser mod;
+    
     /**
      * Creates new form readRubro
      */
@@ -65,6 +67,25 @@ public class readRubro extends javax.swing.JFrame {
     
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
+
+    public readRubro(LoginUser mod) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        this.mod=mod;
+        initComponents();
+        
+        /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        
+        //Agregar el btan a la tabla
+        tblRubro.setDefaultRenderer(Object.class, new Renders());
+        
+        propiedadesTabla();
+        
+        mostrarRubro();
+        
+        //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
+         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        
+    }
     
     public void propiedadesTabla() {
         
@@ -355,7 +376,7 @@ public class readRubro extends javax.swing.JFrame {
         this.setVisible(false);
         createRubro cd = null;
         try {
-            cd = new createRubro();
+            cd = new createRubro(mod);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(readRubro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -372,17 +393,9 @@ public class readRubro extends javax.swing.JFrame {
     private void btnMenuPrincipalRubroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalRubroActionPerformed
         // TODO add your handling code here:
         menuPrincipal mp = null;
-        try {
-            mp = new menuPrincipal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(readRubro.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(readRubro.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(readRubro.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(readRubro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+            mp = new menuPrincipal(mod);
+        
         this.setVisible(false);
         mp.setVisible(true);
         mp.pack();

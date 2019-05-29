@@ -28,6 +28,7 @@ public class Usuario extends JavaConnectDb{
     private String AceptaOfertasEmail;
     private int IdEstado;
     private String Password;
+    private String NombreRol;
 
     
     public Usuario (){}
@@ -132,7 +133,13 @@ public class Usuario extends JavaConnectDb{
     public void setPassword(String Password) {
         this.Password = Password;
     }
- 
+   public String getNombreRol() {
+        return NombreRol;
+    }
+
+    public void setNombreRol(String NombreRol) {
+        this.NombreRol = NombreRol;
+    }
      
   //metodo para cargar el cmxUusario
    
@@ -202,6 +209,8 @@ public class Usuario extends JavaConnectDb{
    return NombreUsuario+"  "+ApellidoPaterno+"  "+ApellidoMaterno+" / "+RutUsuario
            +" / "+EmailUsuario;
    };
+
+    
    
     
     

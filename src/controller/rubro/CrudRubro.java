@@ -56,10 +56,7 @@ public class CrudRubro {
             
             JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
             
-            readRubro rr = new readRubro();
-            rr.setVisible(true); 
-            rr.pack();
-        
+            
             try{
                 pst.close();
                
@@ -100,9 +97,7 @@ public class CrudRubro {
             
             JOptionPane.showMessageDialog(null, "Datos Actualizados...");
             
-            readRubro rd = new readRubro();
-            rd.setVisible(true); 
-            rd.pack();
+            
         
             try{
                 pst.close();

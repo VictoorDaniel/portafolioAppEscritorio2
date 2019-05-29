@@ -31,6 +31,7 @@ import static view.crudProductos.updateProductos.lblImagenMod;
 public class CrudProducto {
     
     
+    
     public  void mostrarImagen(Producto prod) throws SQLException{
         
        
@@ -83,9 +84,64 @@ public class CrudProducto {
             }
     }
 /*Metodo Modificar*/
-    public void modificarProducto(Producto prod,FileInputStream fi) throws SQLException{
+    public void modificarProducto(Producto prod) throws SQLException{
         
         JavaConnectDb obj = new JavaConnectDb();
+         Connection cn = obj.ConnectBd();
+        String sql = "UPDATE PRODUCTO "
+                   + "SET NOMBREPRODUCTO= ?, "
+                       + "RUBROPRODUCTO = ?,"
+                       + "PRECIOPRODUCTO= ?, "
+                       + "STOCKPRODUCTO = ?,"
+                       + "FECHAEXPIRACION= ?,"
+                       //+ "IMAGENPRODUCTO= ?,"
+                       + "IDTIENDA= ?"
+                       + "WHERE IDPRODUCTO = ?";
+        
+        PreparedStatement pst = null;
+     
+        try{
+            pst = cn.prepareStatement(sql);
+            
+            pst.setString(1, prod.getNombreProducto());
+            pst.setInt(2, prod.getRubroProducto());
+            pst.setInt(3, prod.getPrecioProducto());
+            pst.setInt(4, prod.getStockProducto());
+            pst.setString(5, prod.getFechaExpiracion());
+           // pst.setBinaryStream(6, fi);
+            pst.setInt(6, prod.getIdtienda());
+            
+            pst.setInt(7, prod.getIdProducto());
+            
+            System.out.println("nombre : " + prod.getNombreProducto() + "rubro : " + prod.getRubroProducto()
+                               + "precio :" + prod.getPrecioProducto()
+                               + "stock :" + prod.getStockProducto()  + "IDTIENDA :" + prod.getIdtienda()
+                               + " id :" + prod.getIdProducto());
+             
+            pst.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            
+            JOptionPane.showMessageDialog(null, "Datos Actualizados...");
+            
+           
+        
+            try{
+                pst.close();
+               
+            }catch(Exception ex){}
+        }
+              
+    }
+
+    public void modificarProductoConImagen(Producto prod,FileInputStream fi) throws SQLException{
+        
+        
+       
+         JavaConnectDb obj = new JavaConnectDb();
          Connection cn = obj.ConnectBd();
         String sql = "UPDATE PRODUCTO "
                    + "SET NOMBREPRODUCTO= ?, "
@@ -126,18 +182,22 @@ public class CrudProducto {
             
             JOptionPane.showMessageDialog(null, "Datos Actualizados...");
             
-            readProductos rp = new readProductos();
-            rp.setVisible(true); 
-            rp.pack();
-        
+            
             try{
                 pst.close();
                
             }catch(Exception ex){}
         }
-              
+          
     }
 
+    
+    
+    
+    
+    
+    
+    
 
 /*Metodo Eliminar*/
     public void eliminarProducto (Producto prod) throws SQLException{

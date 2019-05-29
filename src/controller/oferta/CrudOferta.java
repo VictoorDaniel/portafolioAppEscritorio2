@@ -85,7 +85,7 @@ public class CrudOferta {
             
             JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
             //co.limpiarDatos();
-            volverMenu();
+            //volverMenu();
         
             try{
                 pst.close();
