@@ -43,6 +43,12 @@ public class updateOferta extends javax.swing.JFrame {
     
     Oferta ofert = new Oferta();
     CrudOferta cOferta = new CrudOferta();
+    CbxProducto combobox = new CbxProducto();
+    
+    private int stock ;
+    private int maximoDscto;
+    private int varCero;
+    private int idTiendaC;
     
     /**
      * Creates new form readOferta
@@ -62,12 +68,7 @@ public class updateOferta extends javax.swing.JFrame {
         combobox.getValuesProducto(cbxProductoOfertaMod);
         
     }
-    
-    
-    private int stock ;
-    private int maximoDscto;
-    private int varCero;
-            
+      
     
     private void cargarPrecioProducto() throws SQLException{
         Connection cn = obj.ConnectBd();
@@ -91,6 +92,14 @@ public class updateOferta extends javax.swing.JFrame {
                 txtPrecioProductoOfertaMod.setText(rs.getString(1));
                 txtStockOfertaMod.setText(rs.getString(2));
         }
+    }
+    
+    private int obtenerIdTienda() {
+        
+        idTiendaC = cbxTiendaOfertaMod.getItemAt(cbxTiendaOfertaMod.getSelectedIndex()).getIDTIENDA();  
+        combobox.setIdTienda(idTiendaC);
+        //combobox.getValuesProducto2(cbxProductoOferta, idTiendaC);
+        return idTiendaC;
     }
     
     private int cargarPrecioProductoR() throws SQLException{
@@ -146,6 +155,11 @@ public class updateOferta extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnGuardarOfertaMod = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        btnVolverOfertaMod = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtNombreOfertaMod = new javax.swing.JTextField();
         cbxEstadoOfertaMod = new javax.swing.JComboBox<>();
@@ -164,11 +178,6 @@ public class updateOferta extends javax.swing.JFrame {
         btnImagen = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         lblimagen = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        btnGuardarOfertaMod = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        btnVolverOfertaMod = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -200,6 +209,31 @@ public class updateOferta extends javax.swing.JFrame {
                 .addContainerGap())
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setText("Descuento (%)");
+
+        btnGuardarOfertaMod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnGuardarOfertaMod.setText("Guardar");
+        btnGuardarOfertaMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarOfertaModActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel8.setText("Stock");
+
+        btnVolverOfertaMod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnVolverOfertaMod.setText("Volver");
+        btnVolverOfertaMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverOfertaModActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel9.setText("Imagen");
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel10.setText("Estado");
@@ -313,31 +347,6 @@ public class updateOferta extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setText("Precio Producto");
-
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel7.setText("Descuento (%)");
-
-        btnGuardarOfertaMod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnGuardarOfertaMod.setText("Guardar");
-        btnGuardarOfertaMod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarOfertaModActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel8.setText("Stock");
-
-        btnVolverOfertaMod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnVolverOfertaMod.setText("Volver");
-        btnVolverOfertaMod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverOfertaModActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel9.setText("Imagen");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -454,6 +463,99 @@ public class updateOferta extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarOfertaModActionPerformed
+
+        varCero = 0;
+        maximoDscto = 100;
+
+        System.out.println("txtMaxProductoOferta" + parseInt(txtMaxProductoOfertaMod.getText()));
+        System.out.println("txtMinProductoOferta" + parseInt(txtMinProductoOfertaMod.getText()));
+        System.out.println("txtDesceuntoOferta" + parseInt(txtDesceuntoOfertaMod.getText()));
+        System.out.println("ruta imagen" + ruta );
+
+        if(   txtNombreOfertaMod.getText().trim().length() != 0
+            && txtPrecioProductoOfertaMod.getText().trim().length() != 0
+            && txtDesceuntoOfertaMod.getText().trim().length() != 0
+            && txtStockOfertaMod.getText().trim().length() != 0
+            && txtMinProductoOfertaMod.getText().trim().length() != 0
+            && txtMaxProductoOfertaMod.getText().trim().length() != 0
+        )
+        {
+            if (parseInt(txtStockOfertaMod.getText()) <= stock){
+                if ( parseInt(txtMaxProductoOfertaMod.getText()) <= stock){
+                    if (parseInt(txtDesceuntoOfertaMod.getText()) <= maximoDscto){
+                        if (parseInt(txtMinProductoOfertaMod.getText()) != varCero){
+                            if ( ruta != null){
+                                try {
+
+                                    JavaConnectDb obj = new JavaConnectDb();
+                                    Connection cn = obj.ConnectBd();
+                                    String sql = "INSERT INTO OFERTA (IDTIENDA, IDPRODUCTO, NOMBREOFERTA, MINIMOPRODUCTO, MAXIMOPRODUCTO, "
+                                    + "PRECIOOFERTA, DESCUENTOOFERTA, STOCKPRODUCTOOFERTA, IDESTADO, IMAGENOFERTA)\n" +
+                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                                    pst = cn.prepareStatement(sql);
+
+                                    //guardamos la imagen que emos elegido en estas variables
+                                    File file = new File(ruta);
+                                    fi = new FileInputStream(file);
+
+                                    /*para obtener id de producto*/
+                                    int idTienda =   cbxTiendaOfertaMod.getItemAt(cbxTiendaOfertaMod.getSelectedIndex()).getIDTIENDA();
+                                    int idProducto = cbxProductoOfertaMod.getItemAt(cbxProductoOfertaMod.getSelectedIndex()).getIDPRODUCTO();
+                                    int idEstado =   cbxEstadoOfertaMod.getItemAt(cbxEstadoOfertaMod.getSelectedIndex()).getIDESTADO();
+
+                                    pst.setInt(1, idTienda);
+                                    pst.setInt(2, idProducto);
+                                    pst.setString(3, txtNombreOfertaMod.getText());
+                                    pst.setInt(4, parseInt(txtMinProductoOfertaMod.getText()));
+                                    pst.setInt(5, parseInt(txtMaxProductoOfertaMod.getText()));
+
+                                    pst.setInt(6, parseInt(txtPrecioProductoOfertaMod.getText()));
+                                    pst.setInt(7, parseInt(txtDesceuntoOfertaMod.getText()));
+                                    pst.setInt(8, parseInt(txtStockOfertaMod.getText()));
+                                    pst.setInt(9, idEstado);
+
+                                    pst.setBinaryStream(10, fi);
+
+                                    cn.commit();
+
+                                    rs = (OracleResultSet) pst.executeQuery();
+
+                                    limpiarDatos();
+
+                                } catch (FileNotFoundException ex) {
+                                    Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
+                                }finally{
+                                    JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
+                                    this.setVisible(false);
+                                    readOferta rd = new readOferta();
+                                    rd.setVisible(true);
+                                    rd.pack();
+                                    try{
+                                        pst.close();
+                                    }catch(Exception ex){}
+                                }
+                            }else {JOptionPane.showMessageDialog(rootPane, "Debe insertar una imagen");}
+                        }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar como minimo de productos la cantidad cero");}
+                    }else {JOptionPane.showMessageDialog(rootPane, "No puede realizar un descuento mayor al 100%");}
+                }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un máximo de productos mayor al stock existente");}
+            }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un stock mayor al existente");}
+        }else{JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");}
+
+    }//GEN-LAST:event_btnGuardarOfertaModActionPerformed
+
+    private void btnVolverOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverOfertaModActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        limpiarDatos();
+        readOferta ro = new readOferta();
+        ro.setVisible(true);
+        ro.pack();
+    }//GEN-LAST:event_btnVolverOfertaModActionPerformed
 
     private void txtNombreOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreOfertaModActionPerformed
         // TODO add your handling code here:
@@ -579,11 +681,19 @@ public class updateOferta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrecioProductoOfertaModKeyTyped
 
     private void cbxTiendaOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaOfertaModActionPerformed
-        // TODO add your handling code here:
+        obtenerIdTienda();
+        System.out.println("idTiendaC" + idTiendaC);
+
+        //prueba();
+        cbxProductoOfertaMod.removeAllItems();
+
+        combobox.productos(cbxProductoOfertaMod,  idTiendaC);
+        //combobox.getValuesProducto2(cbxProductoOferta, idTiendaC);
+        //combobox.getValuesProducto(cbxProductoOferta);
     }//GEN-LAST:event_cbxTiendaOfertaModActionPerformed
 
     private void cbxProductoOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductoOfertaModActionPerformed
-        
+
         try {
             // TODO add your handling code here:
             cargarPrecioProducto() ;
@@ -591,7 +701,7 @@ public class updateOferta extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_cbxProductoOfertaModActionPerformed
 
     private void btnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenActionPerformed
@@ -614,99 +724,6 @@ public class updateOferta extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnImagenActionPerformed
-
-    private void btnGuardarOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarOfertaModActionPerformed
-
-        varCero = 0;
-        maximoDscto = 100;
-
-        System.out.println("txtMaxProductoOferta" + parseInt(txtMaxProductoOfertaMod.getText()));
-        System.out.println("txtMinProductoOferta" + parseInt(txtMinProductoOfertaMod.getText()));
-        System.out.println("txtDesceuntoOferta" + parseInt(txtDesceuntoOfertaMod.getText()));
-        System.out.println("ruta imagen" + ruta );
-
-        if(   txtNombreOfertaMod.getText().trim().length() != 0
-            && txtPrecioProductoOfertaMod.getText().trim().length() != 0
-            && txtDesceuntoOfertaMod.getText().trim().length() != 0
-            && txtStockOfertaMod.getText().trim().length() != 0
-            && txtMinProductoOfertaMod.getText().trim().length() != 0
-            && txtMaxProductoOfertaMod.getText().trim().length() != 0
-        )
-        {
-            if (parseInt(txtStockOfertaMod.getText()) <= stock){
-                if ( parseInt(txtMaxProductoOfertaMod.getText()) <= stock){
-                    if (parseInt(txtDesceuntoOfertaMod.getText()) <= maximoDscto){
-                        if (parseInt(txtMinProductoOfertaMod.getText()) != varCero){
-                            if ( ruta != null){
-                                try {
-
-                                    JavaConnectDb obj = new JavaConnectDb();
-                                    Connection cn = obj.ConnectBd();
-                                    String sql = "INSERT INTO OFERTA (IDTIENDA, IDPRODUCTO, NOMBREOFERTA, MINIMOPRODUCTO, MAXIMOPRODUCTO, "
-                                    + "PRECIOOFERTA, DESCUENTOOFERTA, STOCKPRODUCTOOFERTA, IDESTADO, IMAGENOFERTA)\n" +
-                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-                                    pst = cn.prepareStatement(sql);
-
-                                    //guardamos la imagen que emos elegido en estas variables
-                                    File file = new File(ruta);
-                                    fi = new FileInputStream(file);
-
-                                    /*para obtener id de producto*/
-                                    int idTienda =   cbxTiendaOfertaMod.getItemAt(cbxTiendaOfertaMod.getSelectedIndex()).getIDTIENDA();
-                                    int idProducto = cbxProductoOfertaMod.getItemAt(cbxProductoOfertaMod.getSelectedIndex()).getIDPRODUCTO();
-                                    int idEstado =   cbxEstadoOfertaMod.getItemAt(cbxEstadoOfertaMod.getSelectedIndex()).getIDESTADO();
-
-                                    pst.setInt(1, idTienda);
-                                    pst.setInt(2, idProducto);
-                                    pst.setString(3, txtNombreOfertaMod.getText());
-                                    pst.setInt(4, parseInt(txtMinProductoOfertaMod.getText()));
-                                    pst.setInt(5, parseInt(txtMaxProductoOfertaMod.getText()));
-
-                                    pst.setInt(6, parseInt(txtPrecioProductoOfertaMod.getText()));
-                                    pst.setInt(7, parseInt(txtDesceuntoOfertaMod.getText()));
-                                    pst.setInt(8, parseInt(txtStockOfertaMod.getText()));
-                                    pst.setInt(9, idEstado);
-
-                                    pst.setBinaryStream(10, fi);
-
-                                    cn.commit();
-
-                                    rs = (OracleResultSet) pst.executeQuery();
-
-                                    limpiarDatos();
-
-                                } catch (FileNotFoundException ex) {
-                                    Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
-                                } catch (SQLException ex) {
-                                    Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
-                                }finally{
-                                    JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
-                                    this.setVisible(false);
-                                    readOferta rd = new readOferta();
-                                    rd.setVisible(true);
-                                    rd.pack();
-                                    try{
-                                        pst.close();
-                                    }catch(Exception ex){}
-                                }
-                            }else {JOptionPane.showMessageDialog(rootPane, "Debe insertar una imagen");}
-                        }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar como minimo de productos la cantidad cero");}
-                    }else {JOptionPane.showMessageDialog(rootPane, "No puede realizar un descuento mayor al 100%");}
-                }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un máximo de productos mayor al stock existente");}
-            }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un stock mayor al existente");}
-        }else{JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");}
-
-    }//GEN-LAST:event_btnGuardarOfertaModActionPerformed
-
-    private void btnVolverOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverOfertaModActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        limpiarDatos();
-        readOferta ro = new readOferta();
-        ro.setVisible(true);
-        ro.pack();
-    }//GEN-LAST:event_btnVolverOfertaModActionPerformed
 
     /**
      * @param args the command line arguments
@@ -748,9 +765,9 @@ public class updateOferta extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardarOfertaMod;
     private javax.swing.JButton btnImagen;
     private javax.swing.JButton btnVolverOfertaMod;
-    private javax.swing.JComboBox<model.comboBox.CbxEstado> cbxEstadoOfertaMod;
-    private javax.swing.JComboBox<model.comboBox.CbxProducto> cbxProductoOfertaMod;
-    private javax.swing.JComboBox<model.comboBox.CbxTienda> cbxTiendaOfertaMod;
+    public static javax.swing.JComboBox<model.comboBox.CbxEstado> cbxEstadoOfertaMod;
+    public static javax.swing.JComboBox<model.comboBox.CbxProducto> cbxProductoOfertaMod;
+    public static javax.swing.JComboBox<model.comboBox.CbxTienda> cbxTiendaOfertaMod;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -765,11 +782,11 @@ public class updateOferta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblimagen;
-    private javax.swing.JTextField txtDesceuntoOfertaMod;
-    private javax.swing.JTextField txtMaxProductoOfertaMod;
-    private javax.swing.JTextField txtMinProductoOfertaMod;
-    private javax.swing.JTextField txtNombreOfertaMod;
-    private javax.swing.JTextField txtPrecioProductoOfertaMod;
-    private javax.swing.JTextField txtStockOfertaMod;
+    public static javax.swing.JTextField txtDesceuntoOfertaMod;
+    public static javax.swing.JTextField txtMaxProductoOfertaMod;
+    public static javax.swing.JTextField txtMinProductoOfertaMod;
+    public static javax.swing.JTextField txtNombreOfertaMod;
+    public static javax.swing.JTextField txtPrecioProductoOfertaMod;
+    public static javax.swing.JTextField txtStockOfertaMod;
     // End of variables declaration//GEN-END:variables
 }

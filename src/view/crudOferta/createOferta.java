@@ -50,6 +50,10 @@ public class createOferta extends javax.swing.JFrame {
     Oferta ofert = new Oferta();
     CrudOferta cOferta = new CrudOferta();
     
+    private int stock ;
+    private int maximoDscto;
+    private int varCero;
+            
     
     public createOferta() throws SQLException {
         initComponents();
@@ -62,7 +66,6 @@ public class createOferta extends javax.swing.JFrame {
         
          txtPrecioProductoOferta.setEditable(false);
         
-        
     }
     
     public void limpiarDatos(){
@@ -73,13 +76,9 @@ public class createOferta extends javax.swing.JFrame {
         lblimagen.setIcon(null);
     }
     
+     CbxProducto combobox = new CbxProducto();
     
     private void cargarCbx(){
-        
-        CbxProducto combobox = new CbxProducto();
-        cbxProductoOferta.removeAllItems();
-        combobox.getValuesProducto(cbxProductoOferta);
-        
         
         CbxTienda comboboxTienda = new CbxTienda();
         cbxTiendaOferta.removeAllItems();
@@ -89,14 +88,26 @@ public class createOferta extends javax.swing.JFrame {
         cbxEstadoOferta.removeAllItems();
         comboboxEstado.getValuesEstado(cbxEstadoOferta);
         
+        //cbxProductoOferta.removeAllItems();
+        //combobox.getValuesProducto(cbxProductoOferta);
     }
     
-    private int stock ;
-    private int maximoDscto;
-    private int varCero;
+    private void prueba (){
+        cbxProductoOferta.removeAllItems();
+    }
+        
+    private int idTiendaC;
             
+    private int obtenerIdTienda() {
+        
+        idTiendaC = cbxTiendaOferta.getItemAt(cbxTiendaOferta.getSelectedIndex()).getIDTIENDA();  
+        combobox.setIdTienda(idTiendaC);
+        //combobox.getValuesProducto2(cbxProductoOferta, idTiendaC);
+        return idTiendaC;
+    }
     
     private void cargarPrecioProducto() throws SQLException{
+        
         Connection cn = obj.ConnectBd();
         Statement st = cn.createStatement();
         String sql = "select PRECIOPRODUCTO\n" +
@@ -106,20 +117,31 @@ public class createOferta extends javax.swing.JFrame {
         
         PreparedStatement pst = null;
         
-        pst = cn.prepareStatement(sql);
-        pst.setInt(1, cbxProductoOferta.getItemAt(cbxProductoOferta.getSelectedIndex()).getIDPRODUCTO());
+        System.out.println("id " + cbxProductoOferta.getSelectedIndex());
         
-        rs = (OracleResultSet) pst.executeQuery();
-        
-        Object datos[] = new Object[2];
-        
-        while (rs.next()) {     
-                //System.out.println("rs.getString(1)" + rs.getString(1));
-                txtPrecioProductoOferta.setText(rs.getString(1));
-                txtStockOferta.setText(rs.getString(2));
+        if (cbxProductoOferta.getSelectedIndex() != -1){
+            
+            int id = cbxProductoOferta.getItemAt(cbxProductoOferta.getSelectedIndex()).getIDPRODUCTO();
+            System.out.println("id cbx producto" + id);
+
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+
+            rs = (OracleResultSet) pst.executeQuery();
+
+            Object datos[] = new Object[2];
+
+            while (rs.next()) {     
+                    //System.out.println("rs.getString(1)" + rs.getString(1));
+                    txtPrecioProductoOferta.setText(rs.getString(1));
+                    txtStockOferta.setText(rs.getString(2));
+            }
         }
+        
+        
     }
     
+   
     private int cargarPrecioProductoR() throws SQLException{
         Connection cn = obj.ConnectBd();
         Statement st = cn.createStatement();
@@ -130,27 +152,28 @@ public class createOferta extends javax.swing.JFrame {
         
         PreparedStatement pst = null;
         
-        pst = cn.prepareStatement(sql);
-        pst.setInt(1, cbxProductoOferta.getItemAt(cbxProductoOferta.getSelectedIndex()).getIDPRODUCTO());
-        
-        rs = (OracleResultSet) pst.executeQuery();
-        
-        Object datos[] = new Object[2];
-        
-        while (rs.next()) {     
-                //System.out.println("rs.getString(1)" + rs.getString(1));
-                txtPrecioProductoOferta.setText(rs.getString(1));
-                txtStockOferta.setText(rs.getString(2));
-                /*
-                if (parseInt(txtStockOferta.getText()) > parseInt(rs.getString(2))){
-                    
-                }*/
-                stock = parseInt(rs.getString(2));
-                
-        }
+        if (cbxProductoOferta.getSelectedIndex() != -1){
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, cbxProductoOferta.getItemAt(cbxProductoOferta.getSelectedIndex()).getIDPRODUCTO());
+
+            rs = (OracleResultSet) pst.executeQuery();
+
+            Object datos[] = new Object[2];
+
+            while (rs.next()) {     
+                    //System.out.println("rs.getString(1)" + rs.getString(1));
+                    txtPrecioProductoOferta.setText(rs.getString(1));
+                    txtStockOferta.setText(rs.getString(2));
+
+                    stock = parseInt(rs.getString(2));
+
+            }
         //txtPrecioProductoOferta.setText(sql);
+        }
+        
         return stock;
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -745,10 +768,19 @@ public class createOferta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMinProductoOfertaKeyTyped
 
     private void cbxTiendaOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaOfertaActionPerformed
-        // TODO add your handling code here:
+        obtenerIdTienda();
+        System.out.println("idTiendaC" + idTiendaC);
+        
+        //prueba();
+        cbxProductoOferta.removeAllItems();
+        
+        combobox.productos(cbxProductoOferta,  idTiendaC);
+        //combobox.getValuesProducto2(cbxProductoOferta, idTiendaC);
+        //combobox.getValuesProducto(cbxProductoOferta);
     }//GEN-LAST:event_cbxTiendaOfertaActionPerformed
 
     private void cbxProductoOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductoOfertaActionPerformed
+        
         try {
             // TODO add your handling code here:
             cargarPrecioProducto() ;
@@ -756,6 +788,7 @@ public class createOferta extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_cbxProductoOfertaActionPerformed
 
     private void cbxEstadoOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEstadoOfertaActionPerformed
