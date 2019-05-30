@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.LoginUser;
 import model.descuento.Descuento;
 
 /**
@@ -19,10 +20,22 @@ import model.descuento.Descuento;
  */
 public class updateDescuentos extends javax.swing.JFrame {
 
+    LoginUser mod;
     /**
      * Creates new form updateDescuentos
      */
     public updateDescuentos() {
+        
+        initComponents();
+        
+        /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        
+        txtIdDescuentoMod.setVisible(false);
+        
+    }
+    public updateDescuentos(LoginUser mod) {
+        this.mod=mod;
         
         initComponents();
         
@@ -337,6 +350,9 @@ public class updateDescuentos extends javax.swing.JFrame {
 
         verificaDatos();
         limpiarDatos();
+         readDescuento rd = new readDescuento(mod);
+            rd.setVisible(true); 
+            rd.pack();
         this.setVisible(false);
 
     }//GEN-LAST:event_btnGuardarDescuentoModActionPerformed
@@ -344,7 +360,7 @@ public class updateDescuentos extends javax.swing.JFrame {
     private void btnVolverDescuentoModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverDescuentoModActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readDescuento rp = new readDescuento();
+        readDescuento rp = new readDescuento(mod);
         rp.setVisible(true);
         rp.pack();
 

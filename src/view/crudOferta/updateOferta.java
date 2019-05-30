@@ -23,6 +23,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import model.LoginUser;
 import model.Oferta.Oferta;
 import model.comboBox.CbxProducto;
 import oracle.jdbc.OracleResultSet;
@@ -32,7 +33,7 @@ import oracle.jdbc.OracleResultSet;
  * @author fernandacancinoreyes
  */
 public class updateOferta extends javax.swing.JFrame {
-
+  LoginUser mod;
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     OracleResultSet rs = null;
@@ -68,7 +69,37 @@ public class updateOferta extends javax.swing.JFrame {
         combobox.getValuesProducto(cbxProductoOfertaMod);
         
     }
+<<<<<<< HEAD
       
+=======
+    public updateOferta(LoginUser mod) {
+        
+        this.mod=mod;
+        initComponents();
+        
+        /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+        
+        //cbxTiendaOfertaMod.setModel(getValuesTiendaMod());
+        //cbxEstadoOfertaMod.setModel(getValuesEstadoMod());
+        //cbxProductoOfertaMod.setModel(getValuesProductoMod());
+        
+        CbxProducto combobox = new CbxProducto();
+        cbxProductoOfertaMod.removeAllItems();
+        combobox.getValuesProducto(cbxProductoOfertaMod);
+        
+    }
+    
+    
+    
+    private int stock ;
+    private int maximoDscto;
+    private int varCero;
+
+    
+
+        
+>>>>>>> 158b48f0cf1f51d9ae06000201668101b629f53b
     
     private void cargarPrecioProducto() throws SQLException{
         Connection cn = obj.ConnectBd();
@@ -725,6 +756,102 @@ public class updateOferta extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnImagenActionPerformed
 
+<<<<<<< HEAD
+=======
+    private void btnGuardarOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarOfertaModActionPerformed
+
+        varCero = 0;
+        maximoDscto = 100;
+
+        System.out.println("txtMaxProductoOferta" + parseInt(txtMaxProductoOfertaMod.getText()));
+        System.out.println("txtMinProductoOferta" + parseInt(txtMinProductoOfertaMod.getText()));
+        System.out.println("txtDesceuntoOferta" + parseInt(txtDesceuntoOfertaMod.getText()));
+        System.out.println("ruta imagen" + ruta );
+
+        if(   txtNombreOfertaMod.getText().trim().length() != 0
+            && txtPrecioProductoOfertaMod.getText().trim().length() != 0
+            && txtDesceuntoOfertaMod.getText().trim().length() != 0
+            && txtStockOfertaMod.getText().trim().length() != 0
+            && txtMinProductoOfertaMod.getText().trim().length() != 0
+            && txtMaxProductoOfertaMod.getText().trim().length() != 0
+        )
+        {
+            if (parseInt(txtStockOfertaMod.getText()) <= stock){
+                if ( parseInt(txtMaxProductoOfertaMod.getText()) <= stock){
+                    if (parseInt(txtDesceuntoOfertaMod.getText()) <= maximoDscto){
+                        if (parseInt(txtMinProductoOfertaMod.getText()) != varCero){
+                            if ( ruta != null){
+                                try {
+
+                                    JavaConnectDb obj = new JavaConnectDb();
+                                    Connection cn = obj.ConnectBd();
+                                    String sql = "INSERT INTO OFERTA (IDTIENDA, IDPRODUCTO, NOMBREOFERTA, MINIMOPRODUCTO, MAXIMOPRODUCTO, "
+                                    + "PRECIOOFERTA, DESCUENTOOFERTA, STOCKPRODUCTOOFERTA, IDESTADO, IMAGENOFERTA)\n" +
+                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                                    pst = cn.prepareStatement(sql);
+
+                                    //guardamos la imagen que emos elegido en estas variables
+                                    File file = new File(ruta);
+                                    fi = new FileInputStream(file);
+
+                                    /*para obtener id de producto*/
+                                    int idTienda =   cbxTiendaOfertaMod.getItemAt(cbxTiendaOfertaMod.getSelectedIndex()).getIDTIENDA();
+                                    int idProducto = cbxProductoOfertaMod.getItemAt(cbxProductoOfertaMod.getSelectedIndex()).getIDPRODUCTO();
+                                    int idEstado =   cbxEstadoOfertaMod.getItemAt(cbxEstadoOfertaMod.getSelectedIndex()).getIDESTADO();
+
+                                    pst.setInt(1, idTienda);
+                                    pst.setInt(2, idProducto);
+                                    pst.setString(3, txtNombreOfertaMod.getText());
+                                    pst.setInt(4, parseInt(txtMinProductoOfertaMod.getText()));
+                                    pst.setInt(5, parseInt(txtMaxProductoOfertaMod.getText()));
+
+                                    pst.setInt(6, parseInt(txtPrecioProductoOfertaMod.getText()));
+                                    pst.setInt(7, parseInt(txtDesceuntoOfertaMod.getText()));
+                                    pst.setInt(8, parseInt(txtStockOfertaMod.getText()));
+                                    pst.setInt(9, idEstado);
+
+                                    pst.setBinaryStream(10, fi);
+
+                                    cn.commit();
+
+                                    rs = (OracleResultSet) pst.executeQuery();
+
+                                    limpiarDatos();
+
+                                } catch (FileNotFoundException ex) {
+                                    Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
+                                }finally{
+                                    JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
+                                    this.setVisible(false);
+                                    readOferta rd = new readOferta(mod);
+                                    rd.setVisible(true);
+                                    rd.pack();
+                                    try{
+                                        pst.close();
+                                    }catch(Exception ex){}
+                                }
+                            }else {JOptionPane.showMessageDialog(rootPane, "Debe insertar una imagen");}
+                        }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar como minimo de productos la cantidad cero");}
+                    }else {JOptionPane.showMessageDialog(rootPane, "No puede realizar un descuento mayor al 100%");}
+                }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un máximo de productos mayor al stock existente");}
+            }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un stock mayor al existente");}
+        }else{JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");}
+
+    }//GEN-LAST:event_btnGuardarOfertaModActionPerformed
+
+    private void btnVolverOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverOfertaModActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        limpiarDatos();
+        readOferta ro = new readOferta(mod);
+        ro.setVisible(true);
+        ro.pack();
+    }//GEN-LAST:event_btnVolverOfertaModActionPerformed
+
+>>>>>>> 158b48f0cf1f51d9ae06000201668101b629f53b
     /**
      * @param args the command line arguments
      */

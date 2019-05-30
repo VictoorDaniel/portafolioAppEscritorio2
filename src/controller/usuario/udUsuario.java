@@ -24,6 +24,70 @@ public class udUsuario {
     
     
     
+  /*Metodo Validar*/
+    public int ExisteRut(String usu) {
+        JavaConnectDb obj = new JavaConnectDb();
+        ResultSet rs=null;
+         Connection cn = obj.ConnectBd();
+        String sql = "SELECT COUNT(IDUSUARIO)FROM USUARIO"
+                + " WHERE RUTUSUARIO =? ";
+        
+        PreparedStatement pst = null;
+     
+        try{
+            pst = cn.prepareStatement(sql);
+         
+            pst.setString(1,usu);
+            rs=pst.executeQuery();
+         
+            if(rs.next())
+            {
+              return  rs.getInt(1);
+            }
+            return 1;
+          
+            
+             
+
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            
+            return 1;
+        }
+              
+    }
+   /*Metodo Validar*/
+    public int ExisteEmail(String usu) {
+        JavaConnectDb obj = new JavaConnectDb();
+        ResultSet rs=null;
+         Connection cn = obj.ConnectBd();
+        String sql = "SELECT COUNT(IDUSUARIO)FROM USUARIO"
+                + " WHERE EMAILUSUARIO =? ";
+        
+        PreparedStatement pst = null;
+     
+        try{
+            pst = cn.prepareStatement(sql);
+         
+            pst.setString(1, usu);
+            rs=pst.executeQuery();
+         
+            if(rs.next())
+            {
+              return  rs.getInt(1);
+            }
+            return 1;
+          
+            
+             
+
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            
+            return 1;
+        }
+              
+    }
 /*Metodo Modificar*/
     public void Modificar_Usuario(Usuario usu) throws SQLException{
         JavaConnectDb obj = new JavaConnectDb();

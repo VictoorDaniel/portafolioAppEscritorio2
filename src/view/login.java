@@ -6,8 +6,16 @@
 package view;
 
 import conectorBD.JavaConnectDb;
+import controller.Login;
+import controller.Utilidades;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
+import model.LoginUser;
+import model.Usuarios.Usuario;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 
@@ -23,7 +31,7 @@ public class login extends javax.swing.JFrame {
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     
-    
+     LoginUser mods= new LoginUser();
     /**
      * Creates new form login
      */
@@ -109,6 +117,11 @@ public class login extends javax.swing.JFrame {
         });
 
         txtLoginPassword.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtLoginPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLoginPasswordActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setText("Usuario:");
@@ -173,33 +186,46 @@ public class login extends javax.swing.JFrame {
 
     private void btnLoginIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginIngresarActionPerformed
         // TODO add your handling code here:
-        //conn = JavaConnectDb.ConnectBd();
-        conn = obj.ConnectBd();
-        
-        try{
-            String sql = "select * from LOGIN where user_id=? and password=?" ; 
-            pst = (OraclePreparedStatement) conn.prepareStatement(sql);
-            pst.setString(1, txtLoginUsuario.getText());
-            pst.setString(2, txtLoginPassword.getText());
-            rs = (OracleResultSet) pst.executeQuery();
-            
-            if(rs.next()){
-                JOptionPane.showMessageDialog(null, "The username and password was successfully verified");
-                menuPrincipal mp = new menuPrincipal();
-                mp.setVisible(true);                
-            }else{
-                JOptionPane.showMessageDialog(null, "The username and password is incorrect, try again");
-            }
-            
-        }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+      Login log=new Login();//llamamos a la clase login
+       String pass=new String(txtLoginPassword.getPassword());//pasamos a string la pass
+       
+       if(!txtLoginUsuario.getText().equals("")&&!pass.equals(""))//validamos los campos vacios
+       {
+      String nuevoPas= Utilidades.Encriptar(pass);//encriptamos la pass
+      
+      mods.setEmailUsuario(txtLoginUsuario.getText());
+      mods.setRutUsuario(txtLoginUsuario.getText());
+       mods.setPassword(nuevoPas);
+          
+          if (log.login(mods))//prenguntamos si algun dato encorrecto en la clase login
+          {
+              
+              //enviamos al frame de menú Principal
+              menuPrincipal mp = null;
+              mp = new menuPrincipal(mods);
+              this.setVisible(false);
+              mp.setVisible(true);
+              mp.pack();
+              
+          } else {
+              JOptionPane.showMessageDialog(null,"Datos incorrectos");
+          }
+       
+       }
+       else 
+       {
+           JOptionPane.showMessageDialog(null,"Ingrese sus datos");
+       }
         
     }//GEN-LAST:event_btnLoginIngresarActionPerformed
 
     private void txtLoginUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginUsuarioActionPerformed
+
+    private void txtLoginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLoginPasswordActionPerformed
 
     /**
      * @param args the command line arguments

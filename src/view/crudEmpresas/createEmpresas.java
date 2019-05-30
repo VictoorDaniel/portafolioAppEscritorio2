@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.Comuna.Comuna;
+import model.LoginUser;
 import model.Usuarios.Usuario;
 import oracle.jdbc.OracleResultSet;
 import org.jdesktop.swingx.autocomplete.AutoCompleteComboBoxEditor;
@@ -23,6 +24,8 @@ import static view.crudUsuarios.createUsuarios.validarRut;
  */
 public class createEmpresas extends javax.swing.JFrame {
 
+    
+    LoginUser mod;
     /**
      * Creates new form createEmpresas
      */
@@ -33,6 +36,28 @@ public class createEmpresas extends javax.swing.JFrame {
     
     OracleResultSet rs = null;
     public createEmpresas() {
+        initComponents();
+        
+         /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+        
+         Usuario usuarios= new Usuario();
+        cmbxUsuarios.removeAllItems();
+        usuarios.getValuesUsuario(cmbxUsuarios);
+        
+        Comuna comunas=new Comuna();
+        
+        cmbxComuna.removeAllItems();
+        comunas.getValuesComuna(cmbxComuna);
+        //Esta sentencia viene de la libreria swing
+        //sirve para que los campos se autocompleten el combx
+        AutoCompleteDecorator.decorate(cmbxUsuarios);
+        AutoCompleteDecorator.decorate(cmbxComuna);
+   
+       
+    }
+    public createEmpresas(LoginUser mod) {
+        this.mod=mod;
         initComponents();
         
          /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
@@ -314,7 +339,7 @@ public class createEmpresas extends javax.swing.JFrame {
     private void btnVolverProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverProductoActionPerformed
         // TODO add your handling code here:
        this.setVisible(false);
-        readEmpresa rp = new readEmpresa();
+        readEmpresa rp = new readEmpresa(mod);
         rp.setVisible(true);
         rp.pack();
 

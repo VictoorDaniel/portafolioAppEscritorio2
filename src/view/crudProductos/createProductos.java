@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import model.LoginUser;
 import model.comboBox.CbxTienda;
 import oracle.jdbc.OracleResultSet;
 
@@ -29,7 +30,7 @@ import oracle.jdbc.OracleResultSet;
  */
 public class createProductos extends javax.swing.JFrame {
     
-
+ LoginUser mod;
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     
@@ -61,6 +62,33 @@ public class createProductos extends javax.swing.JFrame {
         
         //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    }
+
+    createProductos(LoginUser mod)throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        this.mod=mod;
+        
+         /*inicia los componentes*/
+        initComponents();
+        
+        /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+        
+        /*para limpiar el cbx de rubro*/
+        cbxRubroProducto.removeAllItems();
+        
+        ConnectDbProducto cnProd = new ConnectDbProducto();
+        
+        cbxRubroProducto.setModel(getValuesRubro());
+        //cbxCategoriaProducto.setModel(cnProd.getValuesCategoria());
+        
+        CbxTienda comboboxTienda = new CbxTienda();
+        cbxTiendaProducto.removeAllItems();
+        comboboxTienda.getValuesTienda(cbxTiendaProducto);
+        
+        //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
+          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -376,7 +404,7 @@ public class createProductos extends javax.swing.JFrame {
     private void btnVolverProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverProductoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readProductos rp = new readProductos();
+        readProductos rp = new readProductos(mod);
         rp.setVisible(true);
         rp.pack();
         

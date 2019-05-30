@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import model.LoginUser;
 import model.Rubro.Rubro;
 import model.descuento.Descuento;
 import oracle.jdbc.OracleResultSet;
@@ -31,7 +32,7 @@ import static view.crudProductos.updateProductos.cbxCategoriaProductoMod;
  * @author fernandacancinoreyes
  */
 public class createRubro extends javax.swing.JFrame {
-
+LoginUser mod;
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     OracleResultSet rs = null;
@@ -52,7 +53,20 @@ public class createRubro extends javax.swing.JFrame {
          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         
     }
-
+  public createRubro(LoginUser mod) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+      this.mod=mod;
+      initComponents();
+        
+        /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        
+        /*Cargar cmbx*/
+        cbxCategoriaRubro.setModel(getValuesCategoria());
+        
+         //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
+         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        
+    }
     
     private DefaultComboBoxModel getValuesCategoria(){
         
@@ -100,6 +114,12 @@ public class createRubro extends javax.swing.JFrame {
         rub.setIdCategoria(idrubro);
                 
         cRubro.agregarDescuento(rub);
+        
+        readRubro rd = new readRubro();
+            rd.setVisible(true); 
+            rd.pack();
+            this.setVisible(false);
+            
     }
     
     
@@ -110,6 +130,11 @@ public class createRubro extends javax.swing.JFrame {
             //agregaDesucento()
             try {
                 agregaRubro();
+                this.setVisible(false);
+                readRubro rr = new readRubro(mod);
+            rr.setVisible(true); 
+            rr.pack();
+        
             } catch (SQLException ex) {
                 Logger.getLogger(createRubro.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -267,7 +292,7 @@ public class createRubro extends javax.swing.JFrame {
         this.setVisible(false);
         readRubro rb = null;
         try {
-            rb = new readRubro();
+            rb = new readRubro(mod);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(createRubro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {

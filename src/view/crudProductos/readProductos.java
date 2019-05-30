@@ -28,6 +28,7 @@ import javax.swing.RowFilter;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import model.LoginUser;
 import model.TablaImagen;
 import model.producto.Producto;
 import static view.crudProductos.updateProductos.txtIdProductoMod;
@@ -39,7 +40,7 @@ import view.menuPrincipal;
  */
 public class readProductos extends javax.swing.JFrame {
  
-     
+     LoginUser mod;
    
     
     public readProductos() {
@@ -80,6 +81,33 @@ public class readProductos extends javax.swing.JFrame {
                 return false;
             }  
     }; //le agregamos el isCellEditable y lo retornamos falso para que nos epueda editar 
+
+    public readProductos(LoginUser mod) {
+     initComponents();
+        
+     this.mod=mod;
+        /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        
+        propiedadesTabla();
+        
+        /*cargar los datos de la tabla producto en la tabla */
+       // mostrarProductos(); 
+        mostrarProductos(); 
+        /*con esto el tamaño de la pantalla no se puede modificar*/
+        this.setResizable(true);
+        
+        // Indicamos que la aplicación finaliza al cerrar la ventana.
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        //Agregar el btan a la tabla
+        tblProductos.setDefaultRenderer(Object.class, new Renders());
+        //tblProductos.setDefaultRenderer(Object.class, new RenderImages());
+        
+        //modificar el tamaño de las columna en la tablas (lo haremos para la imagen)
+        //modificar el ancho
+        tblProductos.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(110);
+    }
     
     public void propiedadesTabla() {
         
@@ -124,7 +152,7 @@ public class readProductos extends javax.swing.JFrame {
                         "        ,STOCKPRODUCTO\n" +
                         "        ,to_char(FECHAEXPIRACION) \n" +
                         "        ,IMAGENPRODUCTO\n" +
-                        "        ,NOMBRETIENDA\n" +
+                        "        ,TIENDA.NOMBRETIENDA\n" +
                         "from PRODUCTO, RUBRO, CATEGORIA, TIENDA\n" +
                         "where PRODUCTO.RUBROPRODUCTO = rubro.idrubro\n" +
                         "  and rubro.idcategoria = categoria.idcategoria\n"+
@@ -347,17 +375,9 @@ public class readProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
        
         menuPrincipal mp = null;
-        try {
-            mp = new menuPrincipal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+            mp = new menuPrincipal(mod);
+        
         this.setVisible(false);
         mp.setVisible(true);
         mp.pack();
@@ -368,7 +388,7 @@ public class readProductos extends javax.swing.JFrame {
         this.setVisible(false);
         createProductos cp = null;
         try {
-            cp = new createProductos();
+            cp = new createProductos(mod);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -559,6 +579,8 @@ public class readProductos extends javax.swing.JFrame {
                     } catch (SQLException ex) {
                         Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    
+                    
                  
             
                     
@@ -579,14 +601,16 @@ public class readProductos extends javax.swing.JFrame {
                     int s = JOptionPane.showConfirmDialog(null, "Eliminar Usuario","Si/no",JOptionPane.YES_NO_OPTION);
                     
                     if(s == 0){
-                    }
-                    
-                    try {
+                      try {
                         //EVENTOS ELIMINAR
                         eliminar (id);
                     } catch (SQLException ex){
                         Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    
+                    }
+                    
+                  
                 }
             }
 
@@ -609,7 +633,7 @@ public class readProductos extends javax.swing.JFrame {
         cProducto.eliminarProducto(prod);
         //re Actualizamos la pagina para que se vizualice el campo eliminado
          this.setVisible(false);
-        readProductos rp = new readProductos();
+        readProductos rp = new readProductos(mod);
         rp.setVisible(true);
         rp.pack();
     }

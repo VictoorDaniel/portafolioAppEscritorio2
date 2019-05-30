@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.Oferta.Oferta2BI;
 import view.crudProductos.createProductos;
+import view.login;
 import view.menuPrincipal;
 
 /**
@@ -48,14 +49,14 @@ public class Index {
  int dia =  calendar.get(Calendar.DAY_OF_WEEK);
  
 //cambiar el Monday por el dia actual si quieres probar que pasa <3
-if(dia==Calendar.TUESDAY){
+if(dia==Calendar.MONDAY){
    //Lunes
    /*le decimos que comience a ejecutarce desde el lunes 
      cada 168 horas los cual es equvalente a cada7 dias*/
    time.scheduleAtFixedRate(task,0,1000*60*60*168);
  }
    //   lo redireccionamos al menu principal
-   menuPrincipal m = new menuPrincipal();
+   login m = new login();
         m.setVisible(true);
         m.pack();
         

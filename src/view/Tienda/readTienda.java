@@ -22,6 +22,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.Comuna.Comuna;
 import model.Empresas.Empresa;
+import model.LoginUser;
 import model.Tienda.Tienda;
 import model.Usuarios.Usuario;
 import oracle.jdbc.OracleResultSet;
@@ -35,6 +36,11 @@ import view.menuPrincipal;
  */
 public class readTienda extends javax.swing.JFrame {
 
+    
+    
+    LoginUser mod;
+ 
+    
     /**
      * Creates new form readTienda
      */
@@ -96,6 +102,54 @@ public class readTienda extends javax.swing.JFrame {
          //modificar el ancho
        tbl.setRowHeight(50);
         
+    }
+
+    public readTienda(LoginUser mod) {
+        this.mod=mod;
+         initComponents();
+        //tamaño del JFrame
+        setSize(1200,700);
+        
+    
+    /*Para dejar la pantalla centrada*/
+        this.setLocationRelativeTo(null);
+        /*cargar los datos de la tabla */
+        mostrarEnTabla(); 
+        /*con esto el tamaño de la pantalla no se puede modificar*/
+        this.setResizable(false);
+         // Indicamos que la aplicación finaliza al cerrar la ventana.
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //Agregar el btan a la tabla
+         tbl.setDefaultRenderer(Object.class, new AgregarBtnATbl());
+   
+          /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
+        this.setLocationRelativeTo(null);
+        
+         Usuario usuarios= new Usuario();
+        cmbxUsuarios.removeAllItems();
+        usuarios.getValuesUsuarioEncargado(cmbxUsuarios);
+        
+        Comuna comunas=new Comuna();
+        
+        cmbxComuna.removeAllItems();
+        comunas.getValuesComuna(cmbxComuna);
+        
+         Empresa empresa=new Empresa();
+        
+        cmbxEmpresas.removeAllItems();
+        empresa.getValuesEmpresa(cmbxEmpresas);
+        //Esta sentencia viene de la libreria swing
+        //sirve para que los campos se autocompleten el combx
+        AutoCompleteDecorator.decorate(cmbxUsuarios);
+        AutoCompleteDecorator.decorate(cmbxComuna);
+        AutoCompleteDecorator.decorate(cmbxEmpresas);
+        
+        
+         //modificar el tamaño de las columna en la tablas (lo haremos para la imagen)
+        //modificar el ancho
+        tbl.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(110);
+         //modificar el ancho
+       tbl.setRowHeight(50);
     }
      public  void mostrarEnTabla(){
         
@@ -202,7 +256,7 @@ public class readTienda extends javax.swing.JFrame {
         udtie.Eliminar_Tienda(tie);
         //re Actualizamos la pagina para que se vizualice el campo eliminado
          this.setVisible(false);
-        readTienda rp = new readTienda();
+        readTienda rp = new readTienda(mod);
         rp.setVisible(true);
         rp.pack();
     }
@@ -630,7 +684,7 @@ public class readTienda extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        createTienda cp = new createTienda();
+        createTienda cp = new createTienda(mod);
         cp.setVisible(true);
         cp.pack();
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -786,18 +840,7 @@ public class readTienda extends javax.swing.JFrame {
     private void btnMenuPrincipalProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalProdActionPerformed
         // TODO add your handling code here: this.setVisible(false);
         this.setVisible(false);
-        menuPrincipal mp = null;
-        try {
-            mp = new menuPrincipal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(readTienda.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(readTienda.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(readTienda.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(readTienda.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        menuPrincipal mp = new menuPrincipal(mod);   
         mp.setVisible(true);
         mp.pack();
     }//GEN-LAST:event_btnMenuPrincipalProdActionPerformed
@@ -805,7 +848,7 @@ public class readTienda extends javax.swing.JFrame {
     private void btnVolverProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverProductoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        readTienda rp = new readTienda();
+        readTienda rp = new readTienda(mod);
         rp.setVisible(true);
         rp.pack();
     }//GEN-LAST:event_btnVolverProductoActionPerformed
@@ -825,7 +868,7 @@ public class readTienda extends javax.swing.JFrame {
             }
            
             this.setVisible(false);
-            readTienda rp = new readTienda();
+            readTienda rp = new readTienda(mod);
             rp.setVisible(true);
             rp.pack();
 
