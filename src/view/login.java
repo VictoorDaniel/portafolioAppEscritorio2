@@ -107,6 +107,11 @@ public class login extends javax.swing.JFrame {
                 txtLoginUsuarioActionPerformed(evt);
             }
         });
+        txtLoginUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLoginUsuarioKeyTyped(evt);
+            }
+        });
 
         btnLoginIngresar.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         btnLoginIngresar.setText("Ingresar");
@@ -226,6 +231,18 @@ public class login extends javax.swing.JFrame {
     private void txtLoginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginPasswordActionPerformed
+
+    private void txtLoginUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginUsuarioKeyTyped
+        // TODO add your handling code here:
+        char []p={'1','2','3','4','5','6','7','8','9','0','k'};
+        int b=0;
+        for(int i=0;i<=10;i++){
+            if (p[i]==evt.getKeyChar()){b=1;}
+ 
+        }
+        if(b==0){evt.consume();  getToolkit().beep(); }
+        
+    }//GEN-LAST:event_txtLoginUsuarioKeyTyped
 
     /**
      * @param args the command line arguments

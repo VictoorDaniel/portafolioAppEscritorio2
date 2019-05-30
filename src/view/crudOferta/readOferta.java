@@ -61,6 +61,7 @@ LoginUser mod;
                 
     }
     
+    
     /*variables*/
     CrudOferta cOferta = new CrudOferta();
     Oferta ofert = new Oferta();
