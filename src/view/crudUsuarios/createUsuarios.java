@@ -477,66 +477,59 @@ private void limpiarDatos(){
                  {
                     udUsuario ud=new udUsuario();
             
-                    if(ud.ExisteRut(txtRut.getText())==0)
-                    {
-                     if(ud.ExisteEmail(txtEmail.getText())==0)
-                     {
-                try {
-                       
-                    String nuevaPass=Utilidades.Encriptar(pas);
-                    
-                    Connection cn = obj.ConnectBd();
-                    String sql = "Insert into USUARIO (IDROL,nombreusuario,apellidopaterno," +
-                    "apellidomaterno,emailusuario,rutusuario,fechanacimiento," +
-                    "aceptaofertasemail,IDESTADO,Password) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    //if(ud.ExisteRut(txtRut.getText())==0){
+                      //  if(ud.ExisteEmail(txtEmail.getText())==0){
+                            try {
 
-                    try (PreparedStatement pst = cn.prepareCall(sql)) {
-                        /*para obtener id de producto*/
+                                String nuevaPass=Utilidades.Encriptar(pas);
 
-                        int idrol =  cbxRol.getSelectedIndex();
-                        idrol = idrol + 1;
-                        String idRolString = String.valueOf(idrol);
-                        /*se envian los datos a la consulta*/
-                        pst.setString(1, idRolString);
-                        pst.setString(2, txtNombre.getText()) ;
-                        pst.setString(3, txtApellidoP.getText());
-                        pst.setString(4, txtApellidoM.getText());
-                        pst.setString(5, txtEmail.getText());
-                        pst.setString(6, txtRut.getText());
-                        pst.setString(7,((JTextField)JDFechaN.getDateEditor().getUiComponent()).getText());
-                        pst.setString(8,aceptaOferta);
-                        pst.setInt(9,Estado);
-                        pst.setString(10,nuevaPass);
+                                Connection cn = obj.ConnectBd();
+                                String sql = "Insert into USUARIO (IDROL,nombreusuario,apellidopaterno," +
+                                "apellidomaterno,emailusuario,rutusuario,fechanacimiento," +
+                                "aceptaofertasemail,IDESTADO,Password) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-                    
-                         cn.commit(); 
-                        rs = (OracleResultSet) pst.executeQuery();
+                                try (PreparedStatement pst = cn.prepareCall(sql)) {
+                                    /*para obtener id de producto*/
 
-                        if (rs.next()){
-                            limpiarDatos();
-                            JOptionPane.showMessageDialog(null, "Datos insertados");
+                                    int idrol =  cbxRol.getSelectedIndex();
+                                    idrol = idrol + 1;
+                                    String idRolString = String.valueOf(idrol);
+                                    /*se envian los datos a la consulta*/
+                                    pst.setString(1, idRolString);
+                                    pst.setString(2, txtNombre.getText()) ;
+                                    pst.setString(3, txtApellidoP.getText());
+                                    pst.setString(4, txtApellidoM.getText());
+                                    pst.setString(5, txtEmail.getText());
+                                    pst.setString(6, txtRut.getText());
+                                    pst.setString(7,((JTextField)JDFechaN.getDateEditor().getUiComponent()).getText());
+                                    pst.setString(8,aceptaOferta);
+                                    pst.setInt(9,Estado);
+                                    pst.setString(10,nuevaPass);
+
+
+                                     cn.commit(); 
+                                    rs = (OracleResultSet) pst.executeQuery();
+
+                                    if (rs.next()){
+                                        limpiarDatos();
+                                        JOptionPane.showMessageDialog(null, "Datos insertados");
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "Ocurrio un error, no se pudo insertar datos");
+                                    }
+                                    //pst.execute();
+                                }
+
+                            } catch (Exception e) {
+                                System.out.println(e.getCause());
+                                JOptionPane.showMessageDialog(null,"uups no registro"+e);
+                            }/*
                         }else{
-                            JOptionPane.showMessageDialog(null, "Ocurrio un error, no se pudo insertar datos");
+                            JOptionPane.showMessageDialog(null,"El Correo que intenta "
+                                    + "Ingresa ya existe");
                         }
-                        //pst.execute();
-                    }
-
-                } catch (Exception e) {
-                    System.out.println(e.getCause());
-                    JOptionPane.showMessageDialog(null,"uups no registro"+e);
-                }
-                     }else
-                     {
-                         JOptionPane.showMessageDialog(null,"El Correo que intenta "
-                                 + "Ingresa ya existe");
-                     }
-                }
-                else
-                {
-                
-                JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
-                
-                }
+                    }else{
+                        JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
+                        }*/
                 }
         else
         {

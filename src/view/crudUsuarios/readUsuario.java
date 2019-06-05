@@ -925,10 +925,10 @@ public  class readUsuario extends javax.swing.JFrame {
             if(validarRut(txtRut.getText()))
             {
                 udUsuario ud=new udUsuario();
-                 if(ud.ExisteRut(txtRut.getText())==0)
-                    {
-                     if(ud.ExisteEmail(txtEmail.getText())==0)
-                     {
+                 //if(ud.ExisteRut(txtRut.getText())==0)
+                 //   {
+                    // if(ud.ExisteEmail(txtEmail.getText())==0)
+                   //  {
                 try {
                     modificar();
                     this.setVisible(false);
@@ -939,18 +939,18 @@ public  class readUsuario extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                }else
-                     {
-                         JOptionPane.showMessageDialog(null,"El Correo que intenta "
-                                 + "Ingresa ya existe");
-                     }
-                }
+               // }else
+               //    {
+                //         JOptionPane.showMessageDialog(null,"El Correo que intenta "
+                  //               + "Ingresa ya existe");
+                    // }
+            /*    }
                 else
                 {
                 
                 JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
                 
-                }
+                }*/
 
             }
             else
