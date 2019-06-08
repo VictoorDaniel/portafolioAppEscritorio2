@@ -234,13 +234,16 @@ public class login extends javax.swing.JFrame {
 
     private void txtLoginUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginUsuarioKeyTyped
         // TODO add your handling code here:
-        char []p={'1','2','3','4','5','6','7','8','9','0','k'};
+        char []p={'1','2','3','4','5','6','7','8','9','0','-','k'};
         int b=0;
         for(int i=0;i<=10;i++){
             if (p[i]==evt.getKeyChar()){b=1;}
  
         }
         if(b==0){evt.consume();  getToolkit().beep(); }
+        int numerodecaracater=10;
+        if(txtLoginUsuario.getText().length()>=numerodecaracater)
+        {evt.consume();JOptionPane.showMessageDialog(rootPane,"ejemplo: 12345678-0");};
         
     }//GEN-LAST:event_txtLoginUsuarioKeyTyped
 
