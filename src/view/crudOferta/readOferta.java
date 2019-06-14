@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -547,6 +547,12 @@ LoginUser mod;
         String nombreTienda     = ""+tblOferta.getValueAt(clic_tabla, 2);
         String nombreProducto   = ""+tblOferta.getValueAt(clic_tabla, 3);
         String precioProducto   = ""+tblOferta.getValueAt(clic_tabla, 4);
+        String dscto            = ""+tblOferta.getValueAt(clic_tabla, 5);
+        String stock            = ""+tblOferta.getValueAt(clic_tabla, 6);
+        String minProd          = ""+tblOferta.getValueAt(clic_tabla, 8);
+        String maxProd          = ""+tblOferta.getValueAt(clic_tabla, 9);
+        String estado           = ""+tblOferta.getValueAt(clic_tabla, 10);
+        
         
         int column =  tblOferta.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY()/tblOferta.getRowHeight();
@@ -570,21 +576,21 @@ LoginUser mod;
                     System.out.println("nombreTienda" + nombreTienda);
                     System.out.println("nombreProducto" + nombreProducto);
                     
-                    
-                    //updateOferta.cbxProductoOfertaMod.setSelectedItem(nombreProducto);
-                    
-//EVENTOS MODIFICAR
-                    //Enviar de un Jpanel a otro
-                    //jPanel.setSelectedIndex(1);
-
                     this.setVisible(false);
                     updateOferta ud = new updateOferta(mod);
                     ud.setVisible(true);
 
-                    /*ENVIAR DATOS A LA VENTANA*/
-
-                    //updateOferta.txtIdDescuentoMod.setText(id);
-
+                    updateOferta.txtIdOfertaMod.setText(idOferta);
+                    updateOferta.txtNombreOfertaMod.setText(nombreOferta);
+                    //updateOferta.cbxTiendaOfertaMod.setSelectedItem(nombreTienda);
+                    //updateOferta.cbxProductoOfertaMod.setSelectedItem(nombreProducto);
+                    updateOferta.txtPrecioProductoOfertaMod.setText(precioProducto);
+                    updateOferta.txtDesceuntoOfertaMod.setText(dscto);
+                    updateOferta.txtStockOfertaMod.setText(stock);
+                    updateOferta.txtMinProductoOfertaMod.setText(minProd);
+                    updateOferta.txtMaxProductoOfertaMod.setText(maxProd);
+                    //updateOferta.cbxEstadoOfertaMod.setSelectedItem(estado);
+                    
                     /***************************/
 
                     ud.pack();

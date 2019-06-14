@@ -477,8 +477,8 @@ private void limpiarDatos(){
                  {
                     udUsuario ud=new udUsuario();
             
-                    //if(ud.ExisteRut(txtRut.getText())==0){
-                      //  if(ud.ExisteEmail(txtEmail.getText())==0){
+                    if(ud.ExisteRut(txtRut.getText())==0){
+                        if(ud.ExisteEmail(txtEmail.getText())==0){
                             try {
 
                                 String nuevaPass=Utilidades.Encriptar(pas);
@@ -522,14 +522,14 @@ private void limpiarDatos(){
                             } catch (Exception e) {
                                 System.out.println(e.getCause());
                                 JOptionPane.showMessageDialog(null,"uups no registro"+e);
-                            }/*
+                            }
                         }else{
                             JOptionPane.showMessageDialog(null,"El Correo que intenta "
                                     + "Ingresa ya existe");
                         }
                     }else{
                         JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
-                        }*/
+                        }
                 }
         else
         {
