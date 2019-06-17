@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -34,7 +35,7 @@ import model.TablaImagen;
 import model.Usuarios.Usuario;
 import oracle.jdbc.OracleResultSet;
 import view.menuPrincipal;
-
+import model.comboBox.CbxTienda;
 /**
  *
  * @author muzaka
@@ -69,8 +70,8 @@ public  class readUsuario extends javax.swing.JFrame {
         tblUsuarios.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(110);
          //modificar el ancho
        tblUsuarios.setRowHeight(50);
-       
-    }
+       cargarCbx();
+           }
     
     public readUsuario(LoginUser mod)
     {
@@ -100,6 +101,7 @@ public  class readUsuario extends javax.swing.JFrame {
         tblUsuarios.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(110);
          //modificar el ancho
        tblUsuarios.setRowHeight(50);
+       cargarCbx();
     }
      /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
@@ -138,6 +140,7 @@ public  class readUsuario extends javax.swing.JFrame {
             Estado=1;
         }
           int idrol =  cbxRol.getSelectedIndex();
+           int idTienda =   cbxTiendaOferta.getItemAt(cbxTiendaOferta.getSelectedIndex()).getIDTIENDA();
                         idrol = idrol + 1;
                         usu.setIdUsuario(Integer.parseInt(txtCodigo.getText()));
                         usu.setIdRol(idrol);
@@ -150,6 +153,7 @@ public  class readUsuario extends javax.swing.JFrame {
                         usu.setAceptaOfertasEmail(aceptaOferta);
                         usu.setIdEstado(Estado);
                         usu.setPassword(Utilidades.Encriptar(txtPassword.getText()));
+                        usu.setIdTienda(idTienda);
                         ud.Modificar_Usuario(usu);
         
      
@@ -187,6 +191,7 @@ public  class readUsuario extends javax.swing.JFrame {
         tabla.addColumn("Acepta oferta");
         tabla.addColumn("Estado");
         tabla.addColumn("Password");
+        tabla.addColumn("Tienda");
         tabla.addColumn("Modificar");
         tabla.addColumn("Eliminar");
         
@@ -199,21 +204,22 @@ public  class readUsuario extends javax.swing.JFrame {
         try {
             Connection cn = obj.ConnectBd();
             Statement st = cn.createStatement();
-            String sql = "select   IDUSUARIO\n" +
+            String sql = "select   USUARIO.IDUSUARIO\n" +
                         "        ,ROL.nombrerol\n" +
-                        "        ,NOMBREUSUARIO\n" +
-                        "        ,APELLIDOPATERNO\n" +
-                        "        ,APELLIDOMATERNO\n" +
-                        "        ,EMAILUSUARIO\n" +
-                        "        ,RUTUSUARIO\n" +
-                        "        ,to_char(FECHANACIMIENTO) \n" +
-                        "        ,to_char(FECHAREGISTRO) \n" +
-                       "        ,ACEPTAOFERTASEMAIL\n" +
+                        "        ,USUARIO.NOMBREUSUARIO\n" +
+                        "        ,USUARIO.APELLIDOPATERNO\n" +
+                        "        ,USUARIO.APELLIDOMATERNO\n" +
+                        "        ,USUARIO.EMAILUSUARIO\n" +
+                        "        ,USUARIO.RUTUSUARIO\n" +
+                        "        ,to_char(USUARIO.FECHANACIMIENTO,'DD-mon-YYYY') \n" +
+                        "        ,to_char(USUARIO.FECHAREGISTRO,'DD-mon-YYYY') \n" +
+                       "        ,USUARIO.ACEPTAOFERTASEMAIL\n" +
                        "        ,ESTADO.GLOSAESTADO \n" +
-                       "        ,PASSWORD \n" +
-                          "from USUARIO, ROL, ESTADO\n" +
+                       "        ,USUARIO.PASSWORD \n" +
+                       "        ,TIENDA.NOMBRETIENDA \n" +
+                          "from USUARIO, ROL, ESTADO,TIENDA\n" +
                         "where USUARIO.IDROL = ROL.IDROL\n" +
-                        "  and USUARIO.idEstado = ESTADO.IDESTADO";
+                        "  and USUARIO.idEstado = ESTADO.IDESTADO AND USUARIO.IDTIENDA=TIENDA.IDTIENDA";
             ResultSet rs = st.executeQuery(sql);
             
             Object datos[] = new Object[40];/* A la cantidad objetos le puse 40
@@ -236,12 +242,13 @@ public  class readUsuario extends javax.swing.JFrame {
                 try {
                     //mostrar la contraseña desncriptada
                  datos[11] =  Utilidades.Desencriptar(rs.getString(12));
+                 
                 } catch (Exception ex) {
                     Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
-                datos[12] = btn_modificar;
-                datos[13] = btn_eliminar;
+               datos[12]=rs.getString(13);
+                datos[13] = btn_modificar;
+                datos[14] = btn_eliminar;
                 
                   
                 
@@ -307,6 +314,8 @@ public  class readUsuario extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        cbxTiendaOferta = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -328,7 +337,8 @@ public  class readUsuario extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Mantenedor de Usuarios");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios.png"))); // NOI18N
+        jLabel1.setText("   Mantenedor de Usuarios");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -403,6 +413,17 @@ public  class readUsuario extends javax.swing.JFrame {
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
+            }
+        });
+
+        txtRut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRutActionPerformed(evt);
+            }
+        });
+        txtRut.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRutKeyTyped(evt);
             }
         });
 
@@ -505,6 +526,16 @@ public  class readUsuario extends javax.swing.JFrame {
 
         jLabel16.setText("Codigo");
 
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel17.setText("Tienda");
+        jLabel17.setMaximumSize(new java.awt.Dimension(100, 100));
+
+        cbxTiendaOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTiendaOfertaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPActualizarLayout = new javax.swing.GroupLayout(jPActualizar);
         jPActualizar.setLayout(jPActualizarLayout);
         jPActualizarLayout.setHorizontalGroup(
@@ -524,7 +555,7 @@ public  class readUsuario extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(97, 97, 97))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPActualizarLayout.createSequentialGroup()
-                .addContainerGap(231, Short.MAX_VALUE)
+                .addContainerGap(251, Short.MAX_VALUE)
                 .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPActualizarLayout.createSequentialGroup()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -540,6 +571,25 @@ public  class readUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPActualizarLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(rbAceptarN)
+                        .addGap(32, 32, 32)
+                        .addComponent(rbAceptarS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPActualizarLayout.createSequentialGroup()
+                                    .addComponent(rbInactivo)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(rbActivo))
+                                .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cbxRol, javax.swing.GroupLayout.Alignment.LEADING, 0, 174, Short.MAX_VALUE)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(btnGuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(127, 127, 127))
+                    .addGroup(jPActualizarLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -552,26 +602,12 @@ public  class readUsuario extends javax.swing.JFrame {
                         .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPActualizarLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(rbAceptarN)
-                        .addGap(32, 32, 32)
-                        .addComponent(rbAceptarS)))
-                .addGap(38, 38, 38)
-                .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPActualizarLayout.createSequentialGroup()
-                            .addComponent(rbInactivo)
-                            .addGap(18, 18, 18)
-                            .addComponent(rbActivo))
-                        .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cbxRol, javax.swing.GroupLayout.Alignment.LEADING, 0, 174, Short.MAX_VALUE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnGuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(127, 127, 127))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPActualizarLayout.createSequentialGroup()
+                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbxTiendaOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(84, Short.MAX_VALUE))))
         );
         jPActualizarLayout.setVerticalGroup(
             jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -619,7 +655,11 @@ public  class readUsuario extends javax.swing.JFrame {
                             .addComponent(rbInactivo)
                             .addComponent(rbActivo)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(61, 89, Short.MAX_VALUE)))
+                        .addGap(46, 46, 46)
+                        .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbxTiendaOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)))
                 .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPActualizarLayout.createSequentialGroup()
                         .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -631,9 +671,10 @@ public  class readUsuario extends javax.swing.JFrame {
                             .addComponent(rbAceptarN)
                             .addComponent(rbAceptarS)))
                     .addGroup(jPActualizarLayout.createSequentialGroup()
-                        .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(btnGuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(82, 82, 82)
+                        .addGroup(jPActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(41, 41, 41))
         );
 
@@ -686,33 +727,36 @@ public  class readUsuario extends javax.swing.JFrame {
 
         String[] titulos = {"id", "Rol", "Nombre", "Apellido Paterno", "Apellido Materno", 
                  "Email","Rut","Fecha Nacimiento","Fecha de Registro","Acepta Oferta","Estado"
-        ,"Password","Modificar","Eliminar"};
+        ,"Password","Tienda","Modificar","Eliminar"};
 
-       String sql = "select   IDUSUARIO\n" +
+       String sql = "select  USUARIO.IDUSUARIO\n" +
                         "        ,ROL.nombrerol\n" +
-                        "        ,NOMBREUSUARIO\n" +
-                        "        ,APELLIDOPATERNO\n" +
-                        "        ,APELLIDOMATERNO\n" +
-                        "        ,EMAILUSUARIO\n" +
-                        "        ,RUTUSUARIO\n" +
-                        "        ,to_char(FECHANACIMIENTO) \n" +
-                        "        ,to_char(FECHAREGISTRO) \n" +
-                       "        ,ACEPTAOFERTASEMAIL\n" +
+                        "        ,USUARIO.NOMBREUSUARIO\n" +
+                        "        ,USUARIO.APELLIDOPATERNO\n" +
+                        "        ,USUARIO.APELLIDOMATERNO\n" +
+                        "        ,USUARIO.EMAILUSUARIO\n" +
+                        "        ,USUARIO.RUTUSUARIO\n" +
+                        "        ,to_char(USUARIO.FECHANACIMIENTO,'DD-MON-YYYY') \n" +
+                        "        ,to_char(USUARIO.FECHAREGISTRO,'DD-MON-YYYY') \n" +
+                       "        ,USUARIO.ACEPTAOFERTASEMAIL\n" +
                        "        ,ESTADO.GLOSAESTADO \n" +
-                        "        ,PASSWORD \n" +
+                        "        ,USUARIO.PASSWORD \n" +
+                       "        ,TIENDA.NOMBRETIENDA \n" +
                           "from USUARIO INNER JOIN ROL\n" +
                         "ON USUARIO.IDROL = ROL.IDROL\n" +
                         "  INNER JOIN ESTADO ON USUARIO.idEstado = ESTADO.IDESTADO "+
-        " where IDUSUARIO LIKE '%" + buscartodo.getText() + "%' "
-        + "OR NOMBREUSUARIO  LIKE'%" + buscartodo.getText() + "%'"
+                         " INNER JOIN TIENDA ON USUARIO.IDTIENDA = TIENDA.IDTIENDA "+
+        " where USUARIO.IDUSUARIO LIKE '%" + buscartodo.getText() + "%' "
+        + "OR USUARIO.NOMBREUSUARIO  LIKE'%" + buscartodo.getText() + "%'"
         + "OR ROL.NOMBREROL LIKE '%" + buscartodo.getText() + "%'"
-        + "OR APELLIDOPATERNO LIKE '%" + buscartodo.getText() + "%'"
-        + "OR APELLIDOMATERNO LIKE '%" + buscartodo.getText() + "%'"
-        + "OR RUTUSUARIO LIKE '%" + buscartodo.getText() + "%'"
-        + "OR EMAILUSUARIO LIKE '%" + buscartodo.getText() + "%'"
-        + "OR FECHANACIMIENTO LIKE '%" + buscartodo.getText() + "%'"
+        + "OR USUARIO.APELLIDOPATERNO LIKE '%" + buscartodo.getText() + "%'"
+        + "OR USUARIO.APELLIDOMATERNO LIKE '%" + buscartodo.getText() + "%'"
+        + "OR USUARIO.RUTUSUARIO LIKE '%" + buscartodo.getText() + "%'"
+        + "OR USUARIO.EMAILUSUARIO LIKE '%" + buscartodo.getText() + "%'"
+        + "OR USUARIO.FECHANACIMIENTO LIKE '%" + buscartodo.getText() + "%'"
         + "OR ESTADO.GLOSAESTADO LIKE '%" + buscartodo.getText() + "%'"
-        + "OR FECHAREGISTRO  LIKE'%" + buscartodo.getText() + "%'";
+        + "OR TIENDA.NOMBRETIENDA LIKE '%" + buscartodo.getText() + "%'"
+        + "OR USUARIO.FECHAREGISTRO  LIKE'%" + buscartodo.getText() + "%'";
         tabla = new DefaultTableModel(null, titulos){
             public boolean isCellEditable(int row, int column){
                 return false;
@@ -750,8 +794,9 @@ public  class readUsuario extends javax.swing.JFrame {
                 {
                     Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                 datos[12] = btn_modificar;
-                datos[13] = btn_eliminar;
+                datos[12]=rs.getString(13);
+                 datos[13] = btn_modificar;
+                datos[14] = btn_eliminar;
 
                 
                 tabla.addRow(datos);
@@ -781,21 +826,7 @@ public  class readUsuario extends javax.swing.JFrame {
               mp.setVisible(true);
               mp.pack();
       
-          /* menuPrincipal mp = null;
-           try {
-               mp = new menuPrincipal();
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (IllegalAccessException ex) {
-               Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (InstantiationException ex) {
-               Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (UnsupportedLookAndFeelException ex) {
-               Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-           }
-              this.setVisible(false);
-              mp.setVisible(true);
-              mp.pack();*/
+         
        
     }//GEN-LAST:event_btnMenuPrincipalProdActionPerformed
 
@@ -819,6 +850,7 @@ public  class readUsuario extends javax.swing.JFrame {
         String AceptaOferta = ""+tblUsuarios.getValueAt(clic_tabla,9);
         String Estado =""+tblUsuarios.getValueAt(clic_tabla, 10);
         String pass = ""+tblUsuarios.getValueAt(clic_tabla, 11);
+        String Tienda = ""+tblUsuarios.getValueAt(clic_tabla, 12);
         
        //enviamos las variables a las cajas de textos para que aparescan cargadas
         txtCodigo.setText(String.valueOf(codigo));
@@ -851,6 +883,7 @@ public  class readUsuario extends javax.swing.JFrame {
         ((JTextField)JDFechaN.getDateEditor().getUiComponent()).setText(fechaN);
         
         cbxRol.setSelectedItem(rol);
+        cbxTiendaOferta.setSelectedItem(Tienda);
         
          txtPassword.setText(pass);
          
@@ -913,6 +946,8 @@ public  class readUsuario extends javax.swing.JFrame {
     private void btnGuardarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarUsuariosActionPerformed
 
        
+ if(txtCodigo.getText().trim().length() == 0)
+ {JOptionPane.showMessageDialog(null, "seleccione un objeto para modificar", "Error", JOptionPane.ERROR_MESSAGE);}else{
 
         if(txtNombre.getText().trim().length() != 0 && txtApellidoP.getText().trim().length() != 0
             && txtApellidoM.getText().trim().length() != 0
@@ -922,13 +957,21 @@ public  class readUsuario extends javax.swing.JFrame {
         )//este if es para validar algunos campos vacios
         {
             
-            if(validarRut(txtRut.getText()))
-            {
-                udUsuario ud=new udUsuario();
-                 //if(ud.ExisteRut(txtRut.getText())==0)
-                 //   {
-                    // if(ud.ExisteEmail(txtEmail.getText())==0)
-                   //  {
+            if(validarRut(txtRut.getText())){
+                
+                if (!(Pattern.matches("^[a-zA-Z0-9.]+[@]{1}+[a-zA-Z0-9.]+[.]{1}+[a-zA-Z0-9]+$", txtEmail.getText()))) 
+                        {JOptionPane.showMessageDialog(null, "formato de email incorrecto", "Error", JOptionPane.ERROR_MESSAGE);}else{
+                           if (!(Pattern.matches("^[0-9]+[.]{1}+[0-9]+[.]{1}+[0-9]+[-]{1}+[a-zA-Z0-9]+$", txtRut.getText()))) 
+                        {JOptionPane.showMessageDialog(null, "formato de rut incorrecto;\n ejemplo: 11.123.456-0", "Error", JOptionPane.ERROR_MESSAGE);}else{
+                      if (!(Pattern.matches("^[0-9]{2}+[-]{1}+[a-zA-Z]{3}+[-]{1}+[0-9]{4}+$", ((JTextField)JDFechaN.getDateEditor().getUiComponent()).getText()))) 
+                        {JOptionPane.showMessageDialog(null, "formato de fecha incorrecta; \n ejemplo: dd-mmm-yyyy", "Error", JOptionPane.ERROR_MESSAGE);}else{
+             udUsuario u = new udUsuario();
+   int edad =u.calcularEdad(JDFechaN);
+   if(edad>=18)
+   {
+               
+                
+                 
                 try {
                     modificar();
                     this.setVisible(false);
@@ -936,31 +979,14 @@ public  class readUsuario extends javax.swing.JFrame {
                    rp.setVisible(true);
                    rp.pack();
                  
-                } catch (SQLException ex) {
-                    Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);
-                }
-               // }else
-               //    {
-                //         JOptionPane.showMessageDialog(null,"El Correo que intenta "
-                  //               + "Ingresa ya existe");
-                    // }
-            /*    }
-                else
-                {
-                
-                JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
-                
-                }*/
+                } catch (SQLException ex) { Logger.getLogger(readUsuario.class.getName()).log(Level.SEVERE, null, ex);}
+            } else{JOptionPane.showMessageDialog(null, "para registrarse tiene usted que ser mayor de 18 años \n su edad actua es : "+edad);}
+                            }} }
 
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Rut incorrecto");
-            }
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");
-        }
+            }else{JOptionPane.showMessageDialog(null, "Rut incorrecto");}
+        }else{JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");}
+        
+ }
     }//GEN-LAST:event_btnGuardarUsuariosActionPerformed
 public static boolean validarRut(String rut) {
 
@@ -1025,6 +1051,37 @@ public static boolean validarRut(String rut) {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxRolActionPerformed
 
+    private void txtRutKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutKeyTyped
+        // TODO add your handling code here:
+          
+          char []p={'1','2','3','4','5','6','7','8','9','0','-','k','.'};
+        int b=0;
+        for(int i=0;i<=12;i++){
+            if (p[i]==evt.getKeyChar()){b=1;}
+ 
+        }
+        if(b==0){evt.consume();  getToolkit().beep(); }
+        int numerodecaracater=12;
+        if(txtRut.getText().length()>=numerodecaracater)
+        {evt.consume();};
+    }//GEN-LAST:event_txtRutKeyTyped
+
+    private void txtRutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRutActionPerformed
+
+      private void cargarCbx(){
+        
+        CbxTienda comboboxTienda = new CbxTienda();
+        cbxTiendaOferta.removeAllItems();
+        comboboxTienda.getValuesTienda(cbxTiendaOferta);
+         }
+   
+    
+    private void cbxTiendaOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaOfertaActionPerformed
+        
+    }//GEN-LAST:event_cbxTiendaOfertaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1068,6 +1125,7 @@ public static boolean validarRut(String rut) {
     private javax.swing.JButton btnVolverProducto;
     private javax.swing.JTextField buscartodo;
     private javax.swing.JComboBox cbxRol;
+    private javax.swing.JComboBox<model.comboBox.CbxTienda> cbxTiendaOferta;
     private javax.swing.ButtonGroup gA;
     private javax.swing.ButtonGroup gE;
     private javax.swing.JLabel jLabel1;
@@ -1078,6 +1136,7 @@ public static boolean validarRut(String rut) {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

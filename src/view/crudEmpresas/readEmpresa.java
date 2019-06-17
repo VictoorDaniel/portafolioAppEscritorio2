@@ -155,7 +155,7 @@ public class readEmpresa extends javax.swing.JFrame {
                         "        ,USUARIO.NOMBREUSUARIO\n" +
                         "        ,USUARIO.APELLIDOPATERNO\n" +
                         "        ,USUARIO.APELLIDOMATERNO\n" +
-                        "        ,to_char(FECHAINSCRIPCION) \n" +
+                        "        ,to_char(FECHAINSCRIPCION,'DD-mon-YYYY'') \n" +
                        "        ,COMUNA.NOMBRECOMUNA\n" +
                        "        ,CALLEDIRECCION \n" +
                        "        ,NUMERODIRECCION \n" +
@@ -282,7 +282,8 @@ public class readEmpresa extends javax.swing.JFrame {
         jLabel2.setText("Tiendas Retail Mis Ofertas");
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setText("Mostrar Empresa");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/empresa.png"))); // NOI18N
+        jLabel1.setText(" Mostrar Empresa");
 
         buscartodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -600,7 +601,7 @@ public class readEmpresa extends javax.swing.JFrame {
                         "        ,USUARIO.NOMBREUSUARIO\n" +
                         "        ,USUARIO.APELLIDOPATERNO\n" +
                         "        ,USUARIO.APELLIDOMATERNO\n" +
-                        "        ,to_char(FECHAINSCRIPCION) \n" +
+                        "        ,to_char(FECHAINSCRIPCION,'DD-mon-YYYY') \n" +
                        "        ,COMUNA.NOMBRECOMUNA\n" +
                        "        ,CALLEDIRECCION \n" +
                        "        ,NUMERODIRECCION \n" +
@@ -763,7 +764,8 @@ public class readEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverProductoActionPerformed
 
     private void btnGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProductoActionPerformed
-
+if(txtCodigo.getText().trim().length() == 0)
+ {JOptionPane.showMessageDialog(null, "seleccione un objeto para modificar", "Error", JOptionPane.ERROR_MESSAGE);}else{
         if(txtNombreEmpresa.getText().trim().length() != 0 && txtCalleDireccion.getText().trim().length() != 0
             && txtObservacion.getText().trim().length() != 0 && txtNumero.getText().trim().length() != 0
         )//este if es para validar algunos campos vacios
@@ -786,6 +788,7 @@ public class readEmpresa extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");
         }
+}
     }//GEN-LAST:event_btnGuardarProductoActionPerformed
 
     private void txtNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyTyped

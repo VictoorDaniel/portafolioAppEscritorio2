@@ -1,0 +1,2 @@
+182;Parlante;81 La F;Parlantes;1;5;19000;30;Activo;0;MARTES   11-JUN-2019 11:54 AM;5
+141;ParlantesSony;81 La F;Parlantes;1;25;19000;30;Inactivo;0;LUNES    10-JUN-2019 01:42 PM;30

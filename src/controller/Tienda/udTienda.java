@@ -18,7 +18,8 @@ import model.Tienda.Tienda;
  */
 public class udTienda {
     
-    
+    JavaConnectDb obj = new JavaConnectDb();
+         Connection cn = obj.ConnectBd();
     
   /*Metodo Modificar*/
     public void Modificar_Tienda(Tienda tie) {
@@ -62,8 +63,7 @@ public class udTienda {
 
 /*Metodo Eliminar*/
     public void Eliminar_Tienda(Tienda tie) throws SQLException{
-        JavaConnectDb obj = new JavaConnectDb();
-         Connection cn = obj.ConnectBd();
+        
         String sql = "DELETE FROM TIENDA WHERE IDTIENDA = ?";
         PreparedStatement pst = cn.prepareCall(sql);
         try{
@@ -81,5 +81,32 @@ public class udTienda {
             }catch(Exception ex){}
         }
     }
+    
+      public void ActualizarCantidadDeUsuarios(int idTienda) {
+        
+        String sql = "UPDATE TIENDA SET usuariosregistrados=usuariosregistrados+1 where IDTIENDA= ?";
+           PreparedStatement pst = null;
+     
+        try{
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1,idTienda);
+          
+            pst.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            
+             
+            try{
+                pst.close();
+             
+            }catch(Exception ex){}
+        }
+              
+    }
+
+    
     
 }

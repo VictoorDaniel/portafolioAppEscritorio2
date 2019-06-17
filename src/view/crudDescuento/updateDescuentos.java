@@ -116,15 +116,19 @@ public class updateDescuentos extends javax.swing.JFrame {
         btnGuardarDescuentoMod = new javax.swing.JButton();
         btnVolverDescuentoMod = new javax.swing.JButton();
         txtIdDescuentoMod = new javax.swing.JTextField();
+        txtIdProductoMod = new javax.swing.JTextField();
+        dtFechaVencimientoMod = new com.toedter.calendar.JDateChooser();
+        btnImagenMod = new javax.swing.JButton();
+        lblImagenMod = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(551, 416));
 
         jPanel1.setBackground(new java.awt.Color(208, 211, 212));
         jPanel1.setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setText("Modificar Descuento");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/descuento.png"))); // NOI18N
+        jLabel1.setText("  Modificar Descuento");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -137,7 +141,7 @@ public class updateDescuentos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -214,6 +218,15 @@ public class updateDescuentos extends javax.swing.JFrame {
         txtIdDescuentoMod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdDescuentoModActionPerformed(evt);
+            }
+        });
+
+        txtIdProductoMod.setEditable(false);
+
+        btnImagenMod.setText("Imagen...");
+        btnImagenMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImagenModActionPerformed(evt);
             }
         });
 
@@ -408,15 +421,19 @@ public class updateDescuentos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardarDescuentoMod;
+    private javax.swing.JButton btnImagenMod;
     private javax.swing.JButton btnVolverDescuentoMod;
+    public static com.toedter.calendar.JDateChooser dtFechaVencimientoMod;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    public static javax.swing.JLabel jLabel4;
+    public static javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    public static javax.swing.JLabel lblImagenMod;
     public static javax.swing.JTextField txtIdDescuentoMod;
+    public static javax.swing.JTextField txtIdProductoMod;
     public static javax.swing.JTextField txtMaxPuntosDescuentoMod;
     public static javax.swing.JTextField txtMinPuntosDescuentoMod;
     public static javax.swing.JTextField txtPorcentajeDescuentoMod;

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import model.Usuarios.Usuario;
 import view.crudUsuarios.readUsuario;
@@ -94,7 +95,7 @@ public class udUsuario {
          Connection cn = obj.ConnectBd();
         String sql = "UPDATE USUARIO SET IDROL= ?, NombreUsuario = ?,"
                 + "APELLIDOPATERNO= ?, APELLIDOMATERNO = ?,EMAILUSUARIO= ?,RUTUSUARIO= ?,"
-                + "FECHANACIMIENTO= ?,ACEPTAOFERTASEMAIL= ?,IDESTADO= ?,PASSWORD = ?"
+                + "FECHANACIMIENTO= ?,ACEPTAOFERTASEMAIL= ?,IDESTADO= ?,PASSWORD = ?,IDTIENDA = ?"
                 + " WHERE IDUSUARIO = ?";
         
         PreparedStatement pst = null;
@@ -111,7 +112,8 @@ public class udUsuario {
             pst.setString(8, usu.getAceptaOfertasEmail());
             pst.setInt(9, usu.getIdEstado());
             pst.setString(10, usu.getPassword());
-             pst.setInt(11, usu.getIdUsuario());
+            pst.setInt(11, usu.getIdTienda());
+             pst.setInt(12, usu.getIdUsuario());
              
             pst.executeUpdate();
         }catch(SQLException ex){
@@ -154,4 +156,14 @@ public class udUsuario {
         }
     }
     
+   public int calcularEdad(com.toedter.calendar.JDateChooser fechaNaci){
+        Calendar today = Calendar.getInstance();
+ int diff_año =today.get(Calendar.YEAR)-fechaNaci.getCalendar().get(Calendar.YEAR);
+int diff_mes = today.get(Calendar.MONTH)-fechaNaci.getCalendar().get(Calendar.MONTH);
+int diff_dia = today.get(Calendar.DATE)-fechaNaci.getCalendar().get(Calendar.DATE);
+if(diff_mes<0 ||(diff_mes==0 && diff_dia<0)){
+diff_año =diff_año-1;
+}
+return diff_año;
+}
 }

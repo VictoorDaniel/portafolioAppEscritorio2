@@ -150,7 +150,7 @@ public class readProductos extends javax.swing.JFrame {
                         "        ,CATEGORIA.nombrecategoria\n" +
                         "        ,PRECIOPRODUCTO\n" +
                         "        ,STOCKPRODUCTO\n" +
-                        "        ,to_char(FECHAEXPIRACION) \n" +
+                        "        ,to_char(FECHAEXPIRACION,'DD-mon-YYYY') \n" +
                         "        ,IMAGENPRODUCTO\n" +
                         "        ,TIENDA.NOMBRETIENDA\n" +
                         "from PRODUCTO, RUBRO, CATEGORIA, TIENDA\n" +
@@ -265,7 +265,8 @@ public class readProductos extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Mantenedor de Productos");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/prod.png"))); // NOI18N
+        jLabel1.setText(" Mantenedor de Productos");
 
         tblProductos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
@@ -422,7 +423,7 @@ public class readProductos extends javax.swing.JFrame {
                         "        ,CATEGORIA.nombrecategoria\n" +
                         "        ,PRECIOPRODUCTO\n" +
                         "        ,STOCKPRODUCTO\n" +
-                        "        ,to_char(FECHAEXPIRACION) \n" +
+                        "        ,to_char(FECHAEXPIRACION,'DD-mon-YYYY') \n" +
                         "        ,IMAGENPRODUCTO\n" +
                         "        ,TIENDA.NOMBRETIENDA\n"+
                         "from PRODUCTO INNER JOIN RUBRO     ON PRODUCTO.RUBROPRODUCTO = rubro.idrubro\n" +

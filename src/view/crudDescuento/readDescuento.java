@@ -229,7 +229,8 @@ public class readDescuento extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Mantenedor de Descuentos");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/descuento.png"))); // NOI18N
+        jLabel1.setText("  Mantenedor de Descuentos");
 
         tblDescuentos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tblDescuentos.setModel(new javax.swing.table.DefaultTableModel(

@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -239,7 +240,8 @@ LoginUser mod;
         jPanel1.setToolTipText("");
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel9.setText("Modificar Producto");
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/prod.png"))); // NOI18N
+        jLabel9.setText("  Modificar Producto");
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(51, 51, 51));
@@ -252,7 +254,7 @@ LoginUser mod;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -451,15 +453,22 @@ LoginUser mod;
     }//GEN-LAST:event_btnModificarProductoActionPerformed
 
     public void validaDatosVacios() throws SQLException, FileNotFoundException{
+       
+        
         if(    txtNombreProductoMod.getText().trim().length() != 0
             && txtPrecioProductoMod.getText().trim().length() != 0
             && txtStockProductoMod.getText().trim().length() != 0
             && ((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText().trim().length() != 0
           )//este if es para validar algunos campos vacios
         {
+              if(ruta==null)
+                 {JOptionPane.showMessageDialog(null, "escoja una imagen porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);}else{
+             if (!(Pattern.matches("^[0-9]{2}+[-]{1}+[a-zA-Z]{3}+[-]{1}+[0-9]{4}+$", ((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText()))) 
+                        {JOptionPane.showMessageDialog(null, "formato de fecha incorrecta; \n ejemplo: dd-mmm-yyyy", "Error", JOptionPane.ERROR_MESSAGE);}else{
             modificar();
+             }
             
-        }
+        }}
         else{
             JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");
         }        

@@ -29,6 +29,7 @@ public class Usuario extends JavaConnectDb{
     private int IdEstado;
     private String Password;
     private String NombreRol;
+    private int IdTienda;
 
     
     public Usuario (){}
@@ -209,6 +210,14 @@ public class Usuario extends JavaConnectDb{
    return NombreUsuario+"  "+ApellidoPaterno+"  "+ApellidoMaterno+" / "+RutUsuario
            +" / "+EmailUsuario;
    };
+
+    public int getIdTienda() {
+        return IdTienda;
+    }
+
+    public void setIdTienda(int IdTienda) {
+        this.IdTienda = IdTienda;
+    }
 
     
    

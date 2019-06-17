@@ -307,7 +307,8 @@ LoginUser mod;
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Mantenedor de Ofertas");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/oferta.png"))); // NOI18N
+        jLabel1.setText("  Mantenedor de Ofertas");
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel3.setText("Buscar ");

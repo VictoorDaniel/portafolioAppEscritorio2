@@ -1,29 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-    <background>
-        <band/>
-    </background>
-    <title>
-        <band height="79"/>
-    </title>
-    <pageHeader>
-        <band height="35"/>
-    </pageHeader>
-    <columnHeader>
-        <band height="61"/>
-    </columnHeader>
-    <detail>
-        <band height="125"/>
-    </detail>
-    <columnFooter>
-        <band height="45"/>
-    </columnFooter>
-    <pageFooter>
-        <band height="54"/>
-    </pageFooter>
-    <summary>
-        <band height="42"/>
-    </summary>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0504e719-e258-4353-a143-2bb0ac81e031">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="97a269c7-4b68-423f-968b-a212b9e8c433"/>
+	<queryString>
+		<![CDATA[SELECT
+     REPORTE_GERENTE."NOMBRETIENDA" AS REPORTE_GERENTE_NOMBRETIENDA,
+     REPORTE_GERENTE."CORREOSENVIADOS" AS REPORTE_GERENTE_CORREOSENVIADO,
+     REPORTE_GERENTE."CANTIDADVALORACIONES" AS REPORTE_GERENTE_CANTIDADVALORA,
+     REPORTE_GERENTE."USUARIOSREGISTRADOS" AS REPORTE_GERENTE_USUARIOSREGIST,
+     REPORTE_GERENTE."NOMBRERUBRO" AS REPORTE_GERENTE_NOMBRERUBRO,
+     REPORTE_GERENTE."CUPON" AS REPORTE_GERENTE_CUPON
+FROM
+     "MISOFERTAS"."REPORTE_GERENTE" REPORTE_GERENTE]]>
+	</queryString>
+	<field name="REPORTE_GERENTE_NOMBRETIENDA" class="java.lang.String"/>
+	<field name="REPORTE_GERENTE_CORREOSENVIADO" class="java.math.BigDecimal"/>
+	<field name="REPORTE_GERENTE_CANTIDADVALORA" class="java.math.BigDecimal"/>
+	<field name="REPORTE_GERENTE_USUARIOSREGIST" class="java.math.BigDecimal"/>
+	<field name="REPORTE_GERENTE_NOMBRERUBRO" class="java.lang.String"/>
+	<field name="REPORTE_GERENTE_CUPON" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="161" y="19" width="270" height="46" uuid="5df5a005-19ef-4c15-b9e1-37a4b9f01167"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Reporte Numerico]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="455" y="-1" width="100" height="20" uuid="8097f1b3-a93a-435b-ab73-c16a3e520076"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="138" y="48" width="237" height="1" uuid="20fa6485-abb0-434a-a934-aa2cf44f2d23"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="59" height="20" uuid="858705a3-f962-42e6-b9b3-cad2170326d4"/>
+				<text><![CDATA[Tienda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="0" width="100" height="20" uuid="3bed523c-0b4d-421c-9abe-387df57ae680"/>
+				<text><![CDATA[Correos Enviados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="2" width="69" height="20" uuid="175ae1df-0976-4d74-94d9-588c1e8ad7de"/>
+				<text><![CDATA[Valoraciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="2" width="49" height="20" uuid="0b76b9af-b8fd-45bf-a705-82d59109c6a3"/>
+				<text><![CDATA[Usuarios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="2" width="76" height="20" uuid="9ebd8b72-f705-4e00-bd6b-d5c9c7208391"/>
+				<text><![CDATA[Rubro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="2" width="100" height="20" uuid="565fca75-8404-4bad-ab64-87c3a5e7c4d9"/>
+				<text><![CDATA[Descuentos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="19" width="555" height="1" uuid="f9eb9f6a-1ac6-4e63-b5e8-08c4d8065bfe"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="59" height="20" uuid="e35679b6-b895-4584-9c8c-36d05c858647"/>
+				<textFieldExpression><![CDATA[$F{REPORTE_GERENTE_NOMBRETIENDA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="1" width="43" height="20" uuid="dc464fdf-c313-4004-8826-79eec14fadee"/>
+				<textFieldExpression><![CDATA[$F{REPORTE_GERENTE_CORREOSENVIADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="0" width="32" height="20" uuid="68060496-1920-4dc6-be80-3046822cdc77"/>
+				<textFieldExpression><![CDATA[$F{REPORTE_GERENTE_CANTIDADVALORA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="0" width="35" height="20" uuid="42e7a3db-125f-48e0-b17e-50bf8e60df4a"/>
+				<textFieldExpression><![CDATA[$F{REPORTE_GERENTE_USUARIOSREGIST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="1" width="61" height="20" uuid="479f93c4-c2a6-4865-a2f5-c8a41b5866ef"/>
+				<textFieldExpression><![CDATA[$F{REPORTE_GERENTE_NOMBRERUBRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="468" y="1" width="36" height="20" uuid="7f763fde-da1f-4580-9cf0-74f2ab607ac5"/>
+				<textFieldExpression><![CDATA[$F{REPORTE_GERENTE_CUPON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="212" y="0" width="80" height="20" uuid="c1ba762f-e2d2-4418-9f88-eefe115f0e47"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="301" y="0" width="40" height="20" uuid="25193c53-012a-4c4c-8a0a-84d71fb54321"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
 </jasperReport>

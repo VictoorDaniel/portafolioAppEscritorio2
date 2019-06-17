@@ -7,6 +7,7 @@ package view.crudUsuarios;
 
 import conectorBD.ConnectDbProducto;
 import conectorBD.JavaConnectDb;
+import controller.Tienda.udTienda;
 import controller.Utilidades;
 import controller.usuario.udUsuario;
 
@@ -14,12 +15,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.LoginUser;
+import model.comboBox.CbxEstado;
+import model.comboBox.CbxTienda;
 import oracle.jdbc.OracleResultSet;
-
+import model.comboBox.CbxTienda;
 /**
  *
  * @author muzaka
@@ -30,6 +34,7 @@ public class createUsuarios extends javax.swing.JFrame {
     JavaConnectDb obj = new JavaConnectDb();
     
     OracleResultSet rs = null;
+     udTienda tienda=new udTienda();
 
     /**
      * Creates new form createUsuarios
@@ -43,6 +48,7 @@ public class createUsuarios extends javax.swing.JFrame {
          /*para limpiar el cbx de rubro*/
         cbxRol.removeAllItems();
         cbxRol.setModel(getValuesRol());
+         cargarCbx();
     }
    
     
@@ -59,7 +65,7 @@ public class createUsuarios extends javax.swing.JFrame {
          /*para limpiar el cbx de rubro*/
         cbxRol.removeAllItems();
         cbxRol.setModel(getValuesRol());
-    
+     cargarCbx();
     
     }
 
@@ -102,6 +108,8 @@ public class createUsuarios extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         txtPassword2 = new javax.swing.JPasswordField();
+        cbxTiendaOferta = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -166,6 +174,17 @@ public class createUsuarios extends javax.swing.JFrame {
             }
         });
 
+        txtRut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRutActionPerformed(evt);
+            }
+        });
+        txtRut.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRutKeyTyped(evt);
+            }
+        });
+
         btngAceptar.add(rbAceptarN);
         rbAceptarN.setSelected(true);
         rbAceptarN.setText("No");
@@ -176,6 +195,7 @@ public class createUsuarios extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios.png"))); // NOI18N
         jLabel1.setText("Agregar Usuario");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -213,6 +233,16 @@ public class createUsuarios extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel13.setText("Confirmar Password");
         jLabel13.setMaximumSize(new java.awt.Dimension(100, 100));
+
+        cbxTiendaOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTiendaOfertaActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel14.setText("Tienda");
+        jLabel14.setMaximumSize(new java.awt.Dimension(100, 100));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -274,24 +304,31 @@ public class createUsuarios extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(142, 142, 142)
-                        .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(159, 159, 159)
-                        .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(JDFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(96, 96, 96)
-                        .addComponent(rbAceptarN)
-                        .addGap(84, 84, 84)
-                        .addComponent(rbAceptarS)
-                        .addGap(150, 150, 150)
-                        .addComponent(btnGuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(71, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(96, 96, 96)
+                                .addComponent(rbAceptarN)
+                                .addGap(84, 84, 84)
+                                .addComponent(rbAceptarS)
+                                .addGap(284, 284, 284)))))
+                .addContainerGap(56, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(JDFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(cbxTiendaOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,13 +385,18 @@ public class createUsuarios extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                        .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JDFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JDFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbxTiendaOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
@@ -364,7 +406,10 @@ public class createUsuarios extends javax.swing.JFrame {
                         .addComponent(rbAceptarN))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addComponent(rbAceptarS))
+                        .addComponent(rbAceptarS)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVolverProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -439,7 +484,8 @@ private void limpiarDatos(){
     }
     private void btnGuardarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarUsuariosActionPerformed
 
-     
+    
+   
         String aceptaOferta=null;
         if(rbAceptarN.isSelected())
         {
@@ -477,8 +523,20 @@ private void limpiarDatos(){
                  {
                     udUsuario ud=new udUsuario();
             
-                    //if(ud.ExisteRut(txtRut.getText())==0){
-                      //  if(ud.ExisteEmail(txtEmail.getText())==0){
+                    if(ud.ExisteRut(txtRut.getText())==0){
+                        if(ud.ExisteEmail(txtEmail.getText())==0){
+                           if (!(Pattern.matches("^[a-zA-Z0-9.]+[@]{1}+[a-zA-Z0-9.]+[.]{1}+[a-zA-Z0-9]+$", txtEmail.getText()))) 
+                        {JOptionPane.showMessageDialog(null, "formato de email incorrecto", "Error", JOptionPane.ERROR_MESSAGE);}else{
+                           if (!(Pattern.matches("^[0-9]+[.]{1}+[0-9]+[.]{1}+[0-9]+[-]{1}+[a-zA-Z0-9]+$", txtRut.getText()))) 
+                        {JOptionPane.showMessageDialog(null, "formato de rut incorrecto;\n ejemplo: 11.123.456-0", "Error", JOptionPane.ERROR_MESSAGE);}else{
+                            if (!(Pattern.matches("^[0-9]{2}+[-]{1}+[a-zA-Z]{3}+[-]{1}+[0-9]{4}+$", ((JTextField)JDFechaN.getDateEditor().getUiComponent()).getText()))) 
+                        {JOptionPane.showMessageDialog(null, "formato de fecha incorrecta; \n ejemplo: dd-mmm-yyyy", "Error", JOptionPane.ERROR_MESSAGE);}else{
+             udUsuario u = new udUsuario();
+   int edad =u.calcularEdad(JDFechaN);
+   if(edad>=18)
+   {
+       
+   
                             try {
 
                                 String nuevaPass=Utilidades.Encriptar(pas);
@@ -486,12 +544,13 @@ private void limpiarDatos(){
                                 Connection cn = obj.ConnectBd();
                                 String sql = "Insert into USUARIO (IDROL,nombreusuario,apellidopaterno," +
                                 "apellidomaterno,emailusuario,rutusuario,fechanacimiento," +
-                                "aceptaofertasemail,IDESTADO,Password) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                "aceptaofertasemail,IDESTADO,Password,IDTIENDA) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
                                 try (PreparedStatement pst = cn.prepareCall(sql)) {
                                     /*para obtener id de producto*/
 
                                     int idrol =  cbxRol.getSelectedIndex();
+                                     int idTienda =   cbxTiendaOferta.getItemAt(cbxTiendaOferta.getSelectedIndex()).getIDTIENDA();
                                     idrol = idrol + 1;
                                     String idRolString = String.valueOf(idrol);
                                     /*se envian los datos a la consulta*/
@@ -505,6 +564,7 @@ private void limpiarDatos(){
                                     pst.setString(8,aceptaOferta);
                                     pst.setInt(9,Estado);
                                     pst.setString(10,nuevaPass);
+                                    pst.setInt(11, idTienda);
 
 
                                      cn.commit(); 
@@ -513,6 +573,8 @@ private void limpiarDatos(){
                                     if (rs.next()){
                                         limpiarDatos();
                                         JOptionPane.showMessageDialog(null, "Datos insertados");
+                                        tienda.ActualizarCantidadDeUsuarios(idTienda);
+                                        
                                     }else{
                                         JOptionPane.showMessageDialog(null, "Ocurrio un error, no se pudo insertar datos");
                                     }
@@ -521,30 +583,14 @@ private void limpiarDatos(){
 
                             } catch (Exception e) {
                                 System.out.println(e.getCause());
-                                JOptionPane.showMessageDialog(null,"uups no registro"+e);
-                            }/*
-                        }else{
-                            JOptionPane.showMessageDialog(null,"El Correo que intenta "
-                                    + "Ingresa ya existe");
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
-                        }*/
-                }
-        else
-        {
-             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-        }
-
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Rut incorrecto");
-            }
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");
-        }
+                                JOptionPane.showMessageDialog(null,"uups no registro"+e);} 
+         } else{JOptionPane.showMessageDialog(null, "para registrarse tiene usted que ser mayor de 18 años \n su edad actua es : "+edad);}
+                            }} }
+                          }else{JOptionPane.showMessageDialog(null,"El Correo que intenta " + "Ingresa ya existe"); }
+                          }else{  JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe"); }
+                          }else{  JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");}
+                          }else{ JOptionPane.showMessageDialog(null, "Rut incorrecto");}
+                          }else{ JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");}
         
     }//GEN-LAST:event_btnGuardarUsuariosActionPerformed
 
@@ -579,6 +625,45 @@ private void limpiarDatos(){
         JOptionPane.showMessageDialog(rootPane, "Ingresar solo Letras");
         }        // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtRutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRutActionPerformed
+
+    private void txtRutKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutKeyTyped
+        // TODO add your handling code here:
+        
+         char []p={'1','2','3','4','5','6','7','8','9','0','-','k','.'};
+        int b=0;
+        for(int i=0;i<=12;i++){
+            if (p[i]==evt.getKeyChar()){b=1;}
+ 
+        }
+        if(b==0){evt.consume();  getToolkit().beep(); }
+        int numerodecaracater=12;
+        if(txtRut.getText().length()>numerodecaracater)
+        {evt.consume();};
+        
+    }//GEN-LAST:event_txtRutKeyTyped
+      private int idTiendaC;
+     
+      
+       private void cargarCbx(){
+        
+        CbxTienda comboboxTienda = new CbxTienda();
+        cbxTiendaOferta.removeAllItems();
+        comboboxTienda.getValuesTienda(cbxTiendaOferta);
+         }
+    private int obtenerIdTienda() {
+        
+        idTiendaC = cbxTiendaOferta.getItemAt(cbxTiendaOferta.getSelectedIndex()).getIDTIENDA();  
+        
+        return idTiendaC;
+    }
+    private void cbxTiendaOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaOfertaActionPerformed
+        obtenerIdTienda();
+        System.out.println("idTiendaC" + idTiendaC);
+    }//GEN-LAST:event_cbxTiendaOfertaActionPerformed
   
     /**
      * @param args the command line arguments
@@ -622,11 +707,13 @@ private void limpiarDatos(){
     private javax.swing.ButtonGroup btngAceptar;
     private javax.swing.ButtonGroup btngEstado;
     private javax.swing.JComboBox cbxRol;
+    private javax.swing.JComboBox<model.comboBox.CbxTienda> cbxTiendaOferta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

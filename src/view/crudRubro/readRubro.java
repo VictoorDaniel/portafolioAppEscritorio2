@@ -188,7 +188,8 @@ public class readRubro extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Mantenedor de Rubro");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/rubro.png"))); // NOI18N
+        jLabel1.setText("  Mantenedor de Rubro");
 
         tblRubro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tblRubro.setModel(new javax.swing.table.DefaultTableModel(
@@ -255,7 +256,7 @@ public class readRubro extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(btnAgregarRubro, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnMenuPrincipalRubro, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))

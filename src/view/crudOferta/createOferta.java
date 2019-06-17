@@ -6,6 +6,7 @@
 package view.crudOferta;
 
 import conectorBD.JavaConnectDb;
+import controller.EnviarCorreo;
 import controller.oferta.CrudOferta;
 import java.io.File;
 import java.sql.Connection;
@@ -47,7 +48,7 @@ LoginUser mod;
     /*declaracion de variables*/
     String ruta = null;//para la ruta de la imagen
     FileInputStream fi = null; //para la imagen..
-    
+     Image foto=null;
     Oferta ofert = new Oferta();
     CrudOferta cOferta = new CrudOferta();
     
@@ -234,6 +235,7 @@ LoginUser mod;
         jPanel1.setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/oferta.png"))); // NOI18N
         jLabel1.setText("Agregar Oferta");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -604,7 +606,7 @@ LoginUser mod;
             ruta = j.getSelectedFile().getAbsolutePath();
 
             //de cierto modo necesitamos tener la imagen para ello debemos conocer la ruta de dicha imagen
-            Image foto= getToolkit().getImage(ruta);
+             foto= getToolkit().getImage(ruta);
             //Le damos dimension a nuestro label que tendra la imagen
             foto= foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
             lblimagen.setIcon(new ImageIcon(foto));
@@ -709,13 +711,15 @@ LoginUser mod;
                         rs = (OracleResultSet) pst.executeQuery();
 
                            limpiarDatos();
-
+                           
+                    EnviarCorreo c=new EnviarCorreo();
+                    c.EnviarCorreo(idTienda,foto,ruta);
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SQLException ex) {
                         Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
                     }finally{
-                        JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
+                        JOptionPane.showMessageDialog(null, "Datos registrados exitosamente..." );
                         this.setVisible(false);
                         readOferta rd = new readOferta(mod);
                         rd.setVisible(true); 

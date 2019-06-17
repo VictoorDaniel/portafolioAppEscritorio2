@@ -12,12 +12,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.LoginUser;
 import model.Usuarios.Usuario;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
+import static view.crudUsuarios.createUsuarios.validarRut;
 
 /**
  *
@@ -58,11 +60,12 @@ public class login extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         txtLoginUsuario = new javax.swing.JTextField();
-        btnLoginIngresar = new javax.swing.JButton();
-        txtLoginPassword = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
+        txtLoginPassword = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        btnLoginIngresar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         jToolBar1.setRollover(true);
 
@@ -77,7 +80,7 @@ public class login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(208, 211, 212));
         jPanel1.setToolTipText("");
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setText("Tiendas Retail Mis Ofertas");
 
@@ -87,19 +90,16 @@ public class login extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addContainerGap())
         );
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel3.setText("Password:");
 
         txtLoginUsuario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtLoginUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -113,13 +113,8 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        btnLoginIngresar.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        btnLoginIngresar.setText("Ingresar");
-        btnLoginIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginIngresarActionPerformed(evt);
-            }
-        });
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel2.setText("Rut");
 
         txtLoginPassword.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtLoginPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -128,62 +123,82 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setText("Usuario:");
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel3.setText("Password");
+
+        btnLoginIngresar.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        btnLoginIngresar.setText("Ingresar");
+        btnLoginIngresar.setBorder(new javax.swing.border.MatteBorder(null));
+        btnLoginIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLoginIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginIngresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtLoginUsuario)
-                            .addComponent(txtLoginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addComponent(txtLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(btnLoginIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtLoginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jLabel3)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnLoginIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtLoginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(6, 6, 6)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtLoginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnLoginIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/login.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -196,6 +211,12 @@ public class login extends javax.swing.JFrame {
        
        if(!txtLoginUsuario.getText().equals("")&&!pass.equals(""))//validamos los campos vacios
        {
+           
+            if(!validarRut(txtLoginUsuario.getText()))
+            {JOptionPane.showMessageDialog(null, "Rut incorrecto", "Error", JOptionPane.ERROR_MESSAGE);}else{
+           if (!(Pattern.matches("^[0-9]+[.]{1}+[0-9]+[.]{1}+[0-9]+[-]{1}+[a-zA-Z0-9]+$", txtLoginUsuario.getText()))) 
+       {JOptionPane.showMessageDialog(null, "formato de rut incorrecto;\n ejemplo: 11.123.456-0", "Error", JOptionPane.ERROR_MESSAGE);}else{
+
       String nuevoPas= Utilidades.Encriptar(pass);//encriptamos la pass
       
       mods.setEmailUsuario(txtLoginUsuario.getText());
@@ -212,15 +233,10 @@ public class login extends javax.swing.JFrame {
               mp.setVisible(true);
               mp.pack();
               
-          } else {
-              JOptionPane.showMessageDialog(null,"Datos incorrectos");
-          }
+          } else{JOptionPane.showMessageDialog(null,"Datos incorrectos");}
+           }}
        
-       }
-       else 
-       {
-           JOptionPane.showMessageDialog(null,"Ingrese sus datos");
-       }
+       }else { JOptionPane.showMessageDialog(null,"Ingrese sus datos");}
         
     }//GEN-LAST:event_btnLoginIngresarActionPerformed
 
@@ -234,19 +250,38 @@ public class login extends javax.swing.JFrame {
 
     private void txtLoginUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginUsuarioKeyTyped
         // TODO add your handling code here:
-        char []p={'1','2','3','4','5','6','7','8','9','0','-','k'};
+        char []p={'1','2','3','4','5','6','7','8','9','0','-','k','.'};
         int b=0;
-        for(int i=0;i<=10;i++){
-            if (p[i]==evt.getKeyChar()){b=1;}
- 
-        }
+        for(int i=0;i<=12;i++){if (p[i]==evt.getKeyChar()){b=1;}}
         if(b==0){evt.consume();  getToolkit().beep(); }
-        int numerodecaracater=10;
-        if(txtLoginUsuario.getText().length()>=numerodecaracater)
-        {evt.consume();JOptionPane.showMessageDialog(rootPane,"ejemplo: 12345678-0");};
+        int numerodecaracater=12;
+        if(txtLoginUsuario.getText().length()>numerodecaracater){evt.consume();};
         
     }//GEN-LAST:event_txtLoginUsuarioKeyTyped
+public static boolean validarRut(String rut) {
 
+    boolean validacion = false;
+    try {
+        rut =  rut.toUpperCase();
+        rut = rut.replace(".", "");
+        rut = rut.replace("-", "");
+        int rutAux = Integer.parseInt(rut.substring(0, rut.length() - 1));
+
+        char dv = rut.charAt(rut.length() - 1);
+
+        int m = 0, s = 1;
+        for (; rutAux != 0; rutAux /= 10) {
+            s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
+        }
+        if (dv == (char) (s != 0 ? s + 47 : 75)) {
+            validacion = true;
+        }
+
+    } catch (java.lang.NumberFormatException e) {
+    } catch (Exception e) {
+    }
+    return validacion;
+}
     /**
      * @param args the command line arguments
      */
@@ -287,6 +322,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;

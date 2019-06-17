@@ -199,7 +199,8 @@ public class updateRubro extends javax.swing.JFrame {
         jPanel1.setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setText("Modificar Rubro");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/rubro.png"))); // NOI18N
+        jLabel1.setText(" Modificar Rubro");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -212,7 +213,7 @@ public class updateRubro extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -225,6 +226,11 @@ public class updateRubro extends javax.swing.JFrame {
         );
 
         txtIdRubroMod.setText("jTextField1");
+        txtIdRubroMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdRubroModActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -316,6 +322,10 @@ public class updateRubro extends javax.swing.JFrame {
         rb.setVisible(true);
         rb.pack();
     }//GEN-LAST:event_btnVolverRubroModActionPerformed
+
+    private void txtIdRubroModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdRubroModActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdRubroModActionPerformed
 
     /**
      * @param args the command line arguments

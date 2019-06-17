@@ -37,7 +37,7 @@ public class GenerarArchivoBItxt {
                       
                       String fecha=dia+"-"+mes+"-"+annio;
                       
-                      String Ruta="C:\\ReportesBI";
+                      String Ruta="src\\Reportes\\ReportesBI";
                       File ReporteBI=new File(Ruta);
                       
                       if(ReporteBI.exists())
@@ -52,7 +52,7 @@ public class GenerarArchivoBItxt {
                       }
                       
 			//crea el flujo para escribir en el archivo
-			flwriter = new FileWriter("C:\\ReportesBI\\ReportesBI "+fecha+".txt");
+			flwriter = new FileWriter("src\\Reportes\\ReportesBI\\ReportesBI "+fecha+".txt");
 			//crea un buffer o flujo intermedio antes de escribir directamente en el archivo
 			BufferedWriter bfwriter = new BufferedWriter(flwriter);
                     for (Iterator it = lista.iterator(); it.hasNext();) {
