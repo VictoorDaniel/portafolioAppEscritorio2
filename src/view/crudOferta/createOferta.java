@@ -81,7 +81,7 @@ LoginUser mod;
         limpiarDatos();
         cargarCbx();
         
-         txtPrecioProductoOferta.setEditable(false);
+        txtPrecioProductoOferta.setEditable(false);
         
     }
     

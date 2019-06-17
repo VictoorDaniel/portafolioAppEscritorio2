@@ -27,7 +27,9 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JOptionPane;
 import model.LoginUser;
 import model.Oferta.Oferta;
+import model.comboBox.CbxEstado;
 import model.comboBox.CbxProducto;
+import model.comboBox.CbxTienda;
 import oracle.jdbc.OracleResultSet;
 
 /**
@@ -59,27 +61,45 @@ public class updateOferta extends javax.swing.JFrame {
     public updateOferta() {
         initComponents();
         
+        
         /*PARA QUE LA PANTALLA APAREZCA CENTRADA*/
         this.setLocationRelativeTo(null);
         
         //cbxTiendaOfertaMod.setModel(getValuesTiendaMod());
         //cbxEstadoOfertaMod.setModel(getValuesEstadoMod());
         //cbxProductoOfertaMod.setModel(getValuesProductoMod());
-        
-        CbxProducto combobox = new CbxProducto();
-        cbxProductoOfertaMod.removeAllItems();
-        combobox.getValuesProducto(cbxProductoOfertaMod);
+        limpiarDatos();
+        cargarCbx();
+        txtPrecioProductoOfertaMod.setEditable(false);
+        txtIdOfertaMod.setVisible(false);
         
     }
 
     public updateOferta(LoginUser mod) {
         this.mod=mod;
         
-        initComponents();
-        CbxProducto combobox = new CbxProducto();
-        cbxProductoOfertaMod.removeAllItems();
-        combobox.getValuesProducto(cbxProductoOfertaMod);
         
+        initComponents();
+        limpiarDatos();
+        cargarCbx();
+        txtPrecioProductoOfertaMod.setEditable(false);
+        txtIdOfertaMod.setVisible(false);
+        
+    }
+    
+    
+    private void cargarCbx(){
+        
+        CbxTienda comboboxTienda = new CbxTienda();
+        cbxTiendaOfertaMod.removeAllItems();
+        comboboxTienda.getValuesTienda(cbxTiendaOfertaMod);
+        
+        CbxEstado comboboxEstado = new CbxEstado();
+        cbxEstadoOfertaMod.removeAllItems();
+        comboboxEstado.getValuesEstado(cbxEstadoOfertaMod);
+        
+        //cbxProductoOferta.removeAllItems();
+        //combobox.getValuesProducto(cbxProductoOferta);
     }
     
     private void cargarPrecioProducto() throws SQLException{
@@ -190,6 +210,7 @@ public class updateOferta extends javax.swing.JFrame {
         btnImagen = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         lblimagen = new javax.swing.JLabel();
+        txtIdOfertaMod = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -361,11 +382,17 @@ public class updateOferta extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setText("Precio Producto");
 
+        txtIdOfertaMod.setText("id oferta");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtIdOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(30, 30, 30)
@@ -419,7 +446,9 @@ public class updateOferta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(559, Short.MAX_VALUE))
+                .addGap(192, 192, 192)
+                .addComponent(txtIdOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(341, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(63, 63, 63)
@@ -482,11 +511,7 @@ public class updateOferta extends javax.swing.JFrame {
         varCero = 0;
         maximoDscto = 100;
 
-        System.out.println("txtMaxProductoOferta" + parseInt(txtMaxProductoOfertaMod.getText()));
-        System.out.println("txtMinProductoOferta" + parseInt(txtMinProductoOfertaMod.getText()));
-        System.out.println("txtDesceuntoOferta" + parseInt(txtDesceuntoOfertaMod.getText()));
-        System.out.println("ruta imagen" + ruta );
-
+        
         if(   txtNombreOfertaMod.getText().trim().length() != 0
             && txtPrecioProductoOfertaMod.getText().trim().length() != 0
             && txtDesceuntoOfertaMod.getText().trim().length() != 0
@@ -504,9 +529,18 @@ public class updateOferta extends javax.swing.JFrame {
 
                                     JavaConnectDb obj = new JavaConnectDb();
                                     Connection cn = obj.ConnectBd();
-                                    String sql = "INSERT INTO OFERTA (IDTIENDA, IDPRODUCTO, NOMBREOFERTA, MINIMOPRODUCTO, MAXIMOPRODUCTO, "
-                                    + "PRECIOOFERTA, DESCUENTOOFERTA, STOCKPRODUCTOOFERTA, IDESTADO, IMAGENOFERTA)\n" +
-                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                    String sql = "UPDATE OFERTA "
+                                               + "SET IDTIENDA = ?"
+                                               + ", IDPRODUCTO"
+                                            + ", NOMBREOFERTA"
+                                            + ", MINIMOPRODUCTO"
+                                            + ", MAXIMOPRODUCTO"
+                                            + ", PRECIOOFERTA"
+                                            + ", DESCUENTOOFERTA"
+                                            + ", STOCKPRODUCTOOFERTA"
+                                            + ", IDESTADO"
+                                            + ", IMAGENOFERTA)\n" +
+                                    "WHERE IDOFERTA = ?";
 
                                     pst = cn.prepareStatement(sql);
 
@@ -529,6 +563,7 @@ public class updateOferta extends javax.swing.JFrame {
                                     pst.setInt(7, parseInt(txtDesceuntoOfertaMod.getText()));
                                     pst.setInt(8, parseInt(txtStockOfertaMod.getText()));
                                     pst.setInt(9, idEstado);
+                                    pst.setInt(9, parseInt(txtIdOfertaMod.getText()));
 
                                     pst.setBinaryStream(10, fi);
 
@@ -796,6 +831,7 @@ public class updateOferta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblimagen;
     public static javax.swing.JTextField txtDesceuntoOfertaMod;
+    public static javax.swing.JTextField txtIdOfertaMod;
     public static javax.swing.JTextField txtMaxProductoOfertaMod;
     public static javax.swing.JTextField txtMinProductoOfertaMod;
     public static javax.swing.JTextField txtNombreOfertaMod;

@@ -525,6 +525,7 @@ private void limpiarDatos(){
             
                     if(ud.ExisteRut(txtRut.getText())==0){
                         if(ud.ExisteEmail(txtEmail.getText())==0){
+<<<<<<< HEAD
                            if (!(Pattern.matches("^[a-zA-Z0-9.]+[@]{1}+[a-zA-Z0-9.]+[.]{1}+[a-zA-Z0-9]+$", txtEmail.getText()))) 
                         {JOptionPane.showMessageDialog(null, "formato de email incorrecto", "Error", JOptionPane.ERROR_MESSAGE);}else{
                            if (!(Pattern.matches("^[0-9]+[.]{1}+[0-9]+[.]{1}+[0-9]+[-]{1}+[a-zA-Z0-9]+$", txtRut.getText()))) 
@@ -537,6 +538,8 @@ private void limpiarDatos(){
    {
        
    
+=======
+>>>>>>> ultimo/master
                             try {
 
                                 String nuevaPass=Utilidades.Encriptar(pas);
@@ -583,6 +586,7 @@ private void limpiarDatos(){
 
                             } catch (Exception e) {
                                 System.out.println(e.getCause());
+<<<<<<< HEAD
                                 JOptionPane.showMessageDialog(null,"uups no registro"+e);} 
          } else{JOptionPane.showMessageDialog(null, "para registrarse tiene usted que ser mayor de 18 años \n su edad actua es : "+edad);}
                             }} }
@@ -591,6 +595,32 @@ private void limpiarDatos(){
                           }else{  JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");}
                           }else{ JOptionPane.showMessageDialog(null, "Rut incorrecto");}
                           }else{ JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");}
+=======
+                                JOptionPane.showMessageDialog(null,"uups no registro"+e);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null,"El Correo que intenta "
+                                    + "Ingresa ya existe");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null,"El Rut que intenta Ingresar ya existe");
+                        }
+                }
+        else
+        {
+             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+        }
+
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Rut incorrecto");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");
+        }
+>>>>>>> ultimo/master
         
     }//GEN-LAST:event_btnGuardarUsuariosActionPerformed
 

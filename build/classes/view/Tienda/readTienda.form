@@ -28,6 +28,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel" alignment="0" min="-2" pref="1262" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
+<<<<<<< HEAD
                       <Component id="btnAgregar" min="-2" pref="169" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
                       <Component id="btnMenuPrincipalProd" min="-2" pref="148" max="-2" attributes="0"/>
@@ -36,6 +37,21 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="204" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="233" max="-2" attributes="0"/>
+=======
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="btnAgregar" min="-2" pref="169" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
+                              <Component id="btnMenuPrincipalProd" min="-2" pref="148" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" pref="233" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+>>>>>>> ultimo/master
                   </Group>
               </Group>
           </Group>
@@ -89,10 +105,14 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="24" style="0"/>
         </Property>
+<<<<<<< HEAD
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Imagenes/tienda.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="   Mostrar Tienda"/>
+=======
+        <Property name="text" type="java.lang.String" value="Mostrar Tienda"/>
+>>>>>>> ultimo/master
       </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="jPanel">

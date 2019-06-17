@@ -204,7 +204,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <EmptySpace pref="194" max="32767" attributes="0"/>
+=======
+                  <EmptySpace pref="208" max="32767" attributes="0"/>
+>>>>>>> ultimo/master
                   <Component id="jLabel10" min="-2" pref="233" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -226,10 +230,14 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="24" style="0"/>
             </Property>
+<<<<<<< HEAD
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagenes/prod.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="  Modificar Producto"/>
+=======
+            <Property name="text" type="java.lang.String" value="Modificar Producto"/>
+>>>>>>> ultimo/master
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
@@ -267,9 +275,12 @@
           <Font name="Arial" size="18" style="0"/>
         </Property>
       </Properties>
+<<<<<<< HEAD
       <Events>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtStockProductoModKeyTyped"/>
       </Events>
+=======
+>>>>>>> ultimo/master
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
@@ -296,9 +307,12 @@
           <Font name="Arial" size="18" style="0"/>
         </Property>
       </Properties>
+<<<<<<< HEAD
       <Events>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPrecioProductoModKeyTyped"/>
       </Events>
+=======
+>>>>>>> ultimo/master
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
