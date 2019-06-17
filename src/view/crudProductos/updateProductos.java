@@ -269,10 +269,20 @@ LoginUser mod;
         cbxRubroProductoMod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         txtStockProductoMod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtStockProductoMod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStockProductoModKeyTyped(evt);
+            }
+        });
 
         cbxCategoriaProductoMod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         txtPrecioProductoMod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtPrecioProductoMod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioProductoModKeyTyped(evt);
+            }
+        });
 
         txtNombreProductoMod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtNombreProductoMod.addActionListener(new java.awt.event.ActionListener() {
@@ -436,11 +446,8 @@ LoginUser mod;
     private void btnModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProductoActionPerformed
         try {
             // TODO add your handling code here:
-
             validaDatosVacios();
-            readProductos rp = new readProductos(mod);
-            rp.setVisible(true); 
-            rp.pack();
+          
         
             
         } catch (SQLException ex) {
@@ -449,7 +456,7 @@ LoginUser mod;
             Logger.getLogger(updateProductos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.setVisible(false);
+       
     }//GEN-LAST:event_btnModificarProductoActionPerformed
 
     public void validaDatosVacios() throws SQLException, FileNotFoundException{
@@ -461,14 +468,17 @@ LoginUser mod;
             && ((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText().trim().length() != 0
           )//este if es para validar algunos campos vacios
         {
-              if(ruta==null)
-                 {JOptionPane.showMessageDialog(null, "escoja una imagen porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);}else{
+              
              if (!(Pattern.matches("^[0-9]{2}+[-]{1}+[a-zA-Z]{3}+[-]{1}+[0-9]{4}+$", ((JTextField)dtFechaVencimientoMod.getDateEditor().getUiComponent()).getText()))) 
                         {JOptionPane.showMessageDialog(null, "formato de fecha incorrecta; \n ejemplo: dd-mmm-yyyy", "Error", JOptionPane.ERROR_MESSAGE);}else{
             modificar();
+             this.setVisible(false);
+            readProductos rp = new readProductos(mod);
+            rp.setVisible(true); 
+            rp.pack();
              }
             
-        }}
+        }
         else{
             JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");
         }        
@@ -549,6 +559,36 @@ LoginUser mod;
     private void cbxTiendaProductoModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaProductoModActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxTiendaProductoModActionPerformed
+
+    private void txtPrecioProductoModKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioProductoModKeyTyped
+        // TODO add your handling code here:
+           char validar = evt.getKeyChar();
+
+        if (Character.isLetter(validar)){
+            getToolkit().beep();
+            evt.consume();
+
+            JOptionPane.showMessageDialog(rootPane, "Ingresar Solo Numeros");
+        }else if (validar == '-' ){
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Solo se aceptan numeros Positivos");
+        }
+    }//GEN-LAST:event_txtPrecioProductoModKeyTyped
+
+    private void txtStockProductoModKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockProductoModKeyTyped
+        // TODO add your handling code here:
+           char validar = evt.getKeyChar();
+
+        if (Character.isLetter(validar)){
+            getToolkit().beep();
+            evt.consume();
+
+            JOptionPane.showMessageDialog(rootPane, "Ingresar Solo Numeros");
+        }else if (validar == '-' ){
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Solo se aceptan numeros Positivos");
+        }
+    }//GEN-LAST:event_txtStockProductoModKeyTyped
 
     /**
      * @param args the command line arguments

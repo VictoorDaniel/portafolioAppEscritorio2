@@ -656,10 +656,7 @@ LoginUser mod;
         varCero = 0;
         maximoDscto = 100;
         
-        System.out.println("txtMaxProductoOferta" + parseInt(txtMaxProductoOferta.getText()));
-        System.out.println("txtMinProductoOferta" + parseInt(txtMinProductoOferta.getText()));
-        System.out.println("txtDesceuntoOferta" + parseInt(txtDesceuntoOferta.getText()));
-        System.out.println("ruta imagen" + ruta );
+        
         
         if(   txtNombreOferta.getText().trim().length() != 0 
            && txtPrecioProductoOferta.getText().trim().length() != 0
@@ -675,6 +672,10 @@ LoginUser mod;
                         if (parseInt(txtMinProductoOferta.getText()) != varCero){
                             if ( ruta != null){
                     try {
+                        System.out.println("txtMaxProductoOferta" + parseInt(txtMaxProductoOferta.getText()));
+                        System.out.println("txtMinProductoOferta" + parseInt(txtMinProductoOferta.getText()));
+                        System.out.println("txtDesceuntoOferta" + parseInt(txtDesceuntoOferta.getText()));
+                        System.out.println("ruta imagen" + ruta );
 
                         JavaConnectDb obj = new JavaConnectDb();
                         Connection cn = obj.ConnectBd();
@@ -714,6 +715,7 @@ LoginUser mod;
                            
                     EnviarCorreo c=new EnviarCorreo();
                     c.EnviarCorreo(idTienda,foto,ruta);
+                    
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SQLException ex) {
