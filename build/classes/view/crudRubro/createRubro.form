@@ -88,11 +88,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
                   <EmptySpace pref="76" max="32767" attributes="0"/>
-=======
-                  <EmptySpace pref="83" max="32767" attributes="0"/>
->>>>>>> ultimo/master
                   <Component id="jLabel2" min="-2" pref="233" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -114,14 +110,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="24" style="0"/>
             </Property>
-<<<<<<< HEAD
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagenes/rubro.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value=" Agregar Rubro"/>
-=======
-            <Property name="text" type="java.lang.String" value="Agregar Rubro"/>
->>>>>>> ultimo/master
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

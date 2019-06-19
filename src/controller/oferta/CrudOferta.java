@@ -6,20 +6,29 @@
 package controller.oferta;
 
 import conectorBD.JavaConnectDb;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import model.Oferta.Oferta;
 import model.Oferta.Oferta2BI;
 import model.descuento.Descuento;
+import model.producto.Producto;
 import oracle.jdbc.OracleResultSet;
 import view.crudOferta.createOferta;
 import view.crudOferta.readOferta;
+import static view.crudOferta.updateOferta.lblImagenMod;
 
 /**
  *
@@ -34,6 +43,60 @@ public class CrudOferta {
         readOferta rd = new readOferta();
         rd.setVisible(true); 
         rd.pack();
+    }
+     
+      public  void mostrarImagen(Oferta ofert) throws SQLException{
+        
+       
+        //System.out.println(""+prod.getIdProducto());
+         JavaConnectDb obj = new JavaConnectDb();
+        Connection cn = obj.ConnectBd();
+            Statement st = cn.createStatement();
+            String sql = "select IMAGENOFERTA\n" +
+                    "from OFERTA WHERE IDOFERTA ="+ofert.getIdOferta()+"";
+            ResultSet rs = st.executeQuery(sql);
+            
+            Object datos[] = new Object[40];
+            
+            while (rs.next()) {     
+                
+                
+                
+                  
+                Blob blob = rs.getBlob(1);//llamamos la imagen
+
+                if(blob != null)//mandamos un mensaje de no imagen si es null
+                {
+                    try{
+                        byte[] data = blob.getBytes(1, (int)blob.length());
+                        BufferedImage img = null;
+                        try{
+                            img = ImageIO.read(new ByteArrayInputStream(data));
+                        }catch(Exception ex){
+                            System.out.println(ex.getMessage());
+                        }
+                        
+                        
+                        //de cierto modo necesitamos tener la imagen para ello debemos conocer la ruta de dicha imagen
+                        Image foto = img;
+
+                        //Le damos dimension a nuestro label que tendra la imagen
+                        foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
+                        ImageIcon icono = new ImageIcon(foto);
+                        
+                        lblImagenMod.setIcon(icono);
+                        
+                        
+                        
+                        ///datos[0] = new JLabel(icono);
+                    }catch(Exception ex){
+                        datos[0] = "No Imagen";
+                    }
+                }
+                else{
+                    datos[0] = "No Imagen";
+                } 
+            }
     }
     
     /*Metodo AGREGAR*/
@@ -116,32 +179,44 @@ public class CrudOferta {
         }
     }
     
-    
-    /*Metodo Modificar*/
-    /*
-    public void modificarDescuento(Descuento dscto) throws SQLException{
+ /*Metodo Modificar*/
+    public void modificarOferta(Oferta ofert) throws SQLException{
         
         JavaConnectDb obj = new JavaConnectDb();
          Connection cn = obj.ConnectBd();
-        String sql = "UPDATE DESCUENTO "
-                   + "SET MINPUNTOS= ?, "
-                       + "MAXPUNTOS = ?,"
-                       + "PORCENTAJEDESCUENTO= ?, "
-                       + "TOPEDESCUENTO = ?"
-                   + "WHERE IDDESCUENTO = ?";
+        String sql = "UPDATE OFERTA "
+                   + "SET IDTIENDA= ?, "
+                       + "IDPRODUCTO = ?,"
+                       + "NOMBREOFERTA= ?, "
+                       + "MINIMOPRODUCTO = ?,"
+                       + "MAXIMOPRODUCTO = ?,"
+                       + "PRECIOOFERTA = ?,"
+                        + "DESCUENTOOFERTA = ?,"
+                       + "STOCKPRODUCTOOFERTA= ?,"
+                       + "IDESTADO= ?"
+                       //+ "IMAGENOFERTA= ?,"
+                       + "WHERE IDOFERTA = ?";
         
         PreparedStatement pst = null;
      
         try{
+            System.out.println("..............Modificando........");
             pst = cn.prepareStatement(sql);
             
-            pst.setInt(1, dscto.getMinPuntos());
-            pst.setInt(2, dscto.getMaxPuntos());
-            pst.setInt(3, dscto.getPorcentajeDescuento());
-            pst.setInt(4, dscto.getTopeDescuento());
+            pst.setInt(1, ofert.getIdTienda());
+            pst.setInt(2, ofert.getIdProducto());
+            pst.setString(3, ofert.getNombreOferta());
+            pst.setInt(4, ofert.getMinProducto());
+            pst.setInt(5, ofert.getMaxProducto());
+           // pst.setBinaryStream(6, fi);
+            pst.setInt(6, ofert.getPrecioOferta());
+            pst.setInt(7,ofert.getDescuentoOferta());
+            pst.setInt(8,ofert.getStockProductoOferta());
+            pst.setInt(9,ofert.getIdEstado());
+             pst.setInt(10,ofert.getIdOferta());
             
-            pst.setInt(5, dscto.getIdDescuento());
-            
+          
+             
             pst.executeUpdate();
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
@@ -149,11 +224,13 @@ public class CrudOferta {
             System.out.println(ex.getMessage());
         }finally{
             
+             System.out.println("IdTienda : "+ofert.getIdTienda()+"\n "
+                     + "idProducto : "+ofert.getIdProducto()+"\n "+
+                     "Stock Producto : "+ofert.getStockProductoOferta()+"\n"
+                 +"IdOferta : "+ofert.getIdOferta());
             JOptionPane.showMessageDialog(null, "Datos Actualizados...");
             
-            readDescuento rd = new readDescuento();
-            rd.setVisible(true); 
-            rd.pack();
+           
         
             try{
                 pst.close();
@@ -162,9 +239,58 @@ public class CrudOferta {
         }
               
     }
-    */
-    
-    
-    
-    
+
+    public void modificarOfertaConImagen(Oferta ofert,FileInputStream fi) throws SQLException{
+        
+        
+       
+         JavaConnectDb obj = new JavaConnectDb();
+         Connection cn = obj.ConnectBd();
+        String sql = "UPDATE OFERTA "
+                   + "SET IDTIENDA= ?, "
+                       + "IDPRODUCTO = ?,"
+                       + "NOMBREOFERTA= ?, "
+                       + "MINIMOPRODUCTO = ?,"
+                       + "MAXIMOPRODUCTO = ?,"
+                       + "PRECIOOFERTA = ?,"
+                        + "DESCUENTOOFERTA = ?,"
+                       + "STOCKPRODUCTOOFERTA= ?,"
+                       + "IDESTADO= ?,"
+                       + "IMAGENOFERTA= ?"
+                       + "WHERE IDOFERTA = ?";
+        
+        PreparedStatement pst = null;
+     
+        try{
+            pst = cn.prepareStatement(sql);
+            
+            pst.setInt(1, ofert.getIdTienda());
+            pst.setInt(2, ofert.getIdProducto());
+            pst.setString(3, ofert.getNombreOferta());
+            pst.setInt(4, ofert.getMinProducto());
+            pst.setInt(5, ofert.getMaxProducto());
+            pst.setInt(6, ofert.getPrecioOferta());
+            pst.setInt(7,ofert.getDescuentoOferta());
+            pst.setInt(8,ofert.getStockProductoOferta());
+            pst.setInt(9,ofert.getIdEstado());
+             pst.setBinaryStream(10, fi);
+             pst.setInt(11,ofert.getIdOferta());
+             
+            pst.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            System.out.println("IdTienda : "+ofert.getIdTienda()+"/n "
+                     + "idTienda : "+ofert.getIdProducto());
+            JOptionPane.showMessageDialog(null, "Datos Actualizados...");
+             
+            
+            try{
+                pst.close();
+               
+            }catch(Exception ex){}
+        }   
+    }
 }

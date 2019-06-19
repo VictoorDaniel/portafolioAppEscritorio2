@@ -349,26 +349,32 @@ public class readDescuento extends javax.swing.JFrame {
     private void buscartodoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscartodoKeyPressed
         // TODO add your handling code here:
         
-        String[] titulos = {"id", "Nombre", "Rubro", "Categoria", "Precio", "Stock","Vencimiento",/*"Imagen"*/};
+        String[] titulos = {"id", "MinPuntos", "MaxPuntos", "Porcentaje", "Tope","Modificar","Eliminar"};
         
+        JButton btn_modificar = new JButton("Modificar");
+        btn_modificar.setName("m");
+        JButton btn_eliminar = new JButton("Eliminar");
+        btn_eliminar.setName("e");
            
-            String sql = "select   IDPRODUCTO\n" +
-                        "        ,NOMBREPRODUCTO\n" +
-                        "        ,rubro.nombrerubro\n" +
-                        "        ,CATEGORIA.nombrecategoria\n" +
-                        "        ,PRECIOPRODUCTO\n" +
-                        //"        ,IMAGENPRODUCTO\n" +
-                        "        ,STOCKPRODUCTO\n" +
-                        "        ,FECHAEXPIRACION \n" +
-                        "from PRODUCTO, RUBRO, CATEGORIA\n" +
-                        "where PRODUCTO.RUBROPRODUCTO = rubro.idrubro\n" +
-                        "  and rubro.idcategoria = categoria.idcategoria and"+
-                    " IDPRODUCTO LIKE '%" + buscartodo.getText() + "%' "
-                    + "OR NOMBREPRODUCTO  LIKE'%" + buscartodo.getText() + "%'"
-                    + "OR RUBRO.NOMBRERUBRO LIKE '%" + buscartodo.getText() + "%'"
-                    + "OR CATEGORIA.NOMBRECATEGORIA LIKE '%" + buscartodo.getText() + "%'"
-                    + "OR FECHAEXPIRACION  LIKE'%" + buscartodo.getText() + "%'";
-           tablaDescuentos = new DefaultTableModel(null, titulos);
+            String sql = "SELECT IDDESCUENTO\n" +
+                         "      ,minpuntos\n" +
+                         "      ,maxpuntos\n" +
+                         "      ,porcentajedescuento\n" +
+                         "      ,topedescuento\n" +
+                         "FROM DESCUENTO\n" +
+                        "where  IDDESCUENTO LIKE '%" + buscartodo.getText() + "%' "
+                    + "OR MINPUNTOS  LIKE'%" + buscartodo.getText() + "%'"
+                    + "OR MAXPUNTOS LIKE '%" + buscartodo.getText() + "%'"
+                    + "OR PORCENTAJEDESCUENTO LIKE '%" + buscartodo.getText() + "%'"
+                    + "OR TOPEDESCUENTO  LIKE'%" + buscartodo.getText() + "%'";
+          
+            tablaDescuentos = new DefaultTableModel(null, titulos)
+           {
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }  
+         };
            
             try {
                 Connection cn = obj.ConnectBd();
@@ -383,8 +389,9 @@ public class readDescuento extends javax.swing.JFrame {
                 datos[2] = rs.getString(3);
                 datos[3] = rs.getString(4);
                 datos[4] = rs.getString(5);
-                datos[5] = rs.getString(6);
-                datos[6] = rs.getString(7);
+                
+                datos[5] = btn_modificar;
+                datos[6] = btn_eliminar;
                 
                 tablaDescuentos.addRow(datos);   
                 

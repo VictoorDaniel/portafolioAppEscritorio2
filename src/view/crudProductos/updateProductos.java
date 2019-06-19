@@ -42,6 +42,7 @@ import model.Usuarios.Usuario;
 import model.comboBox.CbxTienda;
 import model.producto.Producto;
 import oracle.jdbc.OracleResultSet;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 //import sun.misc.IOUtils;
 
 /**
@@ -89,7 +90,7 @@ LoginUser mod;
         CbxTienda comboboxTienda = new CbxTienda();
         cbxTiendaProductoMod.removeAllItems();
         comboboxTienda.getValuesTienda(cbxTiendaProductoMod);
-        
+        AutoCompleteDecorator.decorate(cbxTiendaProductoMod);
         
         //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -120,6 +121,7 @@ LoginUser mod;
         CbxTienda comboboxTienda = new CbxTienda();
         cbxTiendaProductoMod.removeAllItems();
         comboboxTienda.getValuesTienda(cbxTiendaProductoMod);
+         AutoCompleteDecorator.decorate(cbxTiendaProductoMod);
         
         
         //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
@@ -316,11 +318,7 @@ LoginUser mod;
             }
         });
 
-        cbxTiendaProductoMod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxTiendaProductoModActionPerformed(evt);
-            }
-        });
+        cbxTiendaProductoMod.setToolTipText("");
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setText("Tienda");
@@ -556,10 +554,6 @@ LoginUser mod;
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreProductoModActionPerformed
 
-    private void cbxTiendaProductoModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaProductoModActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxTiendaProductoModActionPerformed
-
     private void txtPrecioProductoModKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioProductoModKeyTyped
         // TODO add your handling code here:
            char validar = evt.getKeyChar();
@@ -644,7 +638,7 @@ LoginUser mod;
     private javax.swing.JButton btnVolverProductoM;
     public static javax.swing.JComboBox<String> cbxCategoriaProductoMod;
     public static javax.swing.JComboBox<String> cbxRubroProductoMod;
-    private javax.swing.JComboBox<model.comboBox.CbxTienda> cbxTiendaProductoMod;
+    public static javax.swing.JComboBox<CbxTienda> cbxTiendaProductoMod;
     public static com.toedter.calendar.JDateChooser dtFechaVencimientoMod;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;

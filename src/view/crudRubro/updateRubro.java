@@ -21,6 +21,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import model.LoginUser;
 import model.Rubro.Rubro;
 import oracle.jdbc.OracleResultSet;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import static view.crudOferta.updateOferta.cbxTiendaOfertaMod;
 
 /**
  *
@@ -50,12 +52,13 @@ public class updateRubro extends javax.swing.JFrame {
         
          //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        
+        AutoCompleteDecorator.decorate(cbxCategoriaRubroMod);
         
     }
-     public updateRubro(LoginUser mod) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+   public updateRubro(LoginUser mod) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         this.mod=mod;
-         initComponents();
+        
+        initComponents();
         
         /*Para dejar la pantalla centrada*/
         this.setLocationRelativeTo(null);
@@ -67,10 +70,10 @@ public class updateRubro extends javax.swing.JFrame {
         
          //este codigo sirve para que al momento de elegir la crapeta la interface se vea bonita
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        
+        AutoCompleteDecorator.decorate(cbxCategoriaRubroMod);
         
     }
-    
+     
     
     private DefaultComboBoxModel getValuesCategoria(){
         
@@ -152,12 +155,12 @@ public class updateRubro extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cbxCategoriaRubroMod = new javax.swing.JComboBox<>();
         btnGuardarRubroMod = new javax.swing.JButton();
-        btnVolverRubroMod = new javax.swing.JButton();
         txtNombreRubroMod = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtIdRubroMod = new javax.swing.JTextField();
+        btnVolverRubro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,14 +185,6 @@ public class updateRubro extends javax.swing.JFrame {
         btnGuardarRubroMod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarRubroModActionPerformed(evt);
-            }
-        });
-
-        btnVolverRubroMod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnVolverRubroMod.setText("Volver");
-        btnVolverRubroMod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverRubroModActionPerformed(evt);
             }
         });
 
@@ -232,6 +227,14 @@ public class updateRubro extends javax.swing.JFrame {
             }
         });
 
+        btnVolverRubro.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnVolverRubro.setText("Volver");
+        btnVolverRubro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverRubroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -251,8 +254,8 @@ public class updateRubro extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(btnGuardarRubroMod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72)
-                        .addComponent(btnVolverRubroMod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(68, 68, 68)
+                        .addComponent(btnVolverRubro, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(txtIdRubroMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -274,8 +277,8 @@ public class updateRubro extends javax.swing.JFrame {
                     .addComponent(cbxCategoriaRubroMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVolverRubroMod, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardarRubroMod, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGuardarRubroMod, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolverRubro, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(77, 77, 77))
         );
 
@@ -288,9 +291,18 @@ public class updateRubro extends javax.swing.JFrame {
 
     private void btnGuardarRubroModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarRubroModActionPerformed
 
+       
+            
+        
+       
         try {
             verificaDatos();
-        } catch (ClassNotFoundException ex) {
+            this.setVisible(false);
+            readRubro rb = null;
+            rb = new readRubro(mod);
+            rb.setVisible(true);
+            rb.pack();
+           } catch (ClassNotFoundException ex) {
             Logger.getLogger(updateRubro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
             Logger.getLogger(updateRubro.class.getName()).log(Level.SEVERE, null, ex);
@@ -299,33 +311,32 @@ public class updateRubro extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(updateRubro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        limpiarDatos();
-        this.setVisible(false);
+       
 
     }//GEN-LAST:event_btnGuardarRubroModActionPerformed
 
-    private void btnVolverRubroModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverRubroModActionPerformed
+    private void txtIdRubroModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdRubroModActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdRubroModActionPerformed
+
+    private void btnVolverRubroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverRubroActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         readRubro rb = null;
         try {
             rb = new readRubro(mod);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(updateRubro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(createRubro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            Logger.getLogger(updateRubro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(createRubro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(updateRubro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(createRubro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(updateRubro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(createRubro.class.getName()).log(Level.SEVERE, null, ex);
         }
         rb.setVisible(true);
         rb.pack();
-    }//GEN-LAST:event_btnVolverRubroModActionPerformed
-
-    private void txtIdRubroModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdRubroModActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdRubroModActionPerformed
+    }//GEN-LAST:event_btnVolverRubroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -374,7 +385,7 @@ public class updateRubro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardarRubroMod;
-    private javax.swing.JButton btnVolverRubroMod;
+    private javax.swing.JButton btnVolverRubro;
     public static javax.swing.JComboBox<String> cbxCategoriaRubroMod;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

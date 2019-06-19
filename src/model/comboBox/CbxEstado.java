@@ -47,7 +47,7 @@ public class CbxEstado {
     }
     
     //recibe combobox de tipo cbxTienda
-    public  void getValuesEstado(JComboBox<CbxEstado>bla){
+    public  void getValuesEstado(JComboBox<CbxEstado>cbxEs){
         
         JavaConnectDb obj = new JavaConnectDb();
         Connection cn = obj.ConnectBd();
@@ -60,7 +60,7 @@ public class CbxEstado {
             
             while (rs.next()) {   
                 //aqui van los campos del contructor que le dimos al usuario arriba
-                bla.addItem(new CbxEstado (Integer.parseInt(rs.getString("IDESTADO")),
+                cbxEs.addItem(new CbxEstado (Integer.parseInt(rs.getString("IDESTADO")),
                                      rs.getString("GLOSAESTADO")));
             }
             cn.close();
@@ -75,7 +75,6 @@ public class CbxEstado {
     
     @Override
    public String toString()
-   { return GLOSAESTADO ;
-    };
+   {return GLOSAESTADO;}
     
 }

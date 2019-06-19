@@ -114,8 +114,8 @@ public class readRubro extends javax.swing.JFrame {
             Statement st = cn.createStatement();
             String sql = "SELECT IDRUBRO\n" +
                          "      ,NOMBRERUBRO\n" +
-                         "      ,IDCATEGORIA\n" +
-                         "FROM RUBRO";
+                         "      ,NOMBRECATEGORIA\n" +
+                         "FROM RUBRO  R INNER JOIN CATEGORIA C ON R.IDCATEGORIA=C.IDCATEGORIA";
             ResultSet rs = st.executeQuery(sql);
             
             Object datos[] = new Object[40];/* A la cantidad objetos le puse 40
@@ -302,7 +302,7 @@ public class readRubro extends javax.swing.JFrame {
                     
                     updateRubro ud = null;
                     try {
-                        ud = new updateRubro();
+                        ud = new updateRubro(mod);
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(readRubro.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (InstantiationException ex) {

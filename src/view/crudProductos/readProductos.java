@@ -548,7 +548,7 @@ public class readProductos extends javax.swing.JFrame {
                     this.setVisible(false);
                     updateProductos up = null;
                     try {
-                        up = new updateProductos();
+                        up = new updateProductos(mod);
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (InstantiationException ex) {
@@ -571,6 +571,8 @@ public class readProductos extends javax.swing.JFrame {
                     updateProductos.cbxCategoriaProductoMod.setSelectedItem(categoria);
                     updateProductos.cbxRubroProductoMod.setSelectedItem(rubro);
                     ((JTextField)updateProductos.dtFechaVencimientoMod.getDateEditor().getUiComponent()).setText(vencimiento);
+                    
+                    updateProductos.cbxTiendaProductoMod.setSelectedItem(tienda);
                    // updateProductos.lblImagenMod.setIcon((Icon) new JLabel(imagen));
                    Producto prod=new Producto();
                    prod.setIdProducto(Integer.parseInt(id));

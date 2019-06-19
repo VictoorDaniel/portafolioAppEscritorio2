@@ -28,6 +28,8 @@ public class Oferta {
     private int visitas;
     private String fechaVisita;
     
+    public void oferta(){}
+    
     
     public int getIdOferta() {
         return idOferta;

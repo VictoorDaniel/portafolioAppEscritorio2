@@ -116,10 +116,6 @@ public class updateDescuentos extends javax.swing.JFrame {
         btnGuardarDescuentoMod = new javax.swing.JButton();
         btnVolverDescuentoMod = new javax.swing.JButton();
         txtIdDescuentoMod = new javax.swing.JTextField();
-        txtIdProductoMod = new javax.swing.JTextField();
-        dtFechaVencimientoMod = new com.toedter.calendar.JDateChooser();
-        btnImagenMod = new javax.swing.JButton();
-        lblImagenMod = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -218,15 +214,6 @@ public class updateDescuentos extends javax.swing.JFrame {
         txtIdDescuentoMod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdDescuentoModActionPerformed(evt);
-            }
-        });
-
-        txtIdProductoMod.setEditable(false);
-
-        btnImagenMod.setText("Imagen...");
-        btnImagenMod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImagenModActionPerformed(evt);
             }
         });
 
@@ -421,9 +408,7 @@ public class updateDescuentos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardarDescuentoMod;
-    private javax.swing.JButton btnImagenMod;
     private javax.swing.JButton btnVolverDescuentoMod;
-    public static com.toedter.calendar.JDateChooser dtFechaVencimientoMod;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -431,9 +416,7 @@ public class updateDescuentos extends javax.swing.JFrame {
     public static javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    public static javax.swing.JLabel lblImagenMod;
     public static javax.swing.JTextField txtIdDescuentoMod;
-    public static javax.swing.JTextField txtIdProductoMod;
     public static javax.swing.JTextField txtMaxPuntosDescuentoMod;
     public static javax.swing.JTextField txtMinPuntosDescuentoMod;
     public static javax.swing.JTextField txtPorcentajeDescuentoMod;

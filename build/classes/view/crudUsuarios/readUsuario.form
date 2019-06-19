@@ -103,14 +103,10 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="33" red="33" type="rgb"/>
         </Property>
-<<<<<<< HEAD
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Imagenes/usuarios.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="   Mantenedor de Usuarios"/>
-=======
-        <Property name="text" type="java.lang.String" value="Mantenedor de Usuarios"/>
->>>>>>> ultimo/master
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -319,11 +315,7 @@
                       <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-<<<<<<< HEAD
                       <EmptySpace pref="251" max="32767" attributes="0"/>
-=======
-                      <EmptySpace pref="231" max="32767" attributes="0"/>
->>>>>>> ultimo/master
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
@@ -342,7 +334,6 @@
                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Component id="rbAceptarN" min="-2" max="-2" attributes="0"/>
@@ -368,9 +359,6 @@
                               <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-=======
-                          <Group type="102" attributes="0">
->>>>>>> ultimo/master
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtNombre" alignment="0" min="-2" pref="238" max="-2" attributes="0"/>
@@ -385,7 +373,6 @@
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -395,36 +382,6 @@
                               <EmptySpace pref="84" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-=======
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                              <Component id="rbAceptarN" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="rbAceptarS" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="rbInactivo" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="rbActivo" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="cbxRol" alignment="0" pref="174" max="32767" attributes="0"/>
-                                  <Component id="txtPassword" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnGuardarUsuarios" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
-                              <Component id="btnVolverProducto" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
->>>>>>> ultimo/master
                   </Group>
               </Group>
             </DimensionLayout>
@@ -486,16 +443,12 @@
                                   <Component id="rbActivo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-<<<<<<< HEAD
                               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="cbxTiendaOferta" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="20" max="32767" attributes="0"/>
-=======
-                              <EmptySpace min="61" pref="89" max="32767" attributes="0"/>
->>>>>>> ultimo/master
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -512,17 +465,11 @@
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
-<<<<<<< HEAD
                               <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btnGuardarUsuarios" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
                                   <Component id="btnVolverProducto" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
                               </Group>
-=======
-                              <Component id="btnVolverProducto" min="-2" pref="44" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                              <Component id="btnGuardarUsuarios" min="-2" pref="44" max="-2" attributes="0"/>
->>>>>>> ultimo/master
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
@@ -554,13 +501,10 @@
             <Component class="javax.swing.JTextField" name="txtEmail">
             </Component>
             <Component class="javax.swing.JTextField" name="txtRut">
-<<<<<<< HEAD
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRutActionPerformed"/>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtRutKeyTyped"/>
               </Events>
-=======
->>>>>>> ultimo/master
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="JDFechaN">
             </Component>
@@ -777,7 +721,6 @@
                 <Property name="text" type="java.lang.String" value="Codigo"/>
               </Properties>
             </Component>
-<<<<<<< HEAD
             <Component class="javax.swing.JLabel" name="jLabel17">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -802,8 +745,6 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;model.comboBox.CbxTienda&gt;"/>
               </AuxValues>
             </Component>
-=======
->>>>>>> ultimo/master
           </SubComponents>
         </Container>
       </SubComponents>

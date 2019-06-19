@@ -8,6 +8,7 @@ package view.crudOferta;
 import conectorBD.JavaConnectDb;
 import controller.Renders;
 import controller.oferta.CrudOferta;
+import controller.producto.CrudProducto;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -29,6 +30,12 @@ import javax.swing.table.DefaultTableModel;
 import model.LoginUser;
 import model.Oferta.Oferta;
 import model.TablaImagen;
+import model.producto.Producto;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import static view.crudOferta.updateOferta.cbxProductoOfertaMod;
+import static view.crudOferta.updateOferta.cbxTiendaOfertaMod;
+import view.crudProductos.readProductos;
+import static view.crudProductos.updateProductos.cbxTiendaProductoMod;
 import view.menuPrincipal;
 
 /**
@@ -563,9 +570,9 @@ LoginUser mod;
         String precioProducto   = ""+tblOferta.getValueAt(clic_tabla, 4);
         String dscto            = ""+tblOferta.getValueAt(clic_tabla, 5);
         String stock            = ""+tblOferta.getValueAt(clic_tabla, 6);
-        String minProd          = ""+tblOferta.getValueAt(clic_tabla, 8);
-        String maxProd          = ""+tblOferta.getValueAt(clic_tabla, 9);
-        String estado           = ""+tblOferta.getValueAt(clic_tabla, 10);
+        String minProd          = ""+tblOferta.getValueAt(clic_tabla, 7);
+        String maxProd          = ""+tblOferta.getValueAt(clic_tabla, 8);
+        String estado           = (String)tblOferta.getValueAt(clic_tabla, 9);
         
         
         int column =  tblOferta.getColumnModel().getColumnIndexAtX(evt.getX());
@@ -585,10 +592,16 @@ LoginUser mod;
                 if(boton.getName().equals("m")){
                     
                     System.out.println("Click en el boton modificar");
-                    System.out.println("idOferta" + idOferta);
-                    System.out.println("nombreOferta" + nombreOferta);
-                    System.out.println("nombreTienda" + nombreTienda);
-                    System.out.println("nombreProducto" + nombreProducto);
+                    System.out.println("..............................");
+                     System.out.println("cargando.........");
+                    System.out.println("idOferta : " + idOferta);
+                    System.out.println("nombreOferta :" + nombreOferta);
+                    System.out.println("nombreTienda : " + nombreTienda);
+                    System.out.println("nombreProducto : " + nombreProducto);
+                    System.out.println("precio : " + precioProducto);
+                     System.out.println("stock : " + stock);
+                     System.out.println("MaxProducto : " + maxProd);
+                     System.out.println("Estado : " + estado);
                     
                     this.setVisible(false);
                     updateOferta ud = new updateOferta(mod);
@@ -596,18 +609,43 @@ LoginUser mod;
 
                     updateOferta.txtIdOfertaMod.setText(idOferta);
                     updateOferta.txtNombreOfertaMod.setText(nombreOferta);
-                    //updateOferta.cbxTiendaOfertaMod.setSelectedItem(nombreTienda);
-                    //updateOferta.cbxProductoOfertaMod.setSelectedItem(nombreProducto);
+                    updateOferta.cbxTiendaOfertaMod.setSelectedItem(nombreTienda);
+                    updateOferta.cbxProductoOfertaMod.setSelectedItem(nombreProducto);
+                   //updateOferta.cbxEstadoOfertaMod.setSelectedItem(estado);
+                   
                     updateOferta.txtPrecioProductoOfertaMod.setText(precioProducto);
                     updateOferta.txtDesceuntoOfertaMod.setText(dscto);
                     updateOferta.txtStockOfertaMod.setText(stock);
                     updateOferta.txtMinProductoOfertaMod.setText(minProd);
                     updateOferta.txtMaxProductoOfertaMod.setText(maxProd);
-                    //updateOferta.cbxEstadoOfertaMod.setSelectedItem(estado);
+                    
+        if(!"Activo".equals(estado))
+        {
+           updateOferta.rbInactivo.setSelected(true);
+        }
+        else
+        {
+             updateOferta.rbActivo.setSelected(true);
+        }
+                    
+                    
+                  
                     
                     /***************************/
+                    
+                     Oferta ofert=new Oferta();
+                     
+                   ofert.setIdOferta(Integer.parseInt(idOferta));
+                   CrudOferta crud=new CrudOferta();
+                    try {
+                        crud.mostrarImagen(ofert);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(readProductos.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
                     ud.pack();
+                    
+   
 
                 }
                 if(boton.getName().equals("e")){

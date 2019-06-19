@@ -440,11 +440,7 @@ public class readTienda extends javax.swing.JFrame {
         jLabel10.setText("Nombre de Tienda");
 
         cmbxUsuarios.setEditable(true);
-        cmbxUsuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbxUsuariosActionPerformed(evt);
-            }
-        });
+        cmbxUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txtCalleDireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -470,13 +466,6 @@ public class readTienda extends javax.swing.JFrame {
         });
 
         jLabel16.setText("Codigo");
-
-        cmbxEmpresas.setEditable(true);
-        cmbxEmpresas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbxEmpresasActionPerformed(evt);
-            }
-        });
 
         jLabel14.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel14.setText("Empresa Asociada");
@@ -776,7 +765,7 @@ public class readTienda extends javax.swing.JFrame {
         //enviamos los datos de la tabla a las variables
         String codigo = ""+tbl.getValueAt(clic_tabla, 0);
         String nombre = ""+tbl.getValueAt(clic_tabla, 1);
-        String empresa = ""+tbl.getValueAt(clic_tabla,2);
+        String empresa =""+tbl.getValueAt(clic_tabla,2);
         String cliente = ""+tbl.getValueAt(clic_tabla,3);
         String comuna = ""+tbl.getValueAt(clic_tabla, 6);
         String calle = ""+tbl.getValueAt(clic_tabla, 7);
@@ -790,9 +779,14 @@ public class readTienda extends javax.swing.JFrame {
         txtNumero.setText(numero);
         txtObservacion.setText(observacion);
         txtTelefono.setText(Telefono);
+        
         cmbxEmpresas.setSelectedItem(empresa);
         cmbxUsuarios.setSelectedItem(cliente);
         cmbxComuna.setSelectedItem(comuna);
+       // cmbxEmpresas.setActionCommand(empresa);
+        //cmbxUsuarios.setActionCommand(cliente);
+        //cmbxComuna.setActionCommand(comuna);
+        
 
         int column = tbl.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY()/tbl.getRowHeight();
@@ -904,14 +898,6 @@ public class readTienda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Ingresar solo Numeros");
         }
     }//GEN-LAST:event_txtNumeroKeyTyped
-
-    private void cmbxUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxUsuariosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbxUsuariosActionPerformed
-
-    private void cmbxEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxEmpresasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbxEmpresasActionPerformed
 
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:

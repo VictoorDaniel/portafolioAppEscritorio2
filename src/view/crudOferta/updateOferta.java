@@ -8,6 +8,7 @@ package view.crudOferta;
 import conectorBD.JavaConnectDb;
 import controller.Renders;
 import controller.oferta.CrudOferta;
+import controller.producto.CrudProducto;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,19 +26,30 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import model.LoginUser;
 import model.Oferta.Oferta;
 import model.comboBox.CbxEstado;
 import model.comboBox.CbxProducto;
 import model.comboBox.CbxTienda;
+import model.producto.Producto;
 import oracle.jdbc.OracleResultSet;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
+import static view.crudProductos.updateProductos.cbxRubroProductoMod;
+import static view.crudProductos.updateProductos.cbxTiendaProductoMod;
+import static view.crudProductos.updateProductos.dtFechaVencimientoMod;
+import static view.crudProductos.updateProductos.txtIdProductoMod;
+import static view.crudProductos.updateProductos.txtNombreProductoMod;
+import static view.crudProductos.updateProductos.txtPrecioProductoMod;
+import static view.crudProductos.updateProductos.txtStockProductoMod;
 
 /**
  *
  * @author fernandacancinoreyes
  */
 public class updateOferta extends javax.swing.JFrame {
-  LoginUser mod;
+    LoginUser mod;
     /*llamo a la clase que contiene la conexion*/
     JavaConnectDb obj = new JavaConnectDb();
     OracleResultSet rs = null;
@@ -69,10 +81,18 @@ public class updateOferta extends javax.swing.JFrame {
         //cbxEstadoOfertaMod.setModel(getValuesEstadoMod());
         //cbxProductoOfertaMod.setModel(getValuesProductoMod());
         limpiarDatos();
+        
         cargarCbx();
+        
+       
+        
         txtPrecioProductoOfertaMod.setEditable(false);
         txtIdOfertaMod.setVisible(false);
+     
         
+         AutoCompleteDecorator.decorate( cbxProductoOfertaMod);
+         AutoCompleteDecorator.decorate(cbxTiendaOfertaMod);
+//         AutoCompleteDecorator.decorate(cbxEstadoOfertaMod);
     }
 
     public updateOferta(LoginUser mod) {
@@ -81,9 +101,21 @@ public class updateOferta extends javax.swing.JFrame {
         
         initComponents();
         limpiarDatos();
+        
+        
         cargarCbx();
+        
         txtPrecioProductoOfertaMod.setEditable(false);
         txtIdOfertaMod.setVisible(false);
+      
+       AutoCompleteDecorator.decorate( cbxProductoOfertaMod);
+       AutoCompleteDecorator.decorate(cbxTiendaOfertaMod);
+       
+       
+       
+
+         
+       
         
     }
     
@@ -93,13 +125,16 @@ public class updateOferta extends javax.swing.JFrame {
         CbxTienda comboboxTienda = new CbxTienda();
         cbxTiendaOfertaMod.removeAllItems();
         comboboxTienda.getValuesTienda(cbxTiendaOfertaMod);
-        
-        CbxEstado comboboxEstado = new CbxEstado();
+         
+        /*CbxEstado comboboxEstado = new CbxEstado();
         cbxEstadoOfertaMod.removeAllItems();
-        comboboxEstado.getValuesEstado(cbxEstadoOfertaMod);
+        comboboxEstado.getValuesEstado(cbxEstadoOfertaMod);*/
+        //AutoCompleteDecorator.decorate( cbxEstadoOfertaMod);
+         cbxProductoOfertaMod.removeAllItems();
+        combobox.getValuesProducto(cbxProductoOfertaMod);
+       
         
-        //cbxProductoOferta.removeAllItems();
-        //combobox.getValuesProducto(cbxProductoOferta);
+        
     }
     
     private void cargarPrecioProducto() throws SQLException{
@@ -152,7 +187,7 @@ public class updateOferta extends javax.swing.JFrame {
         Object datos[] = new Object[2];
         
         while (rs.next()) {     
-                //System.out.println("rs.getString(1)" + rs.getString(1));
+                System.out.println("rs.getString(1)" + rs.getString(1));
                 txtPrecioProductoOfertaMod.setText(rs.getString(1));
                 txtStockOfertaMod.setText(rs.getString(2));
                 /*
@@ -171,7 +206,7 @@ public class updateOferta extends javax.swing.JFrame {
         txtPrecioProductoOfertaMod.setText("");
         txtDesceuntoOfertaMod.setText("");
         txtStockOfertaMod.setText("");
-        lblimagen.setIcon(null);
+        lblImagenMod.setIcon(null);
     }
     
 
@@ -184,6 +219,7 @@ public class updateOferta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Grupo1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -194,7 +230,6 @@ public class updateOferta extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtNombreOfertaMod = new javax.swing.JTextField();
-        cbxEstadoOfertaMod = new javax.swing.JComboBox<>();
         txtDesceuntoOfertaMod = new javax.swing.JTextField();
         txtMaxProductoOfertaMod = new javax.swing.JTextField();
         txtStockOfertaMod = new javax.swing.JTextField();
@@ -209,8 +244,10 @@ public class updateOferta extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnImagen = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        lblimagen = new javax.swing.JLabel();
         txtIdOfertaMod = new javax.swing.JTextField();
+        lblImagenMod = new javax.swing.JLabel();
+        rbInactivo = new javax.swing.JRadioButton();
+        rbActivo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -276,12 +313,6 @@ public class updateOferta extends javax.swing.JFrame {
         txtNombreOfertaMod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreOfertaModActionPerformed(evt);
-            }
-        });
-
-        cbxEstadoOfertaMod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxEstadoOfertaModActionPerformed(evt);
             }
         });
 
@@ -384,6 +415,18 @@ public class updateOferta extends javax.swing.JFrame {
 
         txtIdOfertaMod.setText("id oferta");
 
+        Grupo1.add(rbInactivo);
+        rbInactivo.setSelected(true);
+        rbInactivo.setText("Inactivo");
+
+        Grupo1.add(rbActivo);
+        rbActivo.setText("Activo");
+        rbActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbActivoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -391,64 +434,81 @@ public class updateOferta extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtIdOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblImagenMod, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbActivo)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(rbInactivo))))
+                .addGap(25, 25, 25))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(btnGuardarOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(169, 169, 169)
+                .addComponent(btnVolverOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(30, 30, 30)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(38, 38, 38)
-                            .addComponent(btnGuardarOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnVolverOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(110, 110, 110))
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel5)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel11)
+                        .addComponent(jLabel12))
+                    .addGap(35, 35, 35)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel11)
-                                .addComponent(jLabel12))
-                            .addGap(35, 35, 35)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtDesceuntoOfertaMod)
+                                .addComponent(txtNombreOfertaMod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtStockOfertaMod)
+                                .addComponent(txtPrecioProductoOfertaMod)
+                                .addComponent(btnImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(cbxEstadoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(163, 163, 163))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtDesceuntoOfertaMod)
-                                            .addComponent(txtNombreOfertaMod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtStockOfertaMod)
-                                            .addComponent(txtPrecioProductoOfertaMod)
-                                            .addComponent(btnImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(txtMaxProductoOfertaMod, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                                                    .addComponent(txtMinProductoOfertaMod, javax.swing.GroupLayout.Alignment.LEADING))
-                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblimagen, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cbxTiendaOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cbxProductoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
-                    .addGap(31, 31, 31)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtMaxProductoOfertaMod, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                                        .addComponent(txtMinProductoOfertaMod, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGap(216, 216, 216))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbxTiendaOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxProductoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(0, 248, Short.MAX_VALUE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(192, 192, 192)
-                .addComponent(txtIdOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(341, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtIdOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(28, 28, 28)
+                        .addComponent(rbInactivo)
+                        .addGap(18, 18, 18)))
+                .addComponent(rbActivo)
+                .addGap(90, 90, 90)
+                .addComponent(lblImagenMod, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardarOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolverOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(123, 123, 123))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(63, 63, 63)
@@ -472,42 +532,31 @@ public class updateOferta extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addComponent(txtDesceuntoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8)
-                                .addComponent(txtStockOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtMinProductoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel11))
-                            .addGap(12, 12, 12)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtMaxProductoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel12))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel9)
-                                .addComponent(btnImagen))
-                            .addGap(7, 7, 7)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cbxEstadoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel10))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnGuardarOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnVolverOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblimagen, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(116, 116, 116)))
-                    .addGap(63, 63, 63)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(txtStockOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtMinProductoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11))
+                    .addGap(12, 12, 12)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtMaxProductoOfertaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(btnImagen))
+                    .addContainerGap(239, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarOfertaModActionPerformed
-
+ 
+        
+        
         varCero = 0;
         maximoDscto = 100;
 
@@ -520,87 +569,93 @@ public class updateOferta extends javax.swing.JFrame {
             && txtMaxProductoOfertaMod.getText().trim().length() != 0
         )
         {
-            if (parseInt(txtStockOfertaMod.getText()) <= stock){
-                if ( parseInt(txtMaxProductoOfertaMod.getText()) <= stock){
+            //if (parseInt(txtStockOfertaMod.getText()) <= stock){
+              //  if ( parseInt(txtMaxProductoOfertaMod.getText()) <= stock){
                     if (parseInt(txtDesceuntoOfertaMod.getText()) <= maximoDscto){
                         if (parseInt(txtMinProductoOfertaMod.getText()) != varCero){
-                            if ( ruta != null){
-                                try {
-
-                                    JavaConnectDb obj = new JavaConnectDb();
-                                    Connection cn = obj.ConnectBd();
-                                    String sql = "UPDATE OFERTA "
-                                               + "SET IDTIENDA = ?"
-                                               + ", IDPRODUCTO"
-                                            + ", NOMBREOFERTA"
-                                            + ", MINIMOPRODUCTO"
-                                            + ", MAXIMOPRODUCTO"
-                                            + ", PRECIOOFERTA"
-                                            + ", DESCUENTOOFERTA"
-                                            + ", STOCKPRODUCTOOFERTA"
-                                            + ", IDESTADO"
-                                            + ", IMAGENOFERTA)\n" +
-                                    "WHERE IDOFERTA = ?";
-
-                                    pst = cn.prepareStatement(sql);
-
-                                    //guardamos la imagen que emos elegido en estas variables
-                                    File file = new File(ruta);
-                                    fi = new FileInputStream(file);
-
-                                    /*para obtener id de producto*/
-                                    int idTienda =   cbxTiendaOfertaMod.getItemAt(cbxTiendaOfertaMod.getSelectedIndex()).getIDTIENDA();
-                                    int idProducto = cbxProductoOfertaMod.getItemAt(cbxProductoOfertaMod.getSelectedIndex()).getIDPRODUCTO();
-                                    int idEstado =   cbxEstadoOfertaMod.getItemAt(cbxEstadoOfertaMod.getSelectedIndex()).getIDESTADO();
-
-                                    pst.setInt(1, idTienda);
-                                    pst.setInt(2, idProducto);
-                                    pst.setString(3, txtNombreOfertaMod.getText());
-                                    pst.setInt(4, parseInt(txtMinProductoOfertaMod.getText()));
-                                    pst.setInt(5, parseInt(txtMaxProductoOfertaMod.getText()));
-
-                                    pst.setInt(6, parseInt(txtPrecioProductoOfertaMod.getText()));
-                                    pst.setInt(7, parseInt(txtDesceuntoOfertaMod.getText()));
-                                    pst.setInt(8, parseInt(txtStockOfertaMod.getText()));
-                                    pst.setInt(9, idEstado);
-                                    pst.setInt(9, parseInt(txtIdOfertaMod.getText()));
-
-                                    pst.setBinaryStream(10, fi);
-
-                                    cn.commit();
-
-                                    rs = (OracleResultSet) pst.executeQuery();
-
-                                    limpiarDatos();
-
-                                } catch (FileNotFoundException ex) {
-                                    Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
-                                } catch (SQLException ex) {
-                                    Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
-                                }finally{
-                                    JOptionPane.showMessageDialog(null, "Datos Actualizados..." );
-                                    this.setVisible(false);
-                                    readOferta rd = new readOferta();
+                          
+                           try 
+                           {
+                                    modificar();
+                           } 
+                           catch (SQLException ex) 
+                           {
+                           Logger.getLogger(updateOferta.class.getName()).log(Level.SEVERE, null, ex);
+                           }
+                           catch (FileNotFoundException ex) 
+                           {
+                           Logger.getLogger(updateOferta.class.getName()).log(Level.SEVERE, null, ex);
+                           }
+                                
+                                this.setVisible(false);
+                                    readOferta rd = new readOferta(mod);
                                     rd.setVisible(true);
                                     rd.pack();
-                                    try{
-                                        pst.close();
-                                    }catch(Exception ex){}
-                                }
-                            }else {JOptionPane.showMessageDialog(rootPane, "Debe insertar una imagen");}
+                           
                         }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar como minimo de productos la cantidad cero");}
                     }else {JOptionPane.showMessageDialog(rootPane, "No puede realizar un descuento mayor al 100%");}
-                }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un máximo de productos mayor al stock existente");}
-            }else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un stock mayor al existente");}
+                //}else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un máximo de productos mayor al stock existente");}
+            //}else {JOptionPane.showMessageDialog(rootPane, "No puede ingresar un stock mayor al existente");}
         }else{JOptionPane.showMessageDialog(null, "No debe dejar los campos vacios");}
 
     }//GEN-LAST:event_btnGuardarOfertaModActionPerformed
 
+    
+    public void modificar() throws SQLException, FileNotFoundException {//throws SQLException{
+             
+           if(ruta!=null)
+           {
+            File file = new File(ruta);
+             fi = new FileInputStream(file);
+           }
+             
+
+       
+        Oferta ofert=new Oferta();
+        CrudOferta controllerOfert = new CrudOferta();
+         int Estado=0;
+        if(rbActivo.isSelected())
+        {
+            Estado=0;
+        }
+        else
+        {
+            Estado=1;
+        }
+        
+        int idTienda =   cbxTiendaOfertaMod.getItemAt(cbxTiendaOfertaMod.getSelectedIndex()).getIDTIENDA();
+       int idProd=cbxProductoOfertaMod.getItemAt(cbxProductoOfertaMod.getSelectedIndex()).getIDPRODUCTO();
+       //int idEstado=cbxEstadoOfertaMod.getItemAt(cbxEstadoOfertaMod.getSelectedIndex()).getIDESTADO();
+        ofert.setIdTienda(idTienda);
+        ofert.setIdProducto(idProd);
+        ofert.setNombreOferta(txtNombreOfertaMod.getText());
+        ofert.setMinProducto(parseInt(txtMinProductoOfertaMod.getText()));
+        ofert.setMaxProducto(parseInt(txtMaxProductoOfertaMod.getText()));
+        ofert.setPrecioOferta(parseInt(txtPrecioProductoOfertaMod.getText()));
+        ofert.setDescuentoOferta(parseInt(txtDesceuntoOfertaMod.getText()));
+        ofert.setStockProductoOferta(parseInt(txtStockOfertaMod.getText()));
+        ofert.setIdEstado(Estado);
+        ofert.setIdOferta(parseInt(txtIdOfertaMod.getText()));
+      
+        
+        
+          if(fi==null)
+        {
+        controllerOfert.modificarOferta(ofert);
+        
+        }else
+        {
+            controllerOfert.modificarOfertaConImagen(ofert,fi);
+        }
+        
+        
+   }
+    
     private void btnVolverOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverOfertaModActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         limpiarDatos();
-        readOferta ro = new readOferta();
+        readOferta ro = new readOferta(mod);
         ro.setVisible(true);
         ro.pack();
     }//GEN-LAST:event_btnVolverOfertaModActionPerformed
@@ -608,10 +663,6 @@ public class updateOferta extends javax.swing.JFrame {
     private void txtNombreOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreOfertaModActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreOfertaModActionPerformed
-
-    private void cbxEstadoOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEstadoOfertaModActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxEstadoOfertaModActionPerformed
 
     private void txtDesceuntoOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDesceuntoOfertaModActionPerformed
         // TODO add your handling code here:
@@ -728,30 +779,6 @@ public class updateOferta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtPrecioProductoOfertaModKeyTyped
 
-    private void cbxTiendaOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaOfertaModActionPerformed
-        obtenerIdTienda();
-        System.out.println("idTiendaC" + idTiendaC);
-
-        //prueba();
-        cbxProductoOfertaMod.removeAllItems();
-
-        combobox.productos(cbxProductoOfertaMod,  idTiendaC);
-        //combobox.getValuesProducto2(cbxProductoOferta, idTiendaC);
-        //combobox.getValuesProducto(cbxProductoOferta);
-    }//GEN-LAST:event_cbxTiendaOfertaModActionPerformed
-
-    private void cbxProductoOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductoOfertaModActionPerformed
-
-        try {
-            // TODO add your handling code here:
-            cargarPrecioProducto() ;
-            cargarPrecioProductoR();
-        } catch (SQLException ex) {
-            Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_cbxProductoOfertaModActionPerformed
-
     private void btnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenActionPerformed
         // TODO add your handling code here:
         //esto es para elgir la imagen y su respectiva ruta etc
@@ -767,11 +794,37 @@ public class updateOferta extends javax.swing.JFrame {
             Image foto= getToolkit().getImage(ruta);
             //Le damos dimension a nuestro label que tendra la imagen
             foto= foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
-            lblimagen.setIcon(new ImageIcon(foto));
+            lblImagenMod.setIcon(new ImageIcon(foto));
 
         }
 
     }//GEN-LAST:event_btnImagenActionPerformed
+
+    private void cbxProductoOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductoOfertaModActionPerformed
+        /*try {
+            // TODO add your handling code here:
+            cargarPrecioProducto() ;
+            cargarPrecioProductoR();
+        } catch (SQLException ex) {
+            Logger.getLogger(updateOferta.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+    }//GEN-LAST:event_cbxProductoOfertaModActionPerformed
+
+    private void cbxTiendaOfertaModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTiendaOfertaModActionPerformed
+        /*obtenerIdTienda();
+        System.out.println("idTiendaC" + idTiendaC);
+
+        //prueba();
+        cbxProductoOfertaMod.removeAllItems();
+
+        combobox.productos(cbxProductoOfertaMod,  idTiendaC);*/
+        //combobox.getValuesProducto2(cbxProductoOferta, idTiendaC)¨
+        //combobox.getValuesProducto(cbxProductoOferta);
+    }//GEN-LAST:event_cbxTiendaOfertaModActionPerformed
+
+    private void rbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbActivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbActivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -810,10 +863,10 @@ public class updateOferta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup Grupo1;
     private javax.swing.JButton btnGuardarOfertaMod;
     private javax.swing.JButton btnImagen;
     private javax.swing.JButton btnVolverOfertaMod;
-    public static javax.swing.JComboBox<model.comboBox.CbxEstado> cbxEstadoOfertaMod;
     public static javax.swing.JComboBox<model.comboBox.CbxProducto> cbxProductoOfertaMod;
     public static javax.swing.JComboBox<model.comboBox.CbxTienda> cbxTiendaOfertaMod;
     private javax.swing.JLabel jLabel1;
@@ -829,7 +882,9 @@ public class updateOferta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblimagen;
+    public static javax.swing.JLabel lblImagenMod;
+    public static javax.swing.JRadioButton rbActivo;
+    public static javax.swing.JRadioButton rbInactivo;
     public static javax.swing.JTextField txtDesceuntoOfertaMod;
     public static javax.swing.JTextField txtIdOfertaMod;
     public static javax.swing.JTextField txtMaxProductoOfertaMod;

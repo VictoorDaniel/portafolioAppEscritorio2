@@ -67,18 +67,18 @@ public class CbxProducto {
         
         try {
             
-            String sql = "select IDPRODUCTO, NOMBREPRODUCTO from PRODUCTO where IDTIENDA = ?";
-            Statement st = cn.createStatement();
-            //ResultSet rs = st.executeQuery(sql);
+            String sql = "select IDPRODUCTO, NOMBREPRODUCTO from PRODUCTO ";
+           Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
             
-            PreparedStatement pst = null;
-            OracleResultSet rs = null;
+            
+            /*
             
             pst = cn.prepareStatement(sql);
-            pst.setInt(1, this.getIdTienda());
-            System.out.println("id tienda desde CbxProducto: " + this.getIdTienda() );
+            //pst.setInt(1, this.getIdTienda());
+            //System.out.println("id tienda desde CbxProducto: " + this.getIdTienda() );
             
-            rs = (OracleResultSet) pst.executeQuery();
+            rs = (OracleResultSet) pst.executeQuery();*/
         
             //Object datos[] = new Object[2];
             
