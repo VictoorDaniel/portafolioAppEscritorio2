@@ -43,7 +43,7 @@ import model.Empresas.Empresa;
 public class EnviarCorreo {
     JavaConnectDb obj = new JavaConnectDb();
          Connection cn = obj.ConnectBd();
-    public void EnviarCorreo(int idtienda,Image foto,String ruta) 
+    public void EnviarCorreo(int idtienda,Image foto,String ruta,String NombreOfert,String precio,String Descuento) 
     {
             
         
@@ -103,7 +103,8 @@ public class EnviarCorreo {
             String passwordRemitente="Misofertas123";
             String asunto="Se a publicado una nueva Oferta";
             String mensaje="Hola  "+nombre[0]+" "+nombre[1]+" "+nombre[2]+" "+
-                    " <br> <br> Te presentamos una nueva oferta <br><br>";
+                    " <br> <br> Te presentamos una nueva oferta <br><br>"+" "
+                    +NombreOfert+"<br>"+" precio : $"+precio+ "<br>"+" "+Descuento;
                    // + "<img src=\"cid:foto\">";
             
             BodyPart texto=new MimeBodyPart();

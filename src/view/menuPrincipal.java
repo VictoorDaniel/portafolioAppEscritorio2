@@ -132,17 +132,7 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnMantenedorUsuario1.setVisible(false);
        }else if(mod.getIdRol()==5)
        {
-           //Invitado
-                 btnMantenedorDescuento.setVisible(false);
-                btnMantenedorProducto.setVisible(false);
-                btnMantenedorOferta.setVisible(false);
-                btnMantenedorEmpresa.setVisible(false);
-                btnMantenedorTienda.setVisible(false);
-                btnMantenedoRubro.setVisible(false);
-                btnConsultaValoracionPorTienda.setVisible(false);
-                btnDescargaArchivosBI.setVisible(false);
-                btnReporteResumenPorTienda.setVisible(false);
-                btnMantenedorUsuario1.setVisible(false);
+           JOptionPane.showMessageDialog(null, "A iniciado en modo Dios", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
        }
 
    
@@ -510,7 +500,9 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMantenedorUsuario1ActionPerformed
 
     private void btnConsultaValoracionPorTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaValoracionPorTiendaActionPerformed
+       System.out.println("id jefe : "+mod.getIdUsuario());
         try {
+            
             // TODO add your handling code here:
             
             //El Informe de valoración por  Tienda se realizara segun

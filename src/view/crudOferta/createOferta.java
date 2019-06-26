@@ -51,7 +51,9 @@ LoginUser mod;
      Image foto=null;
     Oferta ofert = new Oferta();
     CrudOferta cOferta = new CrudOferta();
-    
+    String NombreOfert;
+    String PrecioOfert;
+    String DescuentoOfert;
     private int stock ;
     private int maximoDscto;
     private int varCero;
@@ -67,7 +69,9 @@ LoginUser mod;
         cargarCbx();
         
          txtPrecioProductoOferta.setEditable(false);
-        
+         NombreOfert=txtNombreOferta.getText();
+        PrecioOfert=txtPrecioProductoOferta.getText();
+        DescuentoOfert=txtDesceuntoOferta.getText();
     }
 
     public createOferta(LoginUser mod)throws SQLException {
@@ -82,7 +86,9 @@ LoginUser mod;
         cargarCbx();
         
         txtPrecioProductoOferta.setEditable(false);
-        
+        NombreOfert=txtNombreOferta.getText();
+        PrecioOfert=txtPrecioProductoOferta.getText();
+        DescuentoOfert=txtDesceuntoOferta.getText();
     }
     
     public void limpiarDatos(){
@@ -714,7 +720,7 @@ LoginUser mod;
                            limpiarDatos();
                            
                     EnviarCorreo c=new EnviarCorreo();
-                    c.EnviarCorreo(idTienda,foto,ruta);
+                    c.EnviarCorreo(idTienda,foto,ruta,NombreOfert,PrecioOfert,DescuentoOfert);
                     
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(createOferta.class.getName()).log(Level.SEVERE, null, ex);

@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/sh.exe.stackdump</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/producto/Producto.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/nbproject/project.properties</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/AgregarBtnATbl.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/Reportes/Grafico.jrxml</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/producto/CrudProducto.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/rubro/CrudRubro.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudDescuento/updateDescuentos.java</file>
@@ -15,6 +15,8 @@
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/Tienda/readTienda.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/Utilidades.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/login.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/Reportes/ReporteValoracionesPorTienda.jrxml</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/Reportes/ReporteNumericoPorTienda.jrxml</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/comboBox/CbxTienda.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/GenerarArchivoBItxt.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudEmpresas/readEmpresa.java</file>

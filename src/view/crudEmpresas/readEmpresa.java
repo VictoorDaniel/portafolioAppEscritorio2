@@ -155,7 +155,7 @@ public class readEmpresa extends javax.swing.JFrame {
                         "        ,USUARIO.NOMBREUSUARIO\n" +
                         "        ,USUARIO.APELLIDOPATERNO\n" +
                         "        ,USUARIO.APELLIDOMATERNO\n" +
-                        "        ,to_char(FECHAINSCRIPCION,'DD-mon-YYYY'') \n" +
+                        "        ,to_char(FECHAINSCRIPCION,'DD-mon-YYYY') \n" +
                        "        ,COMUNA.NOMBRECOMUNA\n" +
                        "        ,CALLEDIRECCION \n" +
                        "        ,NUMERODIRECCION \n" +

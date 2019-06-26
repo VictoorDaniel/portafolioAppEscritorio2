@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="77550020-f2d6-4456-b1a3-1a8b7b88426b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idJefeTienda" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+TIENDA."NOMBRETIENDA" AS TIENDA,
+ OFERTA."NOMBREOFERTA" AS Oferta,
+ NOTA."NOMBRENOTA" AS nota,
+    Count(NOTA."IDNOTA") as Cantidad
+FROM
+     "MISOFERTAS"."VALORACIONOFERTA" VALORACIONOFERTA INNER JOIN "MISOFERTAS"."USUARIO" USUARIO 
+     ON VALORACIONOFERTA."IDUSUARIO" = USUARIO."IDUSUARIO"
+     INNER JOIN "MISOFERTAS"."OFERTA" OFERTA ON VALORACIONOFERTA."IDOFERTA" = OFERTA."IDOFERTA"
+     INNER JOIN "MISOFERTAS"."NOTA" NOTA ON VALORACIONOFERTA."IDNOTA" = NOTA."IDNOTA"
+     INNER JOIN "MISOFERTAS"."TIENDA" TIENDA ON OFERTA."IDTIENDA" = TIENDA."IDTIENDA"
+WHERE
+     TIENDA."IDUSUARIO" =$P!{idJefeTienda}
+     GROUP BY  OFERTA."NOMBREOFERTA",NOTA."NOMBRENOTA",TIENDA."NOMBRETIENDA"]]>
+	</queryString>
+	<field name="TIENDA" class="java.lang.String"/>
+	<field name="OFERTA" class="java.lang.String"/>
+	<field name="NOTA" class="java.lang.String"/>
+	<field name="CANTIDAD" class="java.math.BigDecimal"/>
+	<summary>
+		<band height="255">
+			<barChart>
+				<chart>
+					<reportElement mode="Opaque" x="16" y="34" width="512" height="197" uuid="bcd7bb28-0e2a-4b1f-907b-dda2ac32521b"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{OFERTA}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{NOTA}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{CANTIDAD}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot orientation="Horizontal"/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<staticText>
+				<reportElement x="33" y="14" width="100" height="20" uuid="e926b4b6-a575-4bc4-ac13-f0966657d650"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Grafico]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

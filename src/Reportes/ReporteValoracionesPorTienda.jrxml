@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9fe7e5b-5dc0-4503-bfd7-e473f12b3adb">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="32"/>
+	<property name="ireport.y" value="71"/>
 	<parameter name="idJefeTienda" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\musaka\\Desktop\\portafolio\\portafolioAppEscritorio2\\src\\Reportes\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -86,7 +89,7 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="58" splitType="Stretch">
+		<band height="57" splitType="Stretch">
 			<textField>
 				<reportElement x="15" y="24" width="57" height="20" uuid="24e49ae3-0d67-4552-803f-14fec22e109e"/>
 				<textFieldExpression><![CDATA[$F{VALORACIONOFERTA_IDVALORACIONO}]]></textFieldExpression>
@@ -114,7 +117,7 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="6" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
@@ -130,6 +133,15 @@ WHERE
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="305" splitType="Stretch">
+			<subreport>
+				<reportElement x="15" y="14" width="540" height="271" uuid="6d3fb0bf-45cd-414b-90cc-25552504c9cb"/>
+				<subreportParameter name="idJefeTienda">
+					<subreportParameterExpression><![CDATA[$P{idJefeTienda}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Grafico.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</summary>
 </jasperReport>
