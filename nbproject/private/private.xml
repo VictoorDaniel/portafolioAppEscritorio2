@@ -6,7 +6,6 @@
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/producto/Producto.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/nbproject/project.properties</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/AgregarBtnATbl.java</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/Reportes/Grafico.jrxml</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/producto/CrudProducto.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/rubro/CrudRubro.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudDescuento/updateDescuentos.java</file>
@@ -16,7 +15,6 @@
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/Utilidades.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/login.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/Reportes/ReporteValoracionesPorTienda.jrxml</file>
-            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/Reportes/ReporteNumericoPorTienda.jrxml</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/comboBox/CbxTienda.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/GenerarArchivoBItxt.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudEmpresas/readEmpresa.java</file>
@@ -27,6 +25,7 @@
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Usuarios/Usuario.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/Login.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Oferta/Oferta2BI.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/controller/EnviarCorreo.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudRubro/createRubro.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudProductos/readProductos.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudOferta/updateOferta.java</file>
@@ -48,6 +47,7 @@
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/META-INF/persistence.xml</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudOferta/readOferta.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/Tienda/createTienda.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/conectorBD/JavaConnectDb.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/view/crudProductos/updateProductos.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/.gitignore</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/TablaImagen.java</file>
@@ -60,6 +60,7 @@
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/comboBox/CbxProducto.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/LoginUser.java</file>
+            <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/conectorBD/ConnectDbProducto.java</file>
             <file>file:/C:/Users/musaka/Desktop/portafolio/portafolioAppEscritorio2/src/model/Oferta/Oferta.java</file>
         </group>
     </open-files>
